@@ -96,5 +96,18 @@ public class Requisition {
         this.authorizer = authorizer;
     }
 
-
+    @Override
+    public String toString() {
+        return "Requisition{" +
+                "id='" + id + '\'' +
+                ", employeeId='" + employeeId + '\'' +
+                ", dateOfRequest='" + dateOfRequest + '\'' +
+                ", dateOfAuthorizing='" + dateOfAuthorizing + '\'' +
+                ", authorizerId='" + authorizerId + '\'' +
+                ", status='" + status + '\'' +
+                ", comment='" + comment + '\'' +
+                ", employee='" + employee + '\'' +
+                ", authorizer='" + authorizer + '\'' +
+                '}';
+    }
 }
