@@ -1,0 +1,12 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/collection"
+        android:title="@string/collection"/>
+    <item
+        android:id="@+id/collectionPoint"
+        android:title="@string/collectionPoint"/>
+    <item
+        android:id="@+id/distribution"
+        android:title="@string/distribution"/>
+
+</menu>

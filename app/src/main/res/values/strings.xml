@@ -1,3 +1,42 @@
 <resources>
     <string name="app_name">ADProjectMobile</string>
+    <string name="login">Log In</string>
+    <string name="logout">Log Out</string>
+    <string name="raise">Raise New Request</string>
+    <string name="enter_username">Enter Username</string>
+    <string name="enter_psw">Enter Password</string>
+    <string name="collection">Collection</string>
+    <string name="collectionPoint">Collection Point Locations</string>
+    <string name="distribution">Distribution</string>
+    <string name="confirmDisbursement">Confirm Disbursement</string>
+    <string name="selectEmployee">Select Employee: </string>
+    <string name="startDate">Start Date: </string>
+    <string name="endDate">End Date: </string>
+    <string name="authorizeDelegate">Authorize</string>
+    <string name="clickHereDate">Click Here To Select Date</string>
+    <string name="selectCollectionPoint">Select Collection Point: </string>
+    <string name="selectRequestor">Select Requestor Name: </string>
+    <string name="complete">Complete</string>
+    <string name="request">Request</string>
+    <string name="requisitionRelated">Requisition Related</string>
+    <string name="stockRelated">Stock Related</string>
+    <string name="stationeryRetrieval">Stationery Retrieval</string>
+    <string name="disbursementList">Disbursement List</string>
+    <string name="invtCheck">Inventory Check</string>
+    <string name="rcvGoods">Receiving Goods</string>
+    <string name="raisePO">Raise Purchase Order</string>
+    <string name="save">Save</string>
+    <string name="discrepencyList">Discrepency List</string>
+    <string name="search">Search</string>
+    <string name="reqForAdjVoucher">Request for adjustment voucher</string>
+    <string name="supplier">Supplier</string>
+    <string name="poNoRef">PO Number Ref</string>
+    <string name="deliveryOrderNo">Delivery Order NO</string>
+    <string name="rcvDate">Receiving Date</string>
+    <string name="stationeryPO">Stationery Purchase Order</string>
+    <string name="next">next</string>
+    <string name="submit">Submit</string>
+    <string name="cancel">Cancel</string>
+
+
 </resources>

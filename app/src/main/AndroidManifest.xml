@@ -2,7 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="iss.workshop.adprojectmobile">
 
-    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
     <application
@@ -12,18 +12,41 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".activity.StationeryRetrievalActivity">
+        <activity android:name=".activity.RaisePurchaseOrderSubmitActivity"></activity>
+        <activity android:name=".activity.RaisePurchaseOrderActivity" />
+        <activity android:name=".activity.ReceiveGoodsActivity" />
+        <activity android:name=".activity.DiscrepencyListActivity" />
+        <activity android:name=".activity.InventoryCheckActivity" />
+        <activity android:name=".activity.StoreClerkHomePageActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".activity.LoginDetailsActivity" />
-        <activity android:name=".activity.LoginActivity" />
-        <activity android:name=".activity.MainActivity">
+        <activity android:name=".activity.RaiseRequestActivity" />
+        <activity android:name=".activity.ConfirmDisbursementDistributionActivity" />
+        <activity android:name=".activity.ConfirmDisbursementCollectionActivity" />
+        <activity android:name=".activity.CollectionPointLocationsActivity" />
+        <activity android:name=".activity.RepresentativeMenuActivity">
+<!--        <intent-filter>-->
+<!--            <action android:name="android.intent.action.MAIN" />-->
 
+<!--            <category android:name="android.intent.category.LAUNCHER" />-->
+<!--        </intent-filter>-->
         </activity>
+        <activity android:name=".activity.DelegateAuthorityActivity"/>
+        <activity android:name=".activity.StationeryRetrievalActivity" />
+        <activity android:name=".activity.LoginActivity">
+
+<!--             <intent-filter>-->
+<!--             <action android:name="android.intent.action.MAIN" />-->
+
+
+<!--             <category android:name="android.intent.category.LAUNCHER" />-->
+<!--             </intent-filter> -->
+        </activity>
+        <activity android:name=".activity.MainActivity" />
     </application>
 
 </manifest>

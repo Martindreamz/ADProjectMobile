@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/invtCheck"
+        android:title="@string/invtCheck"/>
+    <item
+        android:id="@+id/rcvGoods"
+        android:title="@string/rcvGoods"/>
+    <item
+        android:id="@+id/raisePO"
+        android:title="@string/raisePO"/>
+</menu>

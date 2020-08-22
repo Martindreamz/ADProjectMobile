@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".activity.RepresentativeMenuActivity"
+    android:orientation="horizontal"
+    >
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_gravity="center">
+        <Button style="@style/Btn"
+            android:id="@+id/requisitionRelatedBtn"
+            android:text="@string/requisitionRelated"
+            android:layout_gravity="center"
+            android:layout_marginTop="10dp"
+            />
+
+        <Button style="@style/Btn"
+            android:id="@+id/stockRelatedBtn"
+            android:text="@string/stockRelated"
+            android:layout_gravity="center"
+            android:layout_marginTop="10dp"
+            />
+        <Button style="@style/LogOutBtn"
+            android:id="@+id/logOutBtn"
+            android:text="@string/logout"
+            android:layout_gravity="center"
+            android:layout_marginTop="10dp"
+            />
+    </LinearLayout>
+
+</LinearLayout>

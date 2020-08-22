@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".activity.ConfirmDisbursementCollectionActivity"
+    android:orientation="vertical"
+    >
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        android:text="@string/stationeryPO"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+        <TextView
+            android:id="@+id/purchaseOrderSubmit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:inputType="textMultiLine"
+            android:lines="2"
+            />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:weightSum="1.0">
+            <TextView
+                android:id="@+id/mainSupplier"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="30dp"
+                android:text="Main Supplier"
+                android:layout_weight="0.3"
+                />
+            <TextView
+                android:id="@+id/Supplier2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="30dp"
+                android:text="Supplier2"
+                android:layout_weight="0.3"
+                />
+            <TextView
+                android:id="@+id/Supplier3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="30dp"
+                android:text="Supplier3"
+                android:layout_weight="0.3"
+                />
+        </LinearLayout>
+        <TextView
+            android:id="@+id/poDetail"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:inputType="textMultiLine"
+            android:lines="2"
+            />
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:weightSum="1.0">
+        <Button style="@style/Btn"
+            android:id="@+id/cancelBtn"
+            android:text="@string/cancel"
+            android:layout_weight="0.4"
+            />
+    <Button style="@style/Btn"
+        android:id="@+id/submitBtn"
+        android:text="@string/submit"
+        android:layout_weight="0.4"
+
+        />
+
+    </LinearLayout>
+</LinearLayout>
