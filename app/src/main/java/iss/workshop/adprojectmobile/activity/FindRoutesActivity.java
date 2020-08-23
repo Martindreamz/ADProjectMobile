@@ -1,7 +1,6 @@
 package iss.workshop.adprojectmobile.activity;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.FragmentActivity;
@@ -12,6 +11,9 @@ import android.content.pm.PackageManager;
 import android.location.Location;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.directions.route.AbstractRouting;
@@ -40,6 +42,9 @@ import iss.workshop.adprojectmobile.R;
 public class FindRoutesActivity extends FragmentActivity implements OnMapReadyCallback,
         GoogleApiClient.OnConnectionFailedListener, RoutingListener {
 
+    //get the spinner from the xml
+    Spinner dropdown;
+
     //google map object
     private GoogleMap mMap;
 
@@ -56,12 +61,38 @@ public class FindRoutesActivity extends FragmentActivity implements OnMapReadyCa
     //polyline object
     private List<Polyline> polylines=null;
 
+    //declaring coordinate object
+    class Coordinate {
+        private double v;
+        private double v1;
+
+        public Coordinate(double v, double v1) {
+            this.v = v;
+            this.v1 = v1;
+        }
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_find_routes);
 
-        //request location permission.
+        dropdown = findViewById(R.id.spinner);
+
+        //create a list of items for the spinner
+        final List<String> spinnerArray = new ArrayList<String>();
+        spinnerArray.add("Place1");
+        spinnerArray.add("Place2");
+        spinnerArray.add("Place3");
+        spinnerArray.add("Place4");
+        spinnerArray.add("Place5");
+
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
+                android.R.layout.simple_spinner_item, spinnerArray);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        dropdown.setAdapter(adapter);
+
+        //request location permission
         requestPermission();
 
         //init google map fragment to show map.
@@ -112,10 +143,47 @@ public class FindRoutesActivity extends FragmentActivity implements OnMapReadyCa
             public void onMyLocationChange(Location location) {
 
                 myLocation=location;
-                LatLng ltlng=new LatLng(location.getLatitude(),location.getLongitude());
+                LatLng ltlng = new LatLng(location.getLatitude(),location.getLongitude());
                 CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(
                         ltlng, 16f);
                 mMap.animateCamera(cameraUpdate);
+            }
+        });
+
+        dropdown.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view,
+                                       int position, long id) {
+                Object item = adapterView.getItemAtPosition(position);
+
+                List<Coordinate> coordinateArray = new ArrayList<Coordinate>();
+                coordinateArray.add(new Coordinate(1.29661506, 103.77311969));
+                coordinateArray.add(new Coordinate(1.29965698, 103.7755326));
+                coordinateArray.add(new Coordinate(1.30016969, 103.77340937));
+                coordinateArray.add(new Coordinate(1.30021474, 103.77066922));
+                coordinateArray.add(new Coordinate(1.3013946, 103.77256286));
+
+                double lat = coordinateArray.get(position).v;
+                double lng = coordinateArray.get(position).v1;
+
+                if (item != null) {
+                    Toast.makeText(FindRoutesActivity.this, item.toString(),
+                            Toast.LENGTH_SHORT).show();
+
+                    mMap.clear();
+
+                    start=new LatLng(myLocation.getLatitude(),myLocation.getLongitude());
+                    end = new LatLng(lat, lng);
+                    //start route finding
+                    Findroutes(start,end);
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+                // TODO Auto-generated method stub
+
             }
         });
 
@@ -135,7 +203,6 @@ public class FindRoutesActivity extends FragmentActivity implements OnMapReadyCa
         });
 
     }
-
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
