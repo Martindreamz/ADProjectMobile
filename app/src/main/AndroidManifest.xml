@@ -4,6 +4,9 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
 
     <application
         android:allowBackup="true"
@@ -12,7 +15,14 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".activity.RaisePurchaseOrderSubmitActivity"></activity>
+
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="AIzaSyAHNMTRIbyTlFWugBR81KZYK33G3eZl1zA" />
+        <meta-data android:name="com.google.android.gms.version"
+            android:value="@integer/google_play_services_version" />
+
+        <activity android:name=".activity.RaisePurchaseOrderSubmitActivity" />
         <activity android:name=".activity.RaisePurchaseOrderActivity" />
         <activity android:name=".activity.ReceiveGoodsActivity" />
         <activity android:name=".activity.DiscrepencyListActivity" />
@@ -25,11 +35,7 @@
         <activity android:name=".activity.ConfirmDisbursementCollectionActivity" />
         <activity android:name=".activity.CollectionPointLocationsActivity" />
         <activity android:name=".activity.RepresentativeMenuActivity">
-            <!--        <intent-filter>-->
-            <!--            <action android:name="android.intent.action.MAIN" />-->
 
-            <!--            <category android:name="android.intent.category.LAUNCHER" />-->
-            <!--        </intent-filter>-->
         </activity>
         <activity android:name=".activity.DelegateAuthorityActivity" />
         <activity android:name=".activity.StationeryRetrievalActivity">
@@ -39,14 +45,11 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".activity.FindRoutesActivity"></activity>
+        <activity android:name=".activity.DelegateAuthorityActivity" />
+        <activity android:name=".activity.StationeryRetrievalActivity" />
         <activity android:name=".activity.LoginActivity">
 
-            <!--             <intent-filter>-->
-            <!--             <action android:name="android.intent.action.MAIN" />-->
-
-
-            <!--             <category android:name="android.intent.category.LAUNCHER" />-->
-            <!--             </intent-filter> -->
         </activity>
         <activity android:name=".activity.MainActivity" />
     </application>

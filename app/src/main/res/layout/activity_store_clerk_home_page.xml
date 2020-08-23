@@ -31,6 +31,14 @@
             android:layout_gravity="center"
             android:layout_marginTop="10dp"
             />
+
+        <Button
+            android:id="@+id/findRoutesBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Start Find Routes"
+            android:layout_gravity="center"
+            android:layout_marginTop="10dp"/>
     </LinearLayout>
 
 </LinearLayout>

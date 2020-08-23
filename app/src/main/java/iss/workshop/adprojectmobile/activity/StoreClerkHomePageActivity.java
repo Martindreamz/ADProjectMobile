@@ -13,17 +13,28 @@ import android.widget.Button;
 import iss.workshop.adprojectmobile.R;
 
 public class StoreClerkHomePageActivity extends AppCompatActivity {
-Button requisitinBtn, stockBtn;
+Button requisitinBtn, stockBtn, findRoutes;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_store_clerk_home_page);
         requisitinBtn=findViewById(R.id.requisitionRelatedBtn);
         stockBtn=findViewById(R.id.stockRelatedBtn);
+        //this button just added as a quick way to test find routes activity - not for this page
+        findRoutes = (Button) findViewById(R.id.findRoutesBtn);
         if(requisitinBtn!=null && stockBtn !=null) {
             registerForContextMenu(requisitinBtn);
             registerForContextMenu(stockBtn);
         }
+
+        //same for this OnClickListener (will remove later on)
+        findRoutes.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(StoreClerkHomePageActivity.this, FindRoutesActivity.class);
+                startActivity(intent);
+            }
+        });
     }
     @Override
     public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo){
