@@ -6,16 +6,15 @@ import javax.net.ssl.SSLSession;
 import javax.net.ssl.SSLSocketFactory;
 import javax.net.ssl.TrustManager;
 import javax.net.ssl.X509TrustManager;
-import javax.security.cert.CertificateException;
 
 import okhttp3.OkHttpClient;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-public class RestAdapter {
+public class SSLBypasser {
 
     private static Retrofit retrofit = null;
-    private static Api apiInterface;
+    private static ApiInterface apiInterface;
 
     public static OkHttpClient.Builder getUnsafeOkHttpClient() {
         try {
@@ -58,12 +57,12 @@ public class RestAdapter {
         }
     }
 
-    public static Api getApiClient() {
+    public static ApiInterface getApiClient() {
         if (apiInterface == null) {
 
             try {
                 retrofit = new Retrofit.Builder()
-                        .baseUrl(Api.url)
+                        .baseUrl(ApiInterface.url)
                         .client(getUnsafeOkHttpClient().build())
                         .addConverterFactory(GsonConverterFactory.create())
                         .build();
@@ -74,7 +73,7 @@ public class RestAdapter {
             }
 
 
-            apiInterface = retrofit.create(Api.class);
+            apiInterface = retrofit.create(ApiInterface.class);
         }
         return apiInterface;
     }

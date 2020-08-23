@@ -2,19 +2,41 @@ package iss.workshop.adprojectmobile.model;
 
 public class Requisition {
 
-    public String getId() {
+    private int id;
+    private int employeeId;
+    private String dateOfRequest;
+    private String dateOfAuthorizing;
+    private int authorizerId;
+    private String status;
+    private String comment;
+    private String employee;
+    private String authorizer;
+
+    public Requisition(int id, int employeeId, String dateOfRequest, String dateOfAuthorizing, int authorizerId, String status, String comment, String employee, String authorizer) {
+        this.id = id;
+        this.employeeId = employeeId;
+        this.dateOfRequest = dateOfRequest;
+        this.dateOfAuthorizing = dateOfAuthorizing;
+        this.authorizerId = authorizerId;
+        this.status = status;
+        this.comment = comment;
+        this.employee = employee;
+        this.authorizer = authorizer;
+    }
+
+    public int getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(int id) {
         this.id = id;
     }
 
-    public String getEmployeeId() {
+    public int getEmployeeId() {
         return employeeId;
     }
 
-    public void setEmployeeId(String employeeId) {
+    public void setEmployeeId(int employeeId) {
         this.employeeId = employeeId;
     }
 
@@ -34,11 +56,11 @@ public class Requisition {
         this.dateOfAuthorizing = dateOfAuthorizing;
     }
 
-    public String getAuthorizerId() {
+    public int getAuthorizerId() {
         return authorizerId;
     }
 
-    public void setAuthorizerId(String authorizerId) {
+    public void setAuthorizerId(int authorizerId) {
         this.authorizerId = authorizerId;
     }
 
@@ -71,28 +93,6 @@ public class Requisition {
     }
 
     public void setAuthorizer(String authorizer) {
-        this.authorizer = authorizer;
-    }
-
-    private String id;
-    private String employeeId;
-    private String dateOfRequest;
-    private String dateOfAuthorizing;
-    private String authorizerId;
-    private String status;
-    private String comment;
-    private String employee;
-    private String authorizer;
-
-    public Requisition(String id, String employeeId, String dateOfRequest, String dateOfAuthorizing, String authorizerId, String status, String comment, String employee, String authorizer) {
-        this.id = id;
-        this.employeeId = employeeId;
-        this.dateOfRequest = dateOfRequest;
-        this.dateOfAuthorizing = dateOfAuthorizing;
-        this.authorizerId = authorizerId;
-        this.status = status;
-        this.comment = comment;
-        this.employee = employee;
         this.authorizer = authorizer;
     }
 

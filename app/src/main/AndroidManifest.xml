@@ -18,33 +18,35 @@
         <activity android:name=".activity.DiscrepencyListActivity" />
         <activity android:name=".activity.InventoryCheckActivity" />
         <activity android:name=".activity.StoreClerkHomePageActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
         <activity android:name=".activity.RaiseRequestActivity" />
         <activity android:name=".activity.ConfirmDisbursementDistributionActivity" />
         <activity android:name=".activity.ConfirmDisbursementCollectionActivity" />
         <activity android:name=".activity.CollectionPointLocationsActivity" />
         <activity android:name=".activity.RepresentativeMenuActivity">
-<!--        <intent-filter>-->
-<!--            <action android:name="android.intent.action.MAIN" />-->
+            <!--        <intent-filter>-->
+            <!--            <action android:name="android.intent.action.MAIN" />-->
 
-<!--            <category android:name="android.intent.category.LAUNCHER" />-->
-<!--        </intent-filter>-->
+            <!--            <category android:name="android.intent.category.LAUNCHER" />-->
+            <!--        </intent-filter>-->
         </activity>
-        <activity android:name=".activity.DelegateAuthorityActivity"/>
-        <activity android:name=".activity.StationeryRetrievalActivity" />
+        <activity android:name=".activity.DelegateAuthorityActivity" />
+        <activity android:name=".activity.StationeryRetrievalActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
         <activity android:name=".activity.LoginActivity">
 
-<!--             <intent-filter>-->
-<!--             <action android:name="android.intent.action.MAIN" />-->
+            <!--             <intent-filter>-->
+            <!--             <action android:name="android.intent.action.MAIN" />-->
 
 
-<!--             <category android:name="android.intent.category.LAUNCHER" />-->
-<!--             </intent-filter> -->
+            <!--             <category android:name="android.intent.category.LAUNCHER" />-->
+            <!--             </intent-filter> -->
         </activity>
         <activity android:name=".activity.MainActivity" />
     </application>

@@ -1,9 +1,78 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:layout_margin="20dp"
+    android:orientation="vertical"
     tools:context=".activity.StationeryRetrievalActivity">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+
+    <TextView
+        android:id="@+id/retrievalheader"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.15"
+        android:gravity="center|left"
+        android:text="@string/retrieval_form_title"
+        android:textSize="20dp" />
+
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.05" />
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.05"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_height="match_parent"
+            android:layout_weight="0.2"
+            android:layout_width="0dp"
+            android:text="No"
+            android:gravity="center"/>
+        <TextView
+            android:layout_height="match_parent"
+            android:layout_weight="0.2"
+            android:layout_width="0dp"
+            android:text="Desc"
+            android:gravity="center"/>
+        <TextView
+            android:layout_height="match_parent"
+            android:layout_weight="0.18"
+            android:layout_width="0dp"
+            android:text="Requisition Id"
+            android:gravity="center"/>
+        <TextView
+            android:layout_height="match_parent"
+            android:layout_weight="0.12"
+            android:layout_width="0dp"
+            android:text="Req Qty"
+            android:gravity="center"/>
+        <TextView
+            android:layout_height="match_parent"
+            android:layout_weight="0.3"
+            android:layout_width="0dp"
+            android:text="Rcv Qty"
+            android:gravity="center"/>
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+        <ListView
+            android:id="@+id/retrievaltable"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="0.5" />
+
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="0.05"
+            android:id="@+id/retrivalSubtBtn"/>
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
