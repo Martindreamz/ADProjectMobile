@@ -46,8 +46,6 @@
             </intent-filter>
         </activity>
         <activity android:name=".activity.FindRoutesActivity"></activity>
-        <activity android:name=".activity.DelegateAuthorityActivity" />
-        <activity android:name=".activity.StationeryRetrievalActivity" />
         <activity android:name=".activity.LoginActivity">
 
         </activity>
