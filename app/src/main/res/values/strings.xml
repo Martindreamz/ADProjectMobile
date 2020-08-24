@@ -15,7 +15,8 @@
     <string name="endDate">End Date: </string>
     <string name="authorizeDelegate">Authorize</string>
     <string name="clickHereDate">Click Here To Select Date</string>
-    <string name="selectCollectionPoint">Select Collection Point: </string>
+    <string name="selectCollectionPoint">Select Collection Point Below: </string>
+    <string name="selectCollectionPointDisbursement">Select Collection Point Below: </string>
     <string name="selectRequestor">Select Requestor Name: </string>
     <string name="complete">Complete</string>
     <string name="request">Request</string>
@@ -38,4 +39,8 @@
     <string name="next">next</string>
     <string name="submit">Submit</string>
     <string name="cancel">Cancel</string>
+    <string name="collectionDate">Collection Date: </string>
+    <string name="collectionTime">Collection Time: </string>
+    <string name="deliveredBy">Delivered By: </string>
+
 </resources>
