@@ -40,6 +40,7 @@ public class StationeryRetrievalActivity extends AppCompatActivity implements Ad
     private ListView RetrievalTable;
     private boolean fetch_completed;
     private static HashMap<Integer, Integer> changes;
+    private static HashMap<Integer, Integer> qtyList;
 
     public static HashMap<Integer, Integer> getChanges() {
         return changes;
@@ -57,6 +58,14 @@ public class StationeryRetrievalActivity extends AppCompatActivity implements Ad
         StationeryRetrievalActivity.stationeries = stationeries;
     }
 
+    public static HashMap<Integer, Integer> getCountList() {
+        return qtyList;
+    }
+
+    public static void setCountList(HashMap<Integer, Integer> countList) {
+        StationeryRetrievalActivity.qtyList = countList;
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -66,7 +75,7 @@ public class StationeryRetrievalActivity extends AppCompatActivity implements Ad
         stationeries_editor = stationeries_pref.edit();
         requisitionDetails = new ArrayList();
         stationeries = new ArrayList();
-
+        qtyList = new HashMap<>();
         changes = new HashMap<>();
 
         submit = findViewById(R.id.retrivalSubtBtn);
@@ -120,6 +129,7 @@ public class StationeryRetrievalActivity extends AppCompatActivity implements Ad
                                 System.out.println(response.code());
                                 for (RequisitionDetail rd : requisitionDetails) {
                                     for (Stationery s : stationeries) {
+                                        qtyList.put(s.getId(), s.getInventoryQty());
                                         int i = s.getId();
                                         int j = rd.getStationeryId();
                                         if (s.getId() == rd.getStationeryId()) {
@@ -211,8 +221,8 @@ public class StationeryRetrievalActivity extends AppCompatActivity implements Ad
                     List<RequisitionDetail> requisitions2 = response.body();
                     System.out.println(response.code());
                     if (requisitions2 != null) {
-                        for(RequisitionDetail rd: requisitions2)
-                        System.out.println(rd);
+                        for (RequisitionDetail rd : requisitions2)
+                            System.out.println(rd);
                     }
                 }
 

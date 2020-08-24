@@ -7,7 +7,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.ListView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -18,15 +17,11 @@ import com.travijuu.numberpicker.library.NumberPicker;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 import iss.workshop.adprojectmobile.R;
 import iss.workshop.adprojectmobile.activity.StationeryRetrievalActivity;
-import iss.workshop.adprojectmobile.model.Requisition;
 import iss.workshop.adprojectmobile.model.RequisitionDetail;
-import iss.workshop.adprojectmobile.model.Stationery;
 
 public class RetrievalItemDetailAdapter extends ArrayAdapter implements AdapterView.OnItemClickListener {
 
@@ -36,6 +31,7 @@ public class RetrievalItemDetailAdapter extends ArrayAdapter implements AdapterV
     private RequisitionDetail currRD;
     private List<Integer> countList;
     private HashMap<Integer, Integer> changes;
+
 
     @Override
     public int getCount() {
@@ -58,7 +54,7 @@ public class RetrievalItemDetailAdapter extends ArrayAdapter implements AdapterV
 
     public View getView(final int pos, View view, @NonNull ViewGroup parent) {
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Activity.LAYOUT_INFLATER_SERVICE);
-        view = inflater.inflate(R.layout.activitiy_stationery_retrieval_item_detail, null);
+        view = inflater.inflate(R.layout.activity_stationery_retrieval_item_detail, null);
 
         TextView requisitionID = view.findViewById(R.id.stationery_row_detail_id);
         requisitionID.setText(Integer.toString(RDlist2.get(pos).getRequisitionId()));

@@ -2,33 +2,25 @@ package iss.workshop.adprojectmobile.adapters;
 
 import android.app.Activity;
 import android.content.Context;
-import android.os.Build;
-import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.ImageView;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.RequiresApi;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
 
-import iss.workshop.adprojectmobile.Interfaces.ApiInterface;
-import iss.workshop.adprojectmobile.Interfaces.SSLBypasser;
 import iss.workshop.adprojectmobile.R;
 import iss.workshop.adprojectmobile.activity.StationeryRetrievalActivity;
-import iss.workshop.adprojectmobile.model.Requisition;
 import iss.workshop.adprojectmobile.model.RequisitionDetail;
 import iss.workshop.adprojectmobile.model.Stationery;
 
@@ -44,6 +36,9 @@ public class RetrievalAdapter extends ArrayAdapter {
     private List<Integer> keylist;
     private List<Stationery> stationeries;
     private List<String> itemname;
+    private List<Integer> remainingcount;
+
+
     public List<RequisitionDetail> getRDlist() {
         return RDlist;
     }
@@ -60,11 +55,13 @@ public class RetrievalAdapter extends ArrayAdapter {
     public RetrievalAdapter(@NonNull Context context, int id, @NonNull List objects) {
         super(context, id, objects);
 
+        stationeries = StationeryRetrievalActivity.getStationeries();
         itemcodesSet = new HashSet<>();
         itemcodesList = new ArrayList<>();
         splittedRequistionDetail = new HashMap<>();
         keylist = new ArrayList<>();
         itemname = new ArrayList<>();
+        remainingcount = new ArrayList<>();
 
 
         this.RDlist = objects;
@@ -95,7 +92,14 @@ public class RetrievalAdapter extends ArrayAdapter {
         for (int i : itemcodesSet) {
             add(null);
             itemcodesList.add(i);
+        }
 
+        for (int i : itemcodesList) {
+            for (Stationery s : stationeries) {
+                if (i == s.getId()) {
+                    remainingcount.add(s.getInventoryQty());
+                }
+            }
         }
 
 
@@ -109,11 +113,11 @@ public class RetrievalAdapter extends ArrayAdapter {
         rownumber.setText(Integer.toString(pos));
 
         TextView description = view.findViewById(R.id.stationery_row_description);
-        description.setText(itemname.get(pos));
+        description.setText(itemname.get(pos) + " ("+remainingcount.get(pos)+")");
 
         int key = keylist.get(pos);
         List<RequisitionDetail> list = splittedRequistionDetail.get(key);
-        RetrievalItemDetailAdapter adapter = new RetrievalItemDetailAdapter(context, R.layout.activitiy_stationery_retrieval_item_detail, list);
+        RetrievalItemDetailAdapter adapter = new RetrievalItemDetailAdapter(context, R.layout.activity_stationery_retrieval_item_detail, list);
         ListView requistionList = view.findViewById(R.id.stationery_row_detail);
         if (requistionList != null) {
             requistionList.setAdapter(adapter);
