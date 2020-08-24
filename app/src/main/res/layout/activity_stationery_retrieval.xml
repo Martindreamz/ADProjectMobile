@@ -51,13 +51,14 @@
             android:layout_height="match_parent"
             android:layout_weight="0.12"
             android:layout_width="0dp"
-            android:text="Req Qty"
+            android:text="rqst qty"
+
             android:gravity="center"/>
         <TextView
             android:layout_height="match_parent"
             android:layout_weight="0.3"
             android:layout_width="0dp"
-            android:text="Rcv Qty"
+            android:text="taken"
             android:gravity="center"/>
 
         </androidx.appcompat.widget.LinearLayoutCompat>
