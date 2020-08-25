@@ -70,11 +70,12 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                         session_editor.putInt("departmentId", currEmp.getDepartmentId());
                         session_editor.putInt("staffId", currEmp.getId());
                         session_editor.commit();
+                        System.out.println("from login preference"+ session.getInt("staffId",0)+"from currEMP "+currEmp.getId());
 
-                        if(currEmp.getRole().equals("STRMGR")||currEmp.getRole().equals("STRSUPV")){
+                        if (currEmp.getRole().equals("STRMGR") || currEmp.getRole().equals("STRSUPV")) {
                             Toast.makeText(getApplication(), "Hi there, " + currEmp.getName() + " sorry you are not authorized for this mobile app", Toast.LENGTH_LONG).show();
 
-                        }else {
+                        } else {
                             Toast.makeText(getApplication(), "Welcome, " + currEmp.getName(), Toast.LENGTH_LONG).show();
                             Intent intent;
                             switch (currEmp.getRole()) {

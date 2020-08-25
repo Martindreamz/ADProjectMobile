@@ -3,7 +3,7 @@ package iss.workshop.adprojectmobile.model;
 public class Employee {
 
     //[Required]
-    private int Id;
+    private int id;
     private String name;
     private String password;
     private String email;
@@ -14,11 +14,11 @@ public class Employee {
 
 
     public int getId() {
-        return Id;
+        return id;
     }
 
     public void setId(int id) {
-        Id = id;
+        id = id;
     }
 
     public String getName() {
@@ -77,7 +77,7 @@ public class Employee {
     @Override
     public String toString() {
         return "Employee{" +
-                "Id=" + Id +
+                "Id=" + id +
                 ", name='" + name + '\'' +
                 ", password='" + password + '\'' +
                 ", email='" + email + '\'' +

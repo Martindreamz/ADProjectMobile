@@ -3,6 +3,7 @@ package iss.workshop.adprojectmobile.activity;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.ContextMenu;
 import android.view.MenuInflater;
@@ -14,14 +15,22 @@ import iss.workshop.adprojectmobile.R;
 
 public class StoreClerkHomePageActivity extends AppCompatActivity {
 Button requisitinBtn, stockBtn, findRoutes;
+
+    SharedPreferences session;
+    SharedPreferences.Editor session_editor;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_store_clerk_home_page);
         requisitinBtn=findViewById(R.id.requisitionRelatedBtn);
         stockBtn=findViewById(R.id.stockRelatedBtn);
         //this button just added as a quick way to test find routes activity - not for this page
         findRoutes = (Button) findViewById(R.id.findRoutesBtn);
+
+        session = getSharedPreferences("session", MODE_PRIVATE);
+        session_editor = session.edit();
+
         if(requisitinBtn!=null && stockBtn !=null) {
             registerForContextMenu(requisitinBtn);
             registerForContextMenu(stockBtn);
