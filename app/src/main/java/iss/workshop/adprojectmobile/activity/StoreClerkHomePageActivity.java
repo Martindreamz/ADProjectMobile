@@ -54,12 +54,12 @@ Button requisitinBtn, stockBtn, findRoutes;
     public boolean onContextItemSelected(MenuItem item){
         switch (item.getItemId()){
             case R.id.stationeryRetrieval:
-//                Intent intent=new Intent(this, ConfirmDisbursementCollectionActivity.class);
-//                startActivity(intent);
+                Intent intent=new Intent(this, StationeryRetrievalActivity.class);
+                startActivity(intent);
                 break;
             case R.id.disbursementList:
-//                Intent intent2=new Intent(this, CollectionPointLocationsActivity.class);
-//                startActivity(intent2);
+                Intent intent2=new Intent(this, DisbursementListActivity.class);
+                startActivity(intent2);
                 break;
             case R.id.invtCheck:
                 Intent intent3=new Intent(this, InventoryCheckActivity.class);

@@ -15,7 +15,15 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".activity.DisbursementListActivity"></activity>
+        <activity android:name=".activity.DepartmentHeadHomePageActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+
+        </activity>
+        <activity android:name=".activity.DisbursementListActivity" />
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"
@@ -37,20 +45,13 @@
         <activity android:name=".activity.RepresentativeMenuActivity" />
         <activity android:name=".activity.DelegateAuthorityActivity" />
         <activity android:name=".activity.StationeryRetrievalActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
+<!--            <intent-filter>-->
+<!--                <action android:name="android.intent.action.MAIN" />-->
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+<!--                <category android:name="android.intent.category.LAUNCHER" />-->
+<!--            </intent-filter>-->
         </activity>
         <activity android:name=".activity.FindRoutesActivity">
-
-            <!-- <intent-filter> -->
-            <!-- <action android:name="android.intent.action.MAIN" /> -->
-
-
-            <!-- <category android:name="android.intent.category.LAUNCHER" /> -->
-            <!-- </intent-filter> -->
         </activity>
         <activity android:name=".activity.LoginActivity" />
         <activity android:name=".activity.MainActivity" />
