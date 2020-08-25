@@ -2,6 +2,7 @@ package iss.workshop.adprojectmobile.Interfaces;
 
 import java.util.List;
 
+import iss.workshop.adprojectmobile.model.Employee;
 import iss.workshop.adprojectmobile.model.Requisition;
 import iss.workshop.adprojectmobile.model.RequisitionDetail;
 import iss.workshop.adprojectmobile.model.Stationery;
@@ -27,6 +28,10 @@ public interface ApiInterface {
     @Headers({"Content-Type: application/json"})
     @POST("store/processRetrieval")
     Call<List<RequisitionDetail>> processRetrieval(@Body List<RequisitionDetail> requisitions);
+
+    @Headers({"Content-Type: application/json"})
+    @POST("login/post")
+    Call<Employee> login(@Body Employee employee);
 
 
 }

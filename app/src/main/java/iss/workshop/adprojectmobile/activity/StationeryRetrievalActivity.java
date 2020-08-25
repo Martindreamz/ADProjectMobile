@@ -196,41 +196,49 @@ public class StationeryRetrievalActivity extends AppCompatActivity implements Ad
     @Override
     public void onClick(View view) {
         if (view == submit) {
-            List<RequisitionDetail> rdl_tosend = new ArrayList<>();
-            for (RequisitionDetail rd : requisitionDetails) {
-                System.out.println(rd);
-            }
-            for (int i : changes.keySet()) {
-                System.out.println("RD " + i + " needed " + changes.get(i));
-                rdl_tosend.add(new RequisitionDetail(i, 0, 0, changes.get(i), 0, "", "", ""));
+            int sum = 0;
+
+            for (int i : changes.values()) {
+                sum += i;
             }
 
-            Retrofit retrofit2 = new Retrofit.Builder()
-                    .baseUrl(ApiInterface.url)
-                    .client(SSLBypasser.getUnsafeOkHttpClient().build())
-                    .addConverterFactory(GsonConverterFactory.create())
-                    .build();
+            if (sum != 0) {
+                List<RequisitionDetail> rdl_tosend = new ArrayList<>();
+                for (RequisitionDetail rd : requisitionDetails) {
+                    System.out.println(rd);
+                }
+                for (int i : changes.keySet()) {
+                    System.out.println("RD " + i + " needed " + changes.get(i));
+                    rdl_tosend.add(new RequisitionDetail(i, 0, 0, changes.get(i), 0, "", "", ""));
+                }
 
-            ApiInterface apiInterface2 = retrofit2.create(ApiInterface.class);
+                Retrofit retrofit2 = new Retrofit.Builder()
+                        .baseUrl(ApiInterface.url)
+                        .client(SSLBypasser.getUnsafeOkHttpClient().build())
+                        .addConverterFactory(GsonConverterFactory.create())
+                        .build();
 
-            Call<List<RequisitionDetail>> call2 = apiInterface2.processRetrieval(rdl_tosend);
+                ApiInterface apiInterface2 = retrofit2.create(ApiInterface.class);
 
-            call2.enqueue(new Callback<List<RequisitionDetail>>() {
-                @Override
-                public void onResponse(Call<List<RequisitionDetail>> call2, Response<List<RequisitionDetail>> response) {
-                    List<RequisitionDetail> requisitions2 = response.body();
-                    System.out.println(response.code());
-                    if (requisitions2 != null) {
-                        for (RequisitionDetail rd : requisitions2)
-                            System.out.println(rd);
+                Call<List<RequisitionDetail>> call2 = apiInterface2.processRetrieval(rdl_tosend);
+
+                call2.enqueue(new Callback<List<RequisitionDetail>>() {
+                    @Override
+                    public void onResponse(Call<List<RequisitionDetail>> call2, Response<List<RequisitionDetail>> response) {
+                        List<RequisitionDetail> requisitions2 = response.body();
+                        System.out.println(response.code());
+                        if (requisitions2 != null) {
+                            for (RequisitionDetail rd : requisitions2)
+                                System.out.println(rd);
+                        }
                     }
-                }
 
-                @Override
-                public void onFailure(Call<List<RequisitionDetail>> call2, Throwable t) {
-                    System.out.println("error connecting: " + t.getMessage());
-                }
-            });
+                    @Override
+                    public void onFailure(Call<List<RequisitionDetail>> call2, Throwable t) {
+                        System.out.println("error connecting: " + t.getMessage());
+                    }
+                });
+            }
         }
     }
 }
