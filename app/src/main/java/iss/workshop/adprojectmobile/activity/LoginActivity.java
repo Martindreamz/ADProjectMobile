@@ -79,7 +79,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                             Intent intent;
                             switch (currEmp.getRole()) {
                                 case "HEAD":
-                                    intent = new Intent(getApplicationContext(), DelegateAuthorityActivity.class);
+                                    intent = new Intent(getApplicationContext(), DepartmentHeadHomePageActivity.class);
                                     break;
                                 case "DELEGATE":
                                 case "STAFF":
