@@ -34,6 +34,8 @@ public class StationeryRetrievalActivity extends AppCompatActivity implements Ad
 
     private SharedPreferences stationeries_pref;
     private SharedPreferences.Editor stationeries_editor;
+    private SharedPreferences session;
+    private SharedPreferences.Editor session_editor;
     private Button submit;
     private List<RequisitionDetail> requisitionDetails;
     private static List<Stationery> stationeries;
@@ -41,6 +43,7 @@ public class StationeryRetrievalActivity extends AppCompatActivity implements Ad
     private boolean fetch_completed;
     private static HashMap<Integer, Integer> changes;
     private static HashMap<Integer, Integer> qtyList;
+
 
     public static HashMap<Integer, Integer> getChanges() {
         return changes;
@@ -77,6 +80,8 @@ public class StationeryRetrievalActivity extends AppCompatActivity implements Ad
         stationeries = new ArrayList();
         qtyList = new HashMap<>();
         changes = new HashMap<>();
+        session = getSharedPreferences("session", MODE_PRIVATE);
+        session_editor = session.edit();
 
         submit = findViewById(R.id.retrivalSubtBtn);
 
@@ -197,9 +202,11 @@ public class StationeryRetrievalActivity extends AppCompatActivity implements Ad
     public void onClick(View view) {
         if (view == submit) {
             int sum = 0;
+
             for (int i : changes.values()) {
                 sum += i;
             }
+
             if (sum != 0) {
                 List<RequisitionDetail> rdl_tosend = new ArrayList<>();
                 for (RequisitionDetail rd : requisitionDetails) {
@@ -209,6 +216,9 @@ public class StationeryRetrievalActivity extends AppCompatActivity implements Ad
                     System.out.println("RD " + i + " needed " + changes.get(i));
                     rdl_tosend.add(new RequisitionDetail(i, 0, 0, changes.get(i), 0, "", "", ""));
                 }
+
+                rdl_tosend.get(0).setRequisitionId(session.getInt("staffId",0));
+                System.out.println(rdl_tosend.get(0).getRequisitionId());
 
                 Retrofit retrofit2 = new Retrofit.Builder()
                         .baseUrl(ApiInterface.url)
