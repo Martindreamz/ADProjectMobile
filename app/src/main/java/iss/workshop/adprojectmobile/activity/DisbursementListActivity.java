@@ -1,8 +1,12 @@
 package iss.workshop.adprojectmobile.activity;
 
 import androidx.annotation.RequiresApi;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
@@ -13,7 +17,6 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -21,8 +24,10 @@ import java.util.List;
 import iss.workshop.adprojectmobile.Interfaces.ApiInterface;
 import iss.workshop.adprojectmobile.Interfaces.SSLBypasser;
 import iss.workshop.adprojectmobile.R;
+import iss.workshop.adprojectmobile.adapters.DisbursementDetailAdapter;
 import iss.workshop.adprojectmobile.adapters.DisbursementTableAdapter;
 import iss.workshop.adprojectmobile.model.DisbursementList;
+import iss.workshop.adprojectmobile.model.Employee;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -36,6 +41,17 @@ public class DisbursementListActivity extends AppCompatActivity implements Adapt
     List<String> locationList;
     ListView disbursementListTable;
     List<DisbursementList> currDisbursementLists;
+    List<Employee> departmentReps;
+    private SharedPreferences session;
+    private SharedPreferences.Editor session_editor;
+
+    public List<Employee> getDepartmentReps() {
+        return departmentReps;
+    }
+
+    public void setDepartmentReps(List<Employee> departmentReps) {
+        this.departmentReps = departmentReps;
+    }
 
     public List<String> getLocationList() {
         return locationList;
@@ -62,38 +78,75 @@ public class DisbursementListActivity extends AppCompatActivity implements Adapt
         disbursementListTable = findViewById(R.id.DisbursementListTable);
         disbursementDropDown.setOnItemSelectedListener(this);
         locationList = new ArrayList<>();
+        departmentReps = new ArrayList<>();
         currDisbursementLists = new ArrayList<>();
+        session = getSharedPreferences("session", MODE_PRIVATE);
+        session_editor = session.edit();
 
-        Retrofit retrofit = new Retrofit.Builder()
+        final Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(ApiInterface.url)
                 .client(SSLBypasser.getUnsafeOkHttpClient().build())
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 
-        ApiInterface apiInterface = retrofit.create(ApiInterface.class);
+        final ApiInterface apiInterface = retrofit.create(ApiInterface.class);
 
-        Call<List<DisbursementList>> call = apiInterface.retrievalAllDisbursementLists();
+        Call<List<DisbursementList>> call = apiInterface.getAllDisbursementLists(session.getInt("staffId",0));
 
         call.enqueue(new Callback<List<DisbursementList>>() {
-
-
             @RequiresApi(api = Build.VERSION_CODES.O)
             @Override
             public void onResponse(Call<List<DisbursementList>> call, Response<List<DisbursementList>> response) {
+                System.out.println("calling disbursement list: " + response.code());
                 if (response.code() == 200) {
                     disbursementlist = response.body();
-                    setDisbursementlist(disbursementlist);
-                    HashSet<String> locationHash = new HashSet<>();
-                    for (DisbursementList dl : disbursementlist) {
-                        locationHash.add(dl.getDeliveryPoint());
-                    }
-                    for (String s : locationHash) {
-                        locationList.add(s);
-                    }
-                    setLocationList(locationList);
-                    ArrayAdapter dropdown = new ArrayAdapter(getApplicationContext(), android.R.layout.simple_spinner_item, locationList);
-                    dropdown.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                    disbursementDropDown.setAdapter(dropdown);
+
+
+                    Call<List<Employee>> call2 = apiInterface.getAllDepartmentReps();
+                    call2.enqueue(new Callback<List<Employee>>() {
+                                      @Override
+                                      public void onResponse(Call<List<Employee>> call2, Response<List<Employee>> response2) {
+                                          System.out.println("calling dept rep list: " + response2.code());
+
+                                          if (response2.code() == 200) {
+                                              departmentReps = response2.body();
+                                              setDepartmentReps(departmentReps);
+
+                                              for (DisbursementList dl : disbursementlist) {
+                                                  for (Employee e : departmentReps) {
+                                                      if (dl.getDepartmentId() == e.getDepartmentId()) {
+                                                          System.out.println("fake email:" + e.getEmail());
+                                                          dl.setDepartment(e.getEmail());
+                                                          dl.setRepName(e.getName());
+                                                          System.out.println("called dl:" + dl);
+                                                      }
+                                                  }
+                                              }
+                                              setDisbursementlist(disbursementlist);
+                                              HashSet<String> locationHash = new HashSet<>();
+                                              for (DisbursementList dl : disbursementlist) {
+                                                  locationHash.add(dl.getDeliveryPoint());
+                                              }
+                                              for (String s : locationHash) {
+                                                  locationList.add(s);
+                                              }
+                                              setLocationList(locationList);
+                                              ArrayAdapter dropdown = new ArrayAdapter(getApplicationContext(), android.R.layout.simple_spinner_item, locationList);
+                                              dropdown.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                                              disbursementDropDown.setAdapter(dropdown);
+
+
+                                          }
+
+                                      }
+
+                                      @Override
+                                      public void onFailure(Call<List<Employee>> call2, Throwable t2) {
+
+                                      }
+                                  }
+
+                    );
                 }
             }
 
@@ -119,7 +172,7 @@ public class DisbursementListActivity extends AppCompatActivity implements Adapt
                 currDisbursementLists.add(dl);
             }
         }
-        DisbursementTableAdapter DLadapter = new DisbursementTableAdapter(this,R.layout.activity_disbursement_list_tablerow, currDisbursementLists);
+        DisbursementTableAdapter DLadapter = new DisbursementTableAdapter(this, R.layout.activity_disbursement_list_tablerow, currDisbursementLists);
         disbursementListTable.setAdapter(DLadapter);
         disbursementListTable.setOnItemClickListener(this);
 
@@ -133,6 +186,34 @@ public class DisbursementListActivity extends AppCompatActivity implements Adapt
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-        System.out.println(currDisbursementLists.get(i).getDate());
+        Toast.makeText(getApplicationContext(), Integer.toString(currDisbursementLists.get(i).getId()),Toast.LENGTH_LONG);
+        System.out.println(Integer.toString(currDisbursementLists.get(i).getId()));
+
+        AlertDialog.Builder dlg = new AlertDialog.Builder(this)
+                .setTitle(currDisbursementLists.get(i).getDepartment()+"\n\n"+currDisbursementLists.get(i).getRepName())
+                .setAdapter(new DisbursementDetailAdapter(this, 0, currDisbursementLists), new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        System.out.println(currDisbursementLists.get(i).getId());
+                    }
+                })
+                .setPositiveButton("Delivered", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        System.out.println("delivered");
+                    }
+                })
+                .setNegativeButton("cancel", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        System.out.println("cancel");
+                    }
+                });
+
+        dlg.show();
+
+
+
+
     }
 }

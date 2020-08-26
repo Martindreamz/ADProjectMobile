@@ -99,11 +99,12 @@ public class StationeryRetrievalActivity extends AppCompatActivity implements Ad
 
         //getting all requisitions to be processed
         ApiInterface apiInterface = retrofit.create(ApiInterface.class);
-        Call<List<RequisitionDetail>> call = apiInterface.getPendingRequisition();
+        Call<List<RequisitionDetail>> call = apiInterface.getPendingRequisition(session.getInt("staffId",0));
 
         call.enqueue(new Callback<List<RequisitionDetail>>() {
             @Override
             public void onResponse(Call<List<RequisitionDetail>> call, Response<List<RequisitionDetail>> response) {
+                System.out.println(response.code());
                 requisitionDetails = response.body();
 
                 List<RequisitionDetail> requisitionsToTest = new ArrayList<>();

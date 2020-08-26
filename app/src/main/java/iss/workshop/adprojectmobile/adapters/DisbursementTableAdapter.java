@@ -45,10 +45,11 @@ public class DisbursementTableAdapter extends ArrayAdapter {
         view = inflater.inflate(R.layout.activity_disbursement_list_tablerow, null);
 
         TextView department = view.findViewById(R.id.dl_department);
-        department.setText(Integer.toString(DBL.get(pos).getId()));
+        department.setText(DBL.get(pos).getDepartment());
+        System.out.println("dept name: "+DBL.get(pos).getDepartment());
 
         TextView representative = view.findViewById(R.id.dl_representative);
-        representative.setText(Integer.toString(DBL.get(pos).getId()));
+        representative.setText(DBL.get(pos).getRepName());
 
         return view;
     }
