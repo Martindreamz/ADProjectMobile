@@ -2,6 +2,7 @@ package iss.workshop.adprojectmobile.Interfaces;
 
 import java.util.List;
 
+import iss.workshop.adprojectmobile.model.DisbursementDetail;
 import iss.workshop.adprojectmobile.model.DisbursementList;
 import iss.workshop.adprojectmobile.model.Employee;
 import iss.workshop.adprojectmobile.model.Requisition;
@@ -18,17 +19,24 @@ import retrofit2.http.Path;
 public interface ApiInterface {
     String url = "https://10.0.2.2:5001/api/";
 
-    @GET("store/retrieval/{id}")
+    @GET("store/retrieval/{id}") //store/retrieval/15
     Call<List<RequisitionDetail>> getPendingRequisition(@Path("id") int id);
 
     @GET("store/stationeries")
     Call<List<Stationery>> getAllStationery();
 
     @GET("store/disbursements/{id}")
-    Call<List<DisbursementList>> getAllDisbursementLists(@Path("id") int id);
+    Call<List<DisbursementList>> getAllDisbursementLists(@Path("id") int id); //find by clerk ID
 
     @GET("store/departmentReps")
     Call<List<Employee>> getAllDepartmentReps();
+
+    @GET("store/disbursementdetail/{id}")
+    Call<List<DisbursementDetail>> getAllDisbursementDetail(@Path("id") int id); //disbursement list ID
+
+    @GET("store/disbursementlist/{id}")
+    Call<DisbursementList> getDisbursementList(@Path("id") int id);
+
 
     @Headers({"Content-Type: application/json"})
     @POST("store/getretrieval")

@@ -41,7 +41,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         session = getSharedPreferences("session", MODE_PRIVATE);
         session_editor = session.edit();
 
-
+//sharedpref name = session <- every on create u must instantiate
+        //based on session (which is a sharedpref), you call the key name for value.
     }
 
     @Override
@@ -49,8 +50,9 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         if (view == loginBtn) {
             Employee emp = new Employee(username.getText().toString().trim(), password.getText().toString().trim());
 
+            //keep this and no need to change at all
             Retrofit retrofit = new Retrofit.Builder()
-                    .baseUrl(ApiInterface.url)
+                    .baseUrl(ApiInterface.url) //10.0.0.2:5001/api/xxxxxx
                     .client(SSLBypasser.getUnsafeOkHttpClient().build())
                     .addConverterFactory(GsonConverterFactory.create())
                     .build();
@@ -59,11 +61,13 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             //getting all requisitions to be processed
             ApiInterface apiInterface = retrofit.create(ApiInterface.class);
             Call<Employee> call = apiInterface.login(emp);
+
+
             call.enqueue(new Callback<Employee>() {
                 @Override
                 public void onResponse(Call<Employee> call, Response<Employee> response) {
                     System.out.println(response.code());
-                    if (response.code() != 404) {
+                    if (response.code() == 200) {
                         Employee currEmp = response.body();
                         session_editor.putString("username", currEmp.getName());
                         session_editor.putString("role", currEmp.getRole());

@@ -171,10 +171,8 @@ public class StationeryRetrievalActivity extends AppCompatActivity implements Ad
         });
     }
 
-
     @Override
     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-
     }
 
     public static void ListViewHeightFormatter(ListView listView) {
