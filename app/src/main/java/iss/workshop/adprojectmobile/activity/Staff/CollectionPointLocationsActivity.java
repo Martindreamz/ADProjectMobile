@@ -1,4 +1,4 @@
-package iss.workshop.adprojectmobile.activity;
+package iss.workshop.adprojectmobile.activity.Staff;
 
 import androidx.annotation.NonNull;
 import androidx.core.app.ActivityCompat;
@@ -10,6 +10,7 @@ import android.annotation.SuppressLint;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -39,27 +40,26 @@ import java.util.List;
 
 import iss.workshop.adprojectmobile.R;
 
-public class FindRoutesActivity extends FragmentActivity implements OnMapReadyCallback,
+public class CollectionPointLocationsActivity extends FragmentActivity implements OnMapReadyCallback,
         GoogleApiClient.OnConnectionFailedListener, RoutingListener {
 
     //get the spinner from the xml
-    Spinner dropdown;
+    Spinner selectCollectionPoint;
 
     //google map object
     private GoogleMap mMap;
 
     //current and destination location objects
-    Location myLocation=null;
-    Location destinationLocation=null;
-    protected LatLng start=null;
-    protected LatLng end=null;
+    Location myLocation = null;
+    protected LatLng start = null;
+    protected LatLng end = null;
 
     //to get location permissions.
     private final static int LOCATION_REQUEST_CODE = 23;
-    boolean locationPermission=false;
+    boolean locationPermission = false;
 
     //polyline object
-    private List<Polyline> polylines=null;
+    private List<Polyline> polylines = null;
 
     //declaring coordinate object
     class Coordinate {
@@ -75,22 +75,23 @@ public class FindRoutesActivity extends FragmentActivity implements OnMapReadyCa
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_find_routes);
+        setContentView(R.layout.activity_collection_point_locations);
 
-        dropdown = findViewById(R.id.spinner);
+        selectCollectionPoint = findViewById(R.id.selectCollectionPoint);
 
         //create a list of items for the spinner
         final List<String> spinnerArray = new ArrayList<String>();
-        spinnerArray.add("Place1");
-        spinnerArray.add("Place2");
-        spinnerArray.add("Place3");
-        spinnerArray.add("Place4");
-        spinnerArray.add("Place5");
+        spinnerArray.add("Stationery Store - Administration Building");
+        spinnerArray.add("Management School");
+        spinnerArray.add("Medical School");
+        spinnerArray.add("Engineering School");
+        spinnerArray.add("Science School");
+        spinnerArray.add("University Hospital");
 
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
                 android.R.layout.simple_spinner_item, spinnerArray);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        dropdown.setAdapter(adapter);
+        selectCollectionPoint.setAdapter(adapter);
 
         //request location permission
         requestPermission();
@@ -101,17 +102,15 @@ public class FindRoutesActivity extends FragmentActivity implements OnMapReadyCa
         mapFragment.getMapAsync(this);
     }
 
-    private void requestPermission()
-    {
-        if(ContextCompat.checkSelfPermission(this,
+    private void requestPermission() {
+        if (ContextCompat.checkSelfPermission(this,
                 Manifest.permission.ACCESS_COARSE_LOCATION)
                 != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(this,
                     new String[]{Manifest.permission.ACCESS_COARSE_LOCATION},
                     LOCATION_REQUEST_CODE);
-        }
-        else{
-            locationPermission=true;
+        } else {
+            locationPermission = true;
         }
     }
 
@@ -122,7 +121,7 @@ public class FindRoutesActivity extends FragmentActivity implements OnMapReadyCa
                 if (grantResults.length > 0
                         && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     //if permission granted.
-                    locationPermission=true;
+                    locationPermission = true;
                     getMyLocation();
 
                 } else {
@@ -136,21 +135,36 @@ public class FindRoutesActivity extends FragmentActivity implements OnMapReadyCa
 
     //to get user location
     @SuppressLint("MissingPermission")
-    private void getMyLocation(){
+    private void getMyLocation() {
         mMap.setMyLocationEnabled(true);
         mMap.setOnMyLocationChangeListener(new GoogleMap.OnMyLocationChangeListener() {
             @Override
             public void onMyLocationChange(Location location) {
 
-                myLocation=location;
-                LatLng ltlng = new LatLng(location.getLatitude(),location.getLongitude());
+                myLocation = location;
+                LatLng ltlng = new LatLng(location.getLatitude(), location.getLongitude());
                 CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(
                         ltlng, 16f);
                 mMap.animateCamera(cameraUpdate);
             }
         });
 
-        dropdown.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        //get destination location when user click on map
+        mMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
+            @Override
+            public void onMapClick(LatLng latLng) {
+
+                end = latLng;
+
+                mMap.clear();
+
+                start = new LatLng(myLocation.getLatitude(), myLocation.getLongitude());
+                //start route finding
+                Findroutes(start, end);
+            }
+        });
+
+        selectCollectionPoint.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
 
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view,
@@ -163,20 +177,22 @@ public class FindRoutesActivity extends FragmentActivity implements OnMapReadyCa
                 coordinateArray.add(new Coordinate(1.30016969, 103.77340937));
                 coordinateArray.add(new Coordinate(1.30021474, 103.77066922));
                 coordinateArray.add(new Coordinate(1.3013946, 103.77256286));
+                coordinateArray.add(new Coordinate(1.30021474, 103.77066922));
 
                 double lat = coordinateArray.get(position).v;
                 double lng = coordinateArray.get(position).v1;
 
                 if (item != null) {
-                    Toast.makeText(FindRoutesActivity.this, item.toString(),
-                            Toast.LENGTH_SHORT).show();
 
                     mMap.clear();
 
-                    start=new LatLng(myLocation.getLatitude(),myLocation.getLongitude());
-                    end = new LatLng(lat, lng);
-                    //start route finding
-                    Findroutes(start,end);
+                    if (myLocation != null) {
+                        start = new LatLng(myLocation.getLatitude(), myLocation.getLongitude());
+                        end = new LatLng(lat, lng);
+                        //start route finding
+                        Findroutes(start, end);
+                    }
+
                 }
             }
 
@@ -186,29 +202,13 @@ public class FindRoutesActivity extends FragmentActivity implements OnMapReadyCa
 
             }
         });
-
-        //get destination location when user click on map
-        mMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
-            @Override
-            public void onMapClick(LatLng latLng) {
-
-                end=latLng;
-
-                mMap.clear();
-
-                start=new LatLng(myLocation.getLatitude(),myLocation.getLongitude());
-                //start route finding
-                Findroutes(start,end);
-            }
-        });
-
     }
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
 
-        if(locationPermission) {
+        if (locationPermission) {
             getMyLocation();
         }
 
@@ -216,13 +216,10 @@ public class FindRoutesActivity extends FragmentActivity implements OnMapReadyCa
 
 
     // function to find Routes.
-    public void Findroutes(LatLng Start, LatLng End)
-    {
-        if(Start==null || End==null) {
-            Toast.makeText(FindRoutesActivity.this,"Unable to get location", Toast.LENGTH_LONG).show();
-        }
-        else
-        {
+    public void Findroutes(LatLng Start, LatLng End) {
+        if (Start == null || End == null) {
+            Toast.makeText(CollectionPointLocationsActivity.this, "Unable to get location", Toast.LENGTH_LONG).show();
+        } else {
 
             Routing routing = new Routing.Builder()
                     .travelMode(AbstractRouting.TravelMode.DRIVING)
@@ -239,14 +236,14 @@ public class FindRoutesActivity extends FragmentActivity implements OnMapReadyCa
     @Override
     public void onRoutingFailure(RouteException e) {
         View parentLayout = findViewById(android.R.id.content);
-        Snackbar snackbar= Snackbar.make(parentLayout, e.toString(), Snackbar.LENGTH_LONG);
+        Snackbar snackbar = Snackbar.make(parentLayout, e.toString(), Snackbar.LENGTH_LONG);
         snackbar.show();
 //        Findroutes(start,end);
     }
 
     @Override
     public void onRoutingStart() {
-        Toast.makeText(FindRoutesActivity.this,"Finding Route...",Toast.LENGTH_LONG).show();
+        Toast.makeText(CollectionPointLocationsActivity.this, "Finding Route...", Toast.LENGTH_LONG).show();
     }
 
     //If Route finding success..
@@ -255,31 +252,29 @@ public class FindRoutesActivity extends FragmentActivity implements OnMapReadyCa
 
         CameraUpdate center = CameraUpdateFactory.newLatLng(start);
         CameraUpdate zoom = CameraUpdateFactory.zoomTo(16);
-        if(polylines!=null) {
+        if (polylines != null) {
             polylines.clear();
         }
         PolylineOptions polyOptions = new PolylineOptions();
-        LatLng polylineStartLatLng=null;
-        LatLng polylineEndLatLng=null;
+        LatLng polylineStartLatLng = null;
+        LatLng polylineEndLatLng = null;
 
 
         polylines = new ArrayList<>();
         //add route(s) to the map using polyline
-        for (int i = 0; i <route.size(); i++) {
+        for (int i = 0; i < route.size(); i++) {
 
-            if(i==shortestRouteIndex)
-            {
+            if (i == shortestRouteIndex) {
                 polyOptions.color(getResources().getColor(R.color.colorPrimary));
                 polyOptions.width(7);
                 polyOptions.addAll(route.get(shortestRouteIndex).getPoints());
                 Polyline polyline = mMap.addPolyline(polyOptions);
-                polylineStartLatLng=polyline.getPoints().get(0);
-                int k=polyline.getPoints().size();
-                polylineEndLatLng=polyline.getPoints().get(k-1);
+                polylineStartLatLng = polyline.getPoints().get(0);
+                int k = polyline.getPoints().size();
+                polylineEndLatLng = polyline.getPoints().get(k - 1);
                 polylines.add(polyline);
 
-            }
-            else {
+            } else {
 
             }
 
@@ -300,12 +295,12 @@ public class FindRoutesActivity extends FragmentActivity implements OnMapReadyCa
 
     @Override
     public void onRoutingCancelled() {
-        Findroutes(start,end);
+        Findroutes(start, end);
     }
 
     @Override
     public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
-        Findroutes(start,end);
+        Findroutes(start, end);
 
     }
 }

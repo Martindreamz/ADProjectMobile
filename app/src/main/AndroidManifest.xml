@@ -36,19 +36,19 @@
         <activity android:name=".activity.Staff.RaiseRequestActivity" />
         <activity android:name=".activity.ConfirmDisbursementDistributionActivity" />
         <activity android:name=".activity.ConfirmDisbursementCollectionActivity" />
-        <activity android:name=".activity.CollectionPointLocationsActivity" />
         <activity android:name=".activity.Staff.RepresentativeMenuActivity" />
         <activity android:name=".activity.DelegateAuthorityActivity" />
         <activity android:name=".activity.Store.StationeryRetrievalActivity">
         </activity>
-        <activity android:name=".activity.FindRoutesActivity">
+        <activity android:name=".activity.Staff.CollectionPointLocationsActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
         <activity android:name=".activity.LoginActivity">
-        <intent-filter>
-            <action android:name="android.intent.action.MAIN" />
 
-            <category android:name="android.intent.category.LAUNCHER" />
-        </intent-filter>
         </activity>
         <activity android:name=".activity.MainActivity" />
     </application>
