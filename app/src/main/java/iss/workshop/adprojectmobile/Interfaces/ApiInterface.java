@@ -7,6 +7,7 @@ import iss.workshop.adprojectmobile.model.Employee;
 import iss.workshop.adprojectmobile.model.Requisition;
 import iss.workshop.adprojectmobile.model.RequisitionDetail;
 import iss.workshop.adprojectmobile.model.Stationery;
+import iss.workshop.adprojectmobile.model.CollectionInfo;
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
@@ -23,6 +24,9 @@ public interface ApiInterface {
 
     @GET("store/stationeries")
     Call<List<Stationery>> getAllStationery();
+
+    @GET("Dept/allCollectionpt")
+    Call<List<CollectionInfo>> getAllCollectionPointforDept();
 
     @GET("store/disbursements/{id}")
     Call<List<DisbursementList>> getAllDisbursementLists(@Path("id") int id);

@@ -9,10 +9,24 @@ import android.Manifest;
 import android.annotation.SuppressLint;
 import android.content.pm.PackageManager;
 import android.location.Location;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import iss.workshop.adprojectmobile.R;
+import iss.workshop.adprojectmobile.Interfaces.ApiInterface;
+import iss.workshop.adprojectmobile.Interfaces.SSLBypasser;
+import iss.workshop.adprojectmobile.model.CollectionInfo;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 import android.widget.Toast;
@@ -35,13 +49,19 @@ import com.google.android.gms.maps.model.Polyline;
 import com.google.android.gms.maps.model.PolylineOptions;
 import com.google.android.material.snackbar.Snackbar;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import iss.workshop.adprojectmobile.R;
-
 public class CollectionPointLocationsActivity extends FragmentActivity implements OnMapReadyCallback,
         GoogleApiClient.OnConnectionFailedListener, RoutingListener {
+
+    //for retrieving collection info
+    private SharedPreferences collectionInfo_pref;
+    private SharedPreferences.Editor collectionInfo_editor;
+    private SharedPreferences session;
+    private SharedPreferences.Editor session_editor;
+    private static List<CollectionInfo> collectionInfo;
+
+    public static List<CollectionInfo> getCollectionInfo() {
+        return collectionInfo;
+    }
 
     //get the spinner from the xml
     Spinner selectCollectionPoint;
@@ -77,6 +97,41 @@ public class CollectionPointLocationsActivity extends FragmentActivity implement
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_collection_point_locations);
 
+        //retrieving collection info
+        collectionInfo_pref = getSharedPreferences("collectioninfo", MODE_PRIVATE);
+        collectionInfo_editor = collectionInfo_pref.edit();
+        collectionInfo = new ArrayList();
+        session = getSharedPreferences("session", MODE_PRIVATE);
+        session_editor = session.edit();
+
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(ApiInterface.url)
+                .client(SSLBypasser.getUnsafeOkHttpClient().build())
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+
+        //getting all collection info to be processed
+        ApiInterface apiInterface = retrofit.create(ApiInterface.class);
+        Call<List<CollectionInfo>> call = apiInterface.getAllCollectionPointforDept();
+
+        call.enqueue(new Callback<List<CollectionInfo>>() {
+            @Override
+            public void onResponse(Call<List<CollectionInfo>> call, Response<List<CollectionInfo>> response) {
+                System.out.println("Response here: " + response.code());
+                collectionInfo = response.body();
+
+                for (CollectionInfo cInfo : collectionInfo) {
+                    Log.d("Collection Point: ", cInfo.getCollectionPoint());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<CollectionInfo>> call, Throwable t) {
+                Log.e("error", t.getMessage());
+            }
+        });
+
+        //setting button to view
         selectCollectionPoint = findViewById(R.id.selectCollectionPoint);
 
         //create a list of items for the spinner
