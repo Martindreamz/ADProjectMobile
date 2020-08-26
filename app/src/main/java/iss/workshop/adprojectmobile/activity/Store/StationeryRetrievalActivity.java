@@ -1,5 +1,6 @@
-package iss.workshop.adprojectmobile.activity;
+package iss.workshop.adprojectmobile.activity.Store;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
@@ -9,10 +10,10 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListAdapter;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -20,8 +21,9 @@ import java.util.List;
 import iss.workshop.adprojectmobile.Interfaces.ApiInterface;
 import iss.workshop.adprojectmobile.Interfaces.SSLBypasser;
 import iss.workshop.adprojectmobile.R;
+import iss.workshop.adprojectmobile.activity.DisbursementListActivity;
 import iss.workshop.adprojectmobile.adapters.RetrievalAdapter;
-import iss.workshop.adprojectmobile.model.Requisition;
+import iss.workshop.adprojectmobile.model.DisbursementList;
 import iss.workshop.adprojectmobile.model.RequisitionDetail;
 import iss.workshop.adprojectmobile.model.Stationery;
 import retrofit2.Call;
@@ -174,7 +176,7 @@ public class StationeryRetrievalActivity extends AppCompatActivity implements Ad
 
     }
 
-    public static void getTotalHeightofListView(ListView listView) {
+    public static void ListViewHeightFormatter(ListView listView) {
 
         ListAdapter mAdapter = listView.getAdapter();
 
@@ -201,12 +203,14 @@ public class StationeryRetrievalActivity extends AppCompatActivity implements Ad
     @Override
     public void onClick(View view) {
         if (view == submit) {
-            int sum = 0;
 
+            //validating if there are selections at all
+            int sum = 0;
             for (int i : changes.values()) {
                 sum += i;
             }
 
+            //if there are selections
             if (sum != 0) {
                 List<RequisitionDetail> rdl_tosend = new ArrayList<>();
                 for (RequisitionDetail rd : requisitionDetails) {
@@ -217,8 +221,7 @@ public class StationeryRetrievalActivity extends AppCompatActivity implements Ad
                     rdl_tosend.add(new RequisitionDetail(i, 0, 0, changes.get(i), 0, "", "", ""));
                 }
 
-                rdl_tosend.get(0).setRequisitionId(session.getInt("staffId",0));
-                System.out.println(rdl_tosend.get(0).getRequisitionId());
+                rdl_tosend.get(0).setRequisitionId(session.getInt("staffId", 0)); //utilizing existing models to send clerkID
 
                 Retrofit retrofit2 = new Retrofit.Builder()
                         .baseUrl(ApiInterface.url)
@@ -228,24 +231,30 @@ public class StationeryRetrievalActivity extends AppCompatActivity implements Ad
 
                 ApiInterface apiInterface2 = retrofit2.create(ApiInterface.class);
 
-                Call<List<RequisitionDetail>> call2 = apiInterface2.processRetrieval(rdl_tosend);
+                Call<List<DisbursementList>> call2 = apiInterface2.processRetrieval(rdl_tosend);
 
-                call2.enqueue(new Callback<List<RequisitionDetail>>() {
+                call2.enqueue(new Callback<List<DisbursementList>>() {
                     @Override
-                    public void onResponse(Call<List<RequisitionDetail>> call2, Response<List<RequisitionDetail>> response) {
-                        List<RequisitionDetail> requisitions2 = response.body();
+                    public void onResponse(Call<List<DisbursementList>> call2, Response<List<DisbursementList>> response) {
                         System.out.println(response.code());
-                        if (requisitions2 != null) {
-                            for (RequisitionDetail rd : requisitions2)
-                                System.out.println(rd);
+                        if (response.code() == 200) {
+                            List<DisbursementList> disbursementLists = response.body();
+                            Intent success = new Intent(getApplicationContext(), DisbursementListActivity.class);
+                            startActivity(success);
+                        }else{
+                            Toast.makeText(getApplicationContext(), "Something went wrong please try again", Toast.LENGTH_LONG).show();
+                            Intent failure = new Intent(getApplicationContext(), StationeryRetrievalActivity.class);
+                            startActivity(failure);
                         }
                     }
 
                     @Override
-                    public void onFailure(Call<List<RequisitionDetail>> call2, Throwable t) {
-                        System.out.println("error connecting: " + t.getMessage());
+                    public void onFailure(Call<List<DisbursementList>> call2, Throwable t) {
+                        Toast.makeText(getApplicationContext(), "Server Down", Toast.LENGTH_LONG).show();
                     }
                 });
+            } else {
+                Toast.makeText(getApplicationContext(), "Please select the retrieved items", Toast.LENGTH_LONG).show();
             }
         }
     }

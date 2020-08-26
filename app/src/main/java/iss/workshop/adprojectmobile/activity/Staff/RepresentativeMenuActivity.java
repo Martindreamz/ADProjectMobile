@@ -1,4 +1,4 @@
-package iss.workshop.adprojectmobile.activity;
+package iss.workshop.adprojectmobile.activity.Staff;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -12,6 +12,9 @@ import android.view.View;
 import android.widget.Button;
 
 import iss.workshop.adprojectmobile.R;
+import iss.workshop.adprojectmobile.activity.CollectionPointLocationsActivity;
+import iss.workshop.adprojectmobile.activity.ConfirmDisbursementCollectionActivity;
+import iss.workshop.adprojectmobile.activity.ConfirmDisbursementDistributionActivity;
 
 public class RepresentativeMenuActivity extends AppCompatActivity implements View.OnClickListener {
     Button confirmDisbursement, raiseRequest;

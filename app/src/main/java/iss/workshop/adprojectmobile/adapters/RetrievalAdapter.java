@@ -2,7 +2,6 @@ package iss.workshop.adprojectmobile.adapters;
 
 import android.app.Activity;
 import android.content.Context;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,7 +19,7 @@ import java.util.List;
 import java.util.Set;
 
 import iss.workshop.adprojectmobile.R;
-import iss.workshop.adprojectmobile.activity.StationeryRetrievalActivity;
+import iss.workshop.adprojectmobile.activity.Store.StationeryRetrievalActivity;
 import iss.workshop.adprojectmobile.model.RequisitionDetail;
 import iss.workshop.adprojectmobile.model.Stationery;
 

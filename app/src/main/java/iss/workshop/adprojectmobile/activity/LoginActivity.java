@@ -10,13 +10,12 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.util.List;
-
 import iss.workshop.adprojectmobile.Interfaces.ApiInterface;
 import iss.workshop.adprojectmobile.Interfaces.SSLBypasser;
 import iss.workshop.adprojectmobile.R;
+import iss.workshop.adprojectmobile.activity.Staff.RepresentativeMenuActivity;
+import iss.workshop.adprojectmobile.activity.Store.StoreClerkHomePageActivity;
 import iss.workshop.adprojectmobile.model.Employee;
-import iss.workshop.adprojectmobile.model.RequisitionDetail;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -63,6 +62,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             call.enqueue(new Callback<Employee>() {
                 @Override
                 public void onResponse(Call<Employee> call, Response<Employee> response) {
+                    System.out.println(response.code());
                     if (response.code() != 404) {
                         Employee currEmp = response.body();
                         session_editor.putString("username", currEmp.getName());
@@ -95,13 +95,13 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                         }
 
                     } else {
-                        Toast.makeText(getApplication(), "Employee not found or incorrect password", Toast.LENGTH_LONG).show();
+                        Toast.makeText(getApplicationContext(), "Employee not found or incorrect password", Toast.LENGTH_LONG).show();
                     }
                 }
 
                 @Override
                 public void onFailure(Call<Employee> call, Throwable t) {
-
+                    Toast.makeText(getApplicationContext(), "Server down", Toast.LENGTH_LONG).show();
                 }
             });
 

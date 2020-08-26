@@ -1,4 +1,4 @@
-package iss.workshop.adprojectmobile.activity;
+package iss.workshop.adprojectmobile.activity.Staff;
 
 import androidx.appcompat.app.AppCompatActivity;
 

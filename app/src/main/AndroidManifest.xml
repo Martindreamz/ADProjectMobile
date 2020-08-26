@@ -14,7 +14,8 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
+        android:theme="@style/AppTheme"
+        >
         <activity android:name=".activity.DepartmentHeadHomePageActivity">
         </activity>
         <activity android:name=".activity.DisbursementListActivity" />
@@ -26,19 +27,19 @@
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
 
-        <activity android:name=".activity.RaisePurchaseOrderSubmitActivity" />
-        <activity android:name=".activity.RaisePurchaseOrderActivity" />
+        <activity android:name=".activity.Store.RaisePurchaseOrderSubmitActivity" />
+        <activity android:name=".activity.Store.RaisePurchaseOrderActivity" />
         <activity android:name=".activity.ReceiveGoodsActivity" />
         <activity android:name=".activity.DiscrepencyListActivity" />
-        <activity android:name=".activity.InventoryCheckActivity" />
-        <activity android:name=".activity.StoreClerkHomePageActivity" />
-        <activity android:name=".activity.RaiseRequestActivity" />
+        <activity android:name=".activity.Store.InventoryCheckActivity" />
+        <activity android:name=".activity.Store.StoreClerkHomePageActivity" />
+        <activity android:name=".activity.Staff.RaiseRequestActivity" />
         <activity android:name=".activity.ConfirmDisbursementDistributionActivity" />
         <activity android:name=".activity.ConfirmDisbursementCollectionActivity" />
         <activity android:name=".activity.CollectionPointLocationsActivity" />
-        <activity android:name=".activity.RepresentativeMenuActivity" />
+        <activity android:name=".activity.Staff.RepresentativeMenuActivity" />
         <activity android:name=".activity.DelegateAuthorityActivity" />
-        <activity android:name=".activity.StationeryRetrievalActivity">
+        <activity android:name=".activity.Store.StationeryRetrievalActivity">
         </activity>
         <activity android:name=".activity.FindRoutesActivity">
         </activity>

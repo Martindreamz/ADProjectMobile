@@ -20,7 +20,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import iss.workshop.adprojectmobile.R;
-import iss.workshop.adprojectmobile.activity.StationeryRetrievalActivity;
+import iss.workshop.adprojectmobile.activity.Store.StationeryRetrievalActivity;
 import iss.workshop.adprojectmobile.model.RequisitionDetail;
 
 public class RetrievalItemDetailAdapter extends ArrayAdapter implements AdapterView.OnItemClickListener {

@@ -1,4 +1,4 @@
-package iss.workshop.adprojectmobile.activity;
+package iss.workshop.adprojectmobile.activity.Store;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -9,6 +9,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import iss.workshop.adprojectmobile.R;
+import iss.workshop.adprojectmobile.activity.Store.RaisePurchaseOrderSubmitActivity;
 
 public class RaisePurchaseOrderActivity extends AppCompatActivity implements View.OnClickListener{
 TextView purchaseOrder;

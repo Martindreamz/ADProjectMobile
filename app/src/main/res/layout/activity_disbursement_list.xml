@@ -4,28 +4,29 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activity.DisbursementListActivity"
     android:orientation="vertical"
-    >
+    tools:context=".activity.DisbursementListActivity">
+
     <TextView
         android:id="@+id/disbursementList"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
         android:layout_marginBottom="10dp"
-        android:text="@string/disbursementList"/>
+        android:text="@string/disbursementList" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         android:orientation="horizontal">
+
         <TextView
             android:id="@+id/selectCollectionPointDisbursement"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
-            android:text="@string/selectCollectionPoint"/>
+            android:text="@string/selectCollectionPoint" />
 
     </LinearLayout>
 
@@ -37,18 +38,37 @@
         android:layout_marginTop="10dp"
         android:prompt="@string/search" />
 
+
+    <TextView
+        android:id="@+id/collectionPointDisbursementInfo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:text="@string/selectCollectionPoint" />
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:orientation="horizontal">
+
         <TextView
-            android:id="@+id/collectionPointDisbursementInfo"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="30dp"
-            android:inputType="textMultiLine"
-            android:lines="5"
-            />
+            android:layout_weight="0.5"
+            android:text="Department" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.5"
+            android:text="Representative" />
+
+
     </LinearLayout>
-    
+
+    <ListView
+        android:id="@+id/DisbursementListTable"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
 </LinearLayout>
