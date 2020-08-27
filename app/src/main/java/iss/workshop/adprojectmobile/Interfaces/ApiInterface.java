@@ -44,6 +44,9 @@ public interface ApiInterface {
     @GET("store/disbursementlist/{id}")
     Call<DisbursementList> getDisbursementList(@Path("id") int id);
 
+    @GET("dept/deptEmp/{id}")
+    Call<List<Employee>> getAllEmployeesByDept(@Path("id") int id);
+
 
     @Headers({"Content-Type: application/json"})
     @POST("store/getretrieval")
