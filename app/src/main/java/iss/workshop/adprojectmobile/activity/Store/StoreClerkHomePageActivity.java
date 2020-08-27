@@ -12,12 +12,9 @@ import android.view.View;
 import android.widget.Button;
 
 import iss.workshop.adprojectmobile.R;
-import iss.workshop.adprojectmobile.activity.DisbursementListActivity;
-import iss.workshop.adprojectmobile.activity.FindRoutesActivity;
-import iss.workshop.adprojectmobile.activity.ReceiveGoodsActivity;
 
 public class StoreClerkHomePageActivity extends AppCompatActivity {
-Button requisitinBtn, stockBtn, findRoutes;
+Button requisitinBtn, stockBtn;
 
     SharedPreferences session;
     SharedPreferences.Editor session_editor;
@@ -28,8 +25,6 @@ Button requisitinBtn, stockBtn, findRoutes;
         setContentView(R.layout.activity_store_clerk_home_page);
         requisitinBtn=findViewById(R.id.requisitionRelatedBtn);
         stockBtn=findViewById(R.id.stockRelatedBtn);
-        //this button just added as a quick way to test find routes activity - not for this page
-        findRoutes = (Button) findViewById(R.id.findRoutesBtn);
 
         session = getSharedPreferences("session", MODE_PRIVATE);
         session_editor = session.edit();
@@ -39,14 +34,6 @@ Button requisitinBtn, stockBtn, findRoutes;
             registerForContextMenu(stockBtn);
         }
 
-        //same for this OnClickListener (will remove later on)
-        findRoutes.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(StoreClerkHomePageActivity.this, FindRoutesActivity.class);
-                startActivity(intent);
-            }
-        });
     }
     @Override
     public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo){

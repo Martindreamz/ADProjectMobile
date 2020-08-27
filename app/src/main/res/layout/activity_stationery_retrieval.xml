@@ -13,7 +13,7 @@
         android:id="@+id/retrievalheader"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="0.15"
+        android:layout_weight="0.1"
         android:gravity="center|left"
         android:text="@string/retrieval_form_title"
         android:textSize="20dp" />
@@ -30,50 +30,69 @@
         android:orientation="horizontal">
 
         <TextView
+            android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="0.2"
-            android:layout_width="0dp"
+            android:gravity="center"
             android:text="No"
-            android:gravity="center"/>
+            android:textAlignment="center" />
+
         <TextView
+            android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="0.2"
-            android:layout_width="0dp"
+            android:gravity="center"
             android:text="Desc"
-            android:gravity="center"/>
+            android:textAlignment="center" />
+
         <TextView
+            android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="0.18"
-            android:layout_width="0dp"
+            android:gravity="center"
             android:text="Requisition Id"
-            android:gravity="center"/>
+            android:textAlignment="center" />
+
         <TextView
+            android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="0.12"
-            android:layout_width="0dp"
+            android:gravity="center"
             android:text="rqst qty"
+            android:textAlignment="center" />
 
-            android:gravity="center"/>
         <TextView
+            android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="0.3"
-            android:layout_width="0dp"
+            android:gravity="center"
             android:text="taken"
-            android:gravity="center"/>
+            android:textAlignment="center" />
 
-        </androidx.appcompat.widget.LinearLayoutCompat>
+    </androidx.appcompat.widget.LinearLayoutCompat>
 
-        <ListView
-            android:id="@+id/retrievaltable"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="0.5" />
+    <ListView
+        android:id="@+id/retrievaltable"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.5" />
+
 
 
         <Button
+            android:id="@+id/DLdatepicker"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="0.05"
-            android:id="@+id/retrivalSubtBtn"/>
+            android:layout_weight="0.075"
+            android:text="Select Delivery Date"/>
+
+
+
+    <Button
+        android:id="@+id/retrivalSubtBtn"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.075"
+        android:text="@string/submit" />
 
     </androidx.appcompat.widget.LinearLayoutCompat>

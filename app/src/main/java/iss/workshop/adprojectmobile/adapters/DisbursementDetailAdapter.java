@@ -9,7 +9,6 @@ import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 
 import java.util.List;
 
@@ -37,16 +36,16 @@ public class DisbursementDetailAdapter extends ArrayAdapter {
     @Override
     public View getView(int position, View view, @NonNull ViewGroup parent) {
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Activity.LAYOUT_INFLATER_SERVICE);
-        view = inflater.inflate(R.layout.activity_disbursement_popup_details, null);
+        view = inflater.inflate(R.layout.activity_disbursement_details_rows, null);
 
         TextView itemCode = view.findViewById(R.id.itemcodeDD);
-        itemCode.setText("hi");
+        itemCode.setText(DBlist.get(position).getRequisitionDetail());
 
         TextView description = view.findViewById(R.id.descDD);
-        description.setText("hi");
+        description.setText(DBlist.get(position).getDisbursementList());
 
         TextView plannedQty = view.findViewById(R.id.plannedDD);
-        plannedQty.setText("hi");
+        plannedQty.setText(Integer.toString(DBlist.get(position).getQty()));
 
         return view;
     }

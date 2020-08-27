@@ -12,12 +12,10 @@ import android.view.View;
 import android.widget.Button;
 
 import iss.workshop.adprojectmobile.R;
-import iss.workshop.adprojectmobile.activity.CollectionPointLocationsActivity;
 import iss.workshop.adprojectmobile.activity.ConfirmDisbursementCollectionActivity;
-import iss.workshop.adprojectmobile.activity.ConfirmDisbursementDistributionActivity;
 
 public class RepresentativeMenuActivity extends AppCompatActivity implements View.OnClickListener {
-    Button confirmDisbursement, raiseRequest;
+    Button confirmDisbursement, raiseRequest, findRoutes;
 
     SharedPreferences session;
     SharedPreferences.Editor session_editor;
@@ -27,7 +25,6 @@ public class RepresentativeMenuActivity extends AppCompatActivity implements Vie
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_representative_menu);
-
 
         session = getSharedPreferences("session", MODE_PRIVATE);
         session_editor = session.edit();
@@ -40,6 +37,15 @@ public class RepresentativeMenuActivity extends AppCompatActivity implements Vie
         raiseRequest.setOnClickListener(this);
         if (confirmDisbursement != null)
             registerForContextMenu(confirmDisbursement);
+
+        findRoutes = (Button) findViewById(R.id.findRoutesBtn);
+        findRoutes.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(RepresentativeMenuActivity.this, CollectionPointLocationsActivity.class);
+                startActivity(intent);
+            }
+        });
 
     }
 

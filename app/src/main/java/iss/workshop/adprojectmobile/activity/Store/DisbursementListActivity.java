@@ -1,4 +1,4 @@
-package iss.workshop.adprojectmobile.activity;
+package iss.workshop.adprojectmobile.activity.Store;
 
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AlertDialog;
@@ -24,6 +24,8 @@ import java.util.List;
 import iss.workshop.adprojectmobile.Interfaces.ApiInterface;
 import iss.workshop.adprojectmobile.Interfaces.SSLBypasser;
 import iss.workshop.adprojectmobile.R;
+import iss.workshop.adprojectmobile.activity.Store.DisbursementDetailsActivity;
+import iss.workshop.adprojectmobile.activity.Store.StationeryRetrievalActivity;
 import iss.workshop.adprojectmobile.adapters.DisbursementDetailAdapter;
 import iss.workshop.adprojectmobile.adapters.DisbursementTableAdapter;
 import iss.workshop.adprojectmobile.model.DisbursementList;
@@ -110,7 +112,7 @@ public class DisbursementListActivity extends AppCompatActivity implements Adapt
 
                                           if (response2.code() == 200) {
                                               departmentReps = response2.body();
-                                              setDepartmentReps(departmentReps);
+//                                              setDepartmentReps(departmentReps);
 
                                               for (DisbursementList dl : disbursementlist) {
                                                   for (Employee e : departmentReps) {
@@ -188,29 +190,35 @@ public class DisbursementListActivity extends AppCompatActivity implements Adapt
     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
         Toast.makeText(getApplicationContext(), Integer.toString(currDisbursementLists.get(i).getId()),Toast.LENGTH_LONG);
         System.out.println(Integer.toString(currDisbursementLists.get(i).getId()));
+        session_editor.putInt("selected_dl",currDisbursementLists.get(i).getId());
+        session_editor.putString("selected_dl_dept",currDisbursementLists.get(i).getDepartment());
+        session_editor.putString("selected_dl_rep",currDisbursementLists.get(i).getRepName());
+        session_editor.commit();
+        Intent intent = new Intent(getApplicationContext(), DisbursementDetailsActivity.class);
+        startActivity(intent);
 
-        AlertDialog.Builder dlg = new AlertDialog.Builder(this)
-                .setTitle(currDisbursementLists.get(i).getDepartment()+"\n\n"+currDisbursementLists.get(i).getRepName())
-                .setAdapter(new DisbursementDetailAdapter(this, 0, currDisbursementLists), new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        System.out.println(currDisbursementLists.get(i).getId());
-                    }
-                })
-                .setPositiveButton("Delivered", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        System.out.println("delivered");
-                    }
-                })
-                .setNegativeButton("cancel", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        System.out.println("cancel");
-                    }
-                });
+//        AlertDialog.Builder dlg = new AlertDialog.Builder(this)
+//                .setTitle(currDisbursementLists.get(i).getDepartment()+"\n\n"+currDisbursementLists.get(i).getRepName())
+//                .setAdapter(new DisbursementDetailAdapter(this, 0, currDisbursementLists), new DialogInterface.OnClickListener() {
+//                    @Override
+//                    public void onClick(DialogInterface dialogInterface, int i) {
+//                        System.out.println(currDisbursementLists.get(i).getId());
+//                    }
+//                })
+//                .setPositiveButton("Delivered", new DialogInterface.OnClickListener() {
+//                    @Override
+//                    public void onClick(DialogInterface dialogInterface, int i) {
+//                        System.out.println("delivered");
+//                    }
+//                })
+//                .setNegativeButton("cancel", new DialogInterface.OnClickListener() {
+//                    @Override
+//                    public void onClick(DialogInterface dialogInterface, int i) {
+//                        System.out.println("cancel");
+//                    }
+//                });
 
-        dlg.show();
+//        dlg.show();
 
 
 
