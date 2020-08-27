@@ -37,12 +37,12 @@
         <activity android:name=".activity.Staff.RepresentativeMenuActivity" />
         <activity android:name=".activity.DelegateAuthorityActivity" />
         <activity android:name=".activity.Store.StationeryRetrievalActivity"></activity>
-        <activity android:name=".activity.Staff.CollectionPointLocationsActivity"><intent-filter>
+        <activity android:name=".activity.Staff.CollectionPointLocationsActivity"></activity>
+        <activity android:name=".activity.LoginActivity"><intent-filter>
             <action android:name="android.intent.action.MAIN" />
 
             <category android:name="android.intent.category.LAUNCHER" />
         </intent-filter></activity>
-        <activity android:name=".activity.LoginActivity"></activity>
         <activity android:name=".activity.MainActivity" />
     </application>
 

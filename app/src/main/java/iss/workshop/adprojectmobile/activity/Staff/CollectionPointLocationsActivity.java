@@ -66,6 +66,12 @@ public class CollectionPointLocationsActivity extends FragmentActivity implement
     //get the spinner from the xml
     Spinner selectCollectionPoint;
 
+    //create a list of items for the spinner
+    final List<String> spinnerArray = new ArrayList<String>();
+
+    //coordinates list
+    List<Coordinate> coordinateArray = new ArrayList<Coordinate>();
+
     //google map object
     private GoogleMap mMap;
 
@@ -104,6 +110,9 @@ public class CollectionPointLocationsActivity extends FragmentActivity implement
         session = getSharedPreferences("session", MODE_PRIVATE);
         session_editor = session.edit();
 
+        //setting button to view
+        selectCollectionPoint = findViewById(R.id.selectCollectionPoint);
+
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(ApiInterface.url)
                 .client(SSLBypasser.getUnsafeOkHttpClient().build())
@@ -122,7 +131,16 @@ public class CollectionPointLocationsActivity extends FragmentActivity implement
 
                 for (CollectionInfo cInfo : collectionInfo) {
                     Log.d("Collection Point: ", cInfo.getCollectionPoint());
+                    if(cInfo!=null){
+                        spinnerArray.add(cInfo.getCollectionPoint());
+                        coordinateArray.add(new Coordinate(Double.parseDouble(cInfo.getLat()), Double.parseDouble(cInfo.getLongi())));
+                    }
                 }
+
+                ArrayAdapter<String> adapter = new ArrayAdapter<String>(getApplicationContext(),
+                        android.R.layout.simple_spinner_item, spinnerArray);
+                adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                selectCollectionPoint.setAdapter(adapter);
             }
 
             @Override
@@ -131,22 +149,17 @@ public class CollectionPointLocationsActivity extends FragmentActivity implement
             }
         });
 
-        //setting button to view
-        selectCollectionPoint = findViewById(R.id.selectCollectionPoint);
-
-        //create a list of items for the spinner
-        final List<String> spinnerArray = new ArrayList<String>();
-        spinnerArray.add("Stationery Store - Administration Building");
+        /*spinnerArray.add("Stationery Store - Administration Building");
         spinnerArray.add("Management School");
         spinnerArray.add("Medical School");
         spinnerArray.add("Engineering School");
         spinnerArray.add("Science School");
-        spinnerArray.add("University Hospital");
+        spinnerArray.add("University Hospital");*/
 
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
+        /*ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
                 android.R.layout.simple_spinner_item, spinnerArray);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        selectCollectionPoint.setAdapter(adapter);
+        selectCollectionPoint.setAdapter(adapter);*/
 
         //request location permission
         requestPermission();
@@ -226,13 +239,12 @@ public class CollectionPointLocationsActivity extends FragmentActivity implement
                                        int position, long id) {
                 Object item = adapterView.getItemAtPosition(position);
 
-                List<Coordinate> coordinateArray = new ArrayList<Coordinate>();
-                coordinateArray.add(new Coordinate(1.29661506, 103.77311969));
+                /*coordinateArray.add(new Coordinate(1.29661506, 103.77311969));
                 coordinateArray.add(new Coordinate(1.29965698, 103.7755326));
                 coordinateArray.add(new Coordinate(1.30016969, 103.77340937));
                 coordinateArray.add(new Coordinate(1.30021474, 103.77066922));
                 coordinateArray.add(new Coordinate(1.3013946, 103.77256286));
-                coordinateArray.add(new Coordinate(1.30021474, 103.77066922));
+                coordinateArray.add(new Coordinate(1.30021474, 103.77066922));*/
 
                 double lat = coordinateArray.get(position).v;
                 double lng = coordinateArray.get(position).v1;
