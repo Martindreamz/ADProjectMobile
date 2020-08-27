@@ -23,6 +23,9 @@ public interface ApiInterface {
     @GET("store/retrieval/{id}") //store/retrieval/15
     Call<List<RequisitionDetail>> getPendingRequisition(@Path("id") int id);
 
+    @GET("Dept/deptEmp/{id}")
+    Call<List<Employee>> GetAllEmployeesByDept(@Path("id") int id);
+
     @GET("store/stationeries")
     Call<List<Stationery>> getAllStationery();
 
@@ -53,5 +56,7 @@ public interface ApiInterface {
     @POST("login/post")
     Call<Employee> login(@Body Employee employee);
 
-
+    @Headers({"Content-Type: application/json"})
+    @POST("deptDelegate")
+    Call<Employee> DeptDelegate(@Body Employee employee);
 }
