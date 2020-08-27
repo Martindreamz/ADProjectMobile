@@ -8,6 +8,7 @@ import iss.workshop.adprojectmobile.model.Employee;
 import iss.workshop.adprojectmobile.model.Requisition;
 import iss.workshop.adprojectmobile.model.RequisitionDetail;
 import iss.workshop.adprojectmobile.model.Stationery;
+import iss.workshop.adprojectmobile.model.StockAdjustmentDetail;
 import iss.workshop.adprojectmobile.model.CollectionInfo;
 import retrofit2.Call;
 import retrofit2.http.Body;
@@ -58,6 +59,11 @@ public interface ApiInterface {
     @Headers({"Content-Type: application/json"})
     @POST("login/post")
     Call<Employee> login(@Body Employee employee);
+
+    @Headers({"Content-Type: application/json"})
+    @POST("store/updateInventory")
+    Call<StockAdjustmentDetail>  updateInventory(@Body List<Stationery> stationeries);
+
 
     @Headers({"Content-Type: application/json"})
     @POST("deptDelegate")
