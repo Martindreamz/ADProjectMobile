@@ -16,14 +16,12 @@
         android:theme="@style/AppTheme">
         <activity android:name=".activity.DepartmentHeadHomePageActivity"></activity>
         <activity android:name=".activity.DisbursementListActivity" />
-
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyAHNMTRIbyTlFWugBR81KZYK33G3eZl1zA" />
         <meta-data
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
-
         <activity android:name=".activity.Store.RaisePurchaseOrderSubmitActivity" />
         <activity android:name=".activity.Store.RaisePurchaseOrderActivity" />
         <activity android:name=".activity.ReceiveGoodsActivity" />
@@ -39,10 +37,8 @@
         <activity android:name=".activity.Staff.CollectionPointLocationsActivity"></activity>
         <activity android:name=".activity.LoginActivity"><intent-filter>
             <action android:name="android.intent.action.MAIN" />
-
             <category android:name="android.intent.category.LAUNCHER" />
         </intent-filter></activity>
         <activity android:name=".activity.MainActivity" />
     </application>
-
 </manifest>
