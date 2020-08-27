@@ -12,8 +12,6 @@ import android.view.View;
 import android.widget.Button;
 
 import iss.workshop.adprojectmobile.R;
-import iss.workshop.adprojectmobile.activity.DisbursementListActivity;
-import iss.workshop.adprojectmobile.activity.ReceiveGoodsActivity;
 
 public class StoreClerkHomePageActivity extends AppCompatActivity {
 Button requisitinBtn, stockBtn;

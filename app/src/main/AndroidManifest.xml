@@ -17,7 +17,7 @@
         android:theme="@style/AppTheme">
         <activity android:name=".activity.Store.DisbursementDetailsActivity"></activity>
         <activity android:name=".activity.DepartmentHeadHomePageActivity"></activity>
-        <activity android:name=".activity.DisbursementListActivity" />
+        <activity android:name=".activity.Store.DisbursementListActivity" />
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"
@@ -28,8 +28,8 @@
 
         <activity android:name=".activity.Store.RaisePurchaseOrderSubmitActivity" />
         <activity android:name=".activity.Store.RaisePurchaseOrderActivity" />
-        <activity android:name=".activity.ReceiveGoodsActivity" />
-        <activity android:name=".activity.DiscrepencyListActivity" />
+        <activity android:name=".activity.Store.ReceiveGoodsActivity" />
+        <activity android:name=".activity.Store.DiscrepencyListActivity" />
         <activity android:name=".activity.Store.InventoryCheckActivity" />
         <activity android:name=".activity.Store.StoreClerkHomePageActivity" />
         <activity android:name=".activity.Staff.RaiseRequestActivity" />

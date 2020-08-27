@@ -13,7 +13,7 @@
         android:id="@+id/retrievalheader"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="0.15"
+        android:layout_weight="0.1"
         android:gravity="center|left"
         android:text="@string/retrieval_form_title"
         android:textSize="20dp" />
@@ -92,7 +92,7 @@
         android:id="@+id/retrivalSubtBtn"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="0.05"
+        android:layout_weight="0.075"
         android:text="@string/submit" />
 
     </androidx.appcompat.widget.LinearLayoutCompat>

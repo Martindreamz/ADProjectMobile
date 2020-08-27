@@ -9,7 +9,6 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import iss.workshop.adprojectmobile.R;
-import iss.workshop.adprojectmobile.activity.DiscrepencyListActivity;
 
 public class InventoryCheckActivity extends AppCompatActivity implements View.OnClickListener{
 Button saveInvtCheckBtn, discripencyListBtn;

@@ -1,4 +1,4 @@
-package iss.workshop.adprojectmobile.activity;
+package iss.workshop.adprojectmobile.activity.Store;
 
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AlertDialog;

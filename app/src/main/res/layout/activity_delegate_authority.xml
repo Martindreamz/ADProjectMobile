@@ -44,7 +44,7 @@
                 android:layout_marginTop="10dp"
                 android:text="@string/startDate"
                 />
-            <EditText
+            <Button
                 android:id="@+id/startDatePicker"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -66,7 +66,7 @@
                 android:layout_marginTop="10dp"
                 android:text="@string/endDate"
                 />
-            <EditText
+            <Button
                 android:id="@+id/endDatePicker"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

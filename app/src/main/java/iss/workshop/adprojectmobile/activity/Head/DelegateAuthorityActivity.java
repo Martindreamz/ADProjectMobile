@@ -32,7 +32,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class DelegateAuthorityActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
     DatePickerDialog picker;
-    EditText startDate, endDate;
+    Button startDate, endDate;
     Button authorizeBtn;
     Spinner spinner;
     List<Employee> departmentReps;
