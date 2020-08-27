@@ -43,5 +43,6 @@
     <string name="collectionTime">Collection Time: </string>
     <string name="deliveredBy">Delivered By: </string>
     <string name="delegateAuthority">Delegate Authority</string>
+    <string name="spinnerTitle">Select Employee:</string>
 
 </resources>

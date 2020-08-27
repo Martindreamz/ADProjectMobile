@@ -12,7 +12,7 @@ public class Employee {
     private int departmentId;
 //    private Department department;
 
-
+    public Employee(){}
     public int getId() {
         return id;
     }
