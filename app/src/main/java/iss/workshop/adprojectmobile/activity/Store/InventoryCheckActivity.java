@@ -28,7 +28,7 @@ import java.util.List;
 import iss.workshop.adprojectmobile.Interfaces.ApiInterface;
 import iss.workshop.adprojectmobile.Interfaces.SSLBypasser;
 import iss.workshop.adprojectmobile.R;
-import iss.workshop.adprojectmobile.activity.DiscrepencyListActivity;
+import iss.workshop.adprojectmobile.activity.Store.DiscrepencyListActivity;
 import iss.workshop.adprojectmobile.adapters.InventoryCheckAdapter;
 import iss.workshop.adprojectmobile.model.RequisitionDetail;
 import iss.workshop.adprojectmobile.model.Stationery;
