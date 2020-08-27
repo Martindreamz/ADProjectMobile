@@ -13,7 +13,7 @@
         android:id="@+id/retrievalheader"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="0.05"
+        android:layout_weight="0.15"
         android:gravity="center|left"
         android:text="@string/retrieval_form_title"
         android:textSize="20dp" />
@@ -77,11 +77,16 @@
         android:layout_height="0dp"
         android:layout_weight="0.5" />
 
-    <DatePicker
-        android:layout_width="wrap_content"
-        android:layout_height="0dp"
-        android:layout_weight="0.1"
-        android:layout_gravity="center"/>
+
+
+        <Button
+            android:id="@+id/DLdatepicker"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="0.075"
+            android:text="Select Delivery Date"/>
+
+
 
     <Button
         android:id="@+id/retrivalSubtBtn"
@@ -90,4 +95,4 @@
         android:layout_weight="0.05"
         android:text="@string/submit" />
 
-</androidx.appcompat.widget.LinearLayoutCompat>
+    </androidx.appcompat.widget.LinearLayoutCompat>
