@@ -99,8 +99,8 @@ public class DelegateAuthorityActivity extends AppCompatActivity implements Adap
         employees = new ArrayList<>();
         startDateStr = "";
         endDateStr = "";
-        startDateClear = true;
-        endDateClear = true;
+        startDateClear = false;
+        endDateClear = false;
 
         final Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(ApiInterface.url)
@@ -225,13 +225,13 @@ public class DelegateAuthorityActivity extends AppCompatActivity implements Adap
                     sendingEmployee.setPhoneNum(selectedEmployee.getRole());
 
 
-                    final Retrofit retrofit = new Retrofit.Builder()
+                    Retrofit retrofit = new Retrofit.Builder()
                             .baseUrl(ApiInterface.url)
                             .client(SSLBypasser.getUnsafeOkHttpClient().build())
                             .addConverterFactory(GsonConverterFactory.create())
                             .build();
 
-                    final ApiInterface apiInterface2 = retrofit.create(ApiInterface.class);
+                    ApiInterface apiInterface2 = retrofit.create(ApiInterface.class);
                     Call<Employee> DeptDelegateCall = apiInterface2.DeptDelegate(sendingEmployee);
                     DeptDelegateCall.enqueue(new Callback<Employee>() {
                         @Override

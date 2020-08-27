@@ -66,6 +66,6 @@ public interface ApiInterface {
 
 
     @Headers({"Content-Type: application/json"})
-    @POST("deptDelegate")
+    @POST("dept/deptDelegate")
     Call<Employee> DeptDelegate(@Body Employee employee);
 }
