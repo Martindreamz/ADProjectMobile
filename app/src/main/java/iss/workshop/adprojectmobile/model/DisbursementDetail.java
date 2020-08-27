@@ -8,6 +8,8 @@ public class DisbursementDetail {
     private int qty;
     private String disbursementList;
     private String requisitionDetail;
+    private int StationeryId;
+    private String StationeryDesc;
 
     public DisbursementDetail(int id, int disbursementListId, int requisitionDetailId, int qty, String disbursementList, String requisitionDetail) {
         this.id = id;
@@ -16,6 +18,8 @@ public class DisbursementDetail {
         this.qty = qty;
         this.disbursementList = disbursementList;
         this.requisitionDetail = requisitionDetail;
+        this.StationeryId = 0;
+        this.StationeryDesc = null;
     }
 
     public int getId() {
@@ -64,6 +68,22 @@ public class DisbursementDetail {
 
     public void setRequisitionDetail(String requisitionDetail) {
         this.requisitionDetail = requisitionDetail;
+    }
+
+    public int getStationeryId() {
+        return StationeryId;
+    }
+
+    public void setStationeryId(int stationeryId) {
+        this.StationeryId = stationeryId;
+    }
+
+    public String getStationeryDesc() {
+        return StationeryDesc;
+    }
+
+    public void setStationeryDesc(String stationeryDesc) {
+        this.StationeryDesc = stationeryDesc;
     }
 
     @Override

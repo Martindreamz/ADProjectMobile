@@ -12,10 +12,9 @@ import android.view.View;
 import android.widget.Button;
 
 import iss.workshop.adprojectmobile.R;
-import iss.workshop.adprojectmobile.activity.ConfirmDisbursementCollectionActivity;
 
 public class RepresentativeMenuActivity extends AppCompatActivity implements View.OnClickListener {
-    Button confirmDisbursement, raiseRequest, findRoutes;
+    Button confirmDisbursement, raiseRequest, findRoutes, dCollection;
 
     SharedPreferences session;
     SharedPreferences.Editor session_editor;
@@ -43,6 +42,15 @@ public class RepresentativeMenuActivity extends AppCompatActivity implements Vie
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(RepresentativeMenuActivity.this, CollectionPointLocationsActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        dCollection = (Button) findViewById(R.id.dCollection);
+        dCollection.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(RepresentativeMenuActivity.this, ConfirmDisbursementCollectionActivity.class);
                 startActivity(intent);
             }
         });
