@@ -30,50 +30,63 @@
         android:orientation="horizontal">
 
         <TextView
+            android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="0.2"
-            android:layout_width="0dp"
-            android:text="No"
-            android:gravity="center"/>
+            android:gravity="center"
+            android:text="No" />
+
         <TextView
+            android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="0.2"
-            android:layout_width="0dp"
-            android:text="Desc"
-            android:gravity="center"/>
+            android:gravity="center"
+            android:text="Desc" />
+
         <TextView
+            android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="0.18"
-            android:layout_width="0dp"
-            android:text="Requisition Id"
-            android:gravity="center"/>
+            android:gravity="center"
+            android:text="Requisition Id" />
+
         <TextView
+            android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="0.12"
-            android:layout_width="0dp"
-            android:text="rqst qty"
+            android:gravity="center"
 
-            android:gravity="center"/>
+            android:text="rqst qty" />
+
         <TextView
+            android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="0.3"
-            android:layout_width="0dp"
-            android:text="taken"
-            android:gravity="center"/>
+            android:gravity="center"
+            android:text="taken" />
 
-        </androidx.appcompat.widget.LinearLayoutCompat>
+    </androidx.appcompat.widget.LinearLayoutCompat>
 
-        <ListView
-            android:id="@+id/retrievaltable"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="0.5" />
+    <ListView
+        android:id="@+id/retrievaltable"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.5" />
 
 
         <Button
+            android:id="@+id/DLdatepicker"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="0.05"
-            android:id="@+id/retrivalSubtBtn"/>
+            android:layout_weight="0.075"
+            android:text="Select Delivery Date"/>
 
-    </androidx.appcompat.widget.LinearLayoutCompat>
+
+    <Button
+        android:id="@+id/retrivalSubtBtn"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.075"
+        android:text="submit"/>
+
+</androidx.appcompat.widget.LinearLayoutCompat>

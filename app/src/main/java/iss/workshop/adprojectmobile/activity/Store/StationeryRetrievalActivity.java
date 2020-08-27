@@ -1,20 +1,28 @@
 package iss.workshop.adprojectmobile.activity.Store;
 
+import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.Build;
 import android.os.Bundle;
+import android.os.health.SystemHealthManager;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.DatePicker;
+import android.widget.EditText;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 
@@ -45,7 +53,13 @@ public class StationeryRetrievalActivity extends AppCompatActivity implements Ad
     private boolean fetch_completed;
     private static HashMap<Integer, Integer> changes;
     private static HashMap<Integer, Integer> qtyList;
-
+    private Button DLdatepicker;
+    private String dateString;
+    private int day;
+    private int month;
+    private int year;
+    private Calendar cldr;
+    private boolean dateClear;
 
     public static HashMap<Integer, Integer> getChanges() {
         return changes;
@@ -84,11 +98,14 @@ public class StationeryRetrievalActivity extends AppCompatActivity implements Ad
         changes = new HashMap<>();
         session = getSharedPreferences("session", MODE_PRIVATE);
         session_editor = session.edit();
-
+        DLdatepicker = findViewById(R.id.DLdatepicker);
         submit = findViewById(R.id.retrivalSubtBtn);
-
+        dateString = "";
+        dateClear = false;
 
         submit.setOnClickListener(this);
+        DLdatepicker.setOnClickListener(this);
+        DLdatepicker.setShowSoftInputOnFocus(false);
 
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(ApiInterface.url)
@@ -99,7 +116,7 @@ public class StationeryRetrievalActivity extends AppCompatActivity implements Ad
 
         //getting all requisitions to be processed
         ApiInterface apiInterface = retrofit.create(ApiInterface.class);
-        Call<List<RequisitionDetail>> call = apiInterface.getPendingRequisition(session.getInt("staffId",0));
+        Call<List<RequisitionDetail>> call = apiInterface.getPendingRequisition(session.getInt("staffId", 0));
 
         call.enqueue(new Callback<List<RequisitionDetail>>() {
             @Override
@@ -201,6 +218,7 @@ public class StationeryRetrievalActivity extends AppCompatActivity implements Ad
         listView.requestLayout();
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     public void onClick(View view) {
         if (view == submit) {
@@ -212,7 +230,7 @@ public class StationeryRetrievalActivity extends AppCompatActivity implements Ad
             }
 
             //if there are selections
-            if (sum != 0) {
+            if (sum != 0 && dateClear) {
                 List<RequisitionDetail> rdl_tosend = new ArrayList<>();
                 for (RequisitionDetail rd : requisitionDetails) {
                     System.out.println(rd);
@@ -222,7 +240,6 @@ public class StationeryRetrievalActivity extends AppCompatActivity implements Ad
                     rdl_tosend.add(new RequisitionDetail(i, 0, 0, changes.get(i), 0, "", "", ""));
                 }
 
-                rdl_tosend.get(0).setRequisitionId(session.getInt("staffId", 0)); //utilizing existing models to send clerkID
 
                 Retrofit retrofit2 = new Retrofit.Builder()
                         .baseUrl(ApiInterface.url)
@@ -232,7 +249,7 @@ public class StationeryRetrievalActivity extends AppCompatActivity implements Ad
 
                 ApiInterface apiInterface2 = retrofit2.create(ApiInterface.class);
 
-                Call<List<DisbursementList>> call2 = apiInterface2.processRetrieval(rdl_tosend);
+                Call<List<DisbursementList>> call2 = apiInterface2.processRetrieval(rdl_tosend, session.getInt("staffId", 0), year, month, day);
 
                 call2.enqueue(new Callback<List<DisbursementList>>() {
                     @Override
@@ -240,9 +257,9 @@ public class StationeryRetrievalActivity extends AppCompatActivity implements Ad
                         System.out.println(response.code());
                         if (response.code() == 200) {
                             List<DisbursementList> disbursementLists = response.body();
-                            Intent success = new Intent(getApplicationContext(), DisbursementListActivity.class);
+                            Intent success = new Intent(getApplicationContext(), StoreClerkHomePageActivity.class);
                             startActivity(success);
-                        }else{
+                        } else {
                             Toast.makeText(getApplicationContext(), "Something went wrong please try again", Toast.LENGTH_LONG).show();
                             Intent failure = new Intent(getApplicationContext(), StationeryRetrievalActivity.class);
                             startActivity(failure);
@@ -255,8 +272,50 @@ public class StationeryRetrievalActivity extends AppCompatActivity implements Ad
                     }
                 });
             } else {
-                Toast.makeText(getApplicationContext(), "Please select the retrieved items", Toast.LENGTH_LONG).show();
+                if (!dateClear) {
+                    Toast.makeText(getApplicationContext(), "select a future date or today please", Toast.LENGTH_LONG).show();
+
+                } else {
+                    Toast.makeText(getApplicationContext(), "Please select the retrieved items", Toast.LENGTH_LONG).show();
+                }
             }
         }
+
+        if (view == DLdatepicker) {
+
+            cldr = Calendar.getInstance();
+            day = cldr.get(Calendar.DATE);
+            month = cldr.get(Calendar.MONTH);
+            year = cldr.get(Calendar.YEAR);
+
+            DatePickerDialog datepicker = new DatePickerDialog(this,
+                    new DatePickerDialog.OnDateSetListener() {
+                        @RequiresApi(api = Build.VERSION_CODES.O)
+                        @Override
+                        public void onDateSet(DatePicker datePicker, int y, int m, int d) {
+                            dateString = d + "/" + (m + 1) + "/" + y;
+                            day = d;
+                            month = m + 1;
+                            year = y;
+                            cldr.set(Calendar.DATE, d);
+                            cldr.set(Calendar.MONTH, m);
+                            cldr.set(Calendar.YEAR, y);
+                            System.out.println("Set date: " + year + "," + month + "," + day);
+                            DLdatepicker.setText("Next delivery: " + dateString);
+                            LocalDateTime selectedDate = LocalDateTime.of(y, (m + 1), d, 23, 59, 59);
+                            if (selectedDate.isBefore(LocalDateTime.now())) {
+                                Toast.makeText(getApplicationContext(), "select a future date or today please", Toast.LENGTH_LONG).show();
+                                dateClear = false;
+                            } else {
+                                dateClear = true;
+                            }
+
+
+                        }
+                    }, year, month, day);
+            datepicker.show();
+            System.out.println("Gotten date: " + year + "," + month + "," + day);
+        }
     }
+
 }

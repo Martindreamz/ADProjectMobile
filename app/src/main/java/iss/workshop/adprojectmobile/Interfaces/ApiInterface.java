@@ -42,9 +42,8 @@ public interface ApiInterface {
     Call<Requisition> sendRequisitionToProcess(@Body Requisition requisitions);
 
     @Headers({"Content-Type: application/json"})
-    @POST("store/processRetrieval")
-    Call<List<DisbursementList>> processRetrieval(@Body List<RequisitionDetail> requisitions);
-
+    @POST("store/processRetrieval/{id}/{year}/{month}/{day}")
+    Call<List<DisbursementList>> processRetrieval(@Body List<RequisitionDetail> requisitions, @Path("id") int id, @Path("year") int year, @Path("month") int month, @Path("day") int day);
     @Headers({"Content-Type: application/json"})
     @POST("login/post")
     Call<Employee> login(@Body Employee employee);
