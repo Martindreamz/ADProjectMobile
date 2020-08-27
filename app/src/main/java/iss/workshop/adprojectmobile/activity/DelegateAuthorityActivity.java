@@ -44,12 +44,21 @@ public class DelegateAuthorityActivity extends AppCompatActivity implements Adap
     TextView txtView;
     private SharedPreferences session;
     private SharedPreferences.Editor session_editor;
-    Employee selectedEmployee,oldDelegate;
+    Employee selectedEmployee, oldDelegate;
     private List<String> employees;
     private List<Employee> departmentEmp;
     String startDateStr, endDateStr;
     boolean startDateClear, endDateClear;
     LocalDate startDate, endDate;
+List<Employee> nonStaff;
+
+    public List<Employee> getNonStaff() {
+        return nonStaff;
+    }
+
+    public void setNonStaff(List<Employee> nonStaff) {
+        this.nonStaff = nonStaff;
+    }
 
     public Employee getOldDelegate() {
         return oldDelegate;
@@ -101,6 +110,7 @@ public class DelegateAuthorityActivity extends AppCompatActivity implements Adap
         endDateStr = "";
         startDateClear = false;
         endDateClear = false;
+        nonStaff=new ArrayList<>();
 
         final Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(ApiInterface.url)
@@ -121,12 +131,14 @@ public class DelegateAuthorityActivity extends AppCompatActivity implements Adap
                         System.out.println(e);
                         if (e.getRole().equals("STAFF")) {
                             employees.add(e.getName());
+                            nonStaff.add(e);
                         }
-                        if(e.getRole().equals("DELEGATE")){
-                            oldDelegate=e;
+                        if (e.getRole().equals("DELEGATE")) {
+                            oldDelegate = e;
                             setOldDelegate(oldDelegate);
                         }
                     }
+                    setNonStaff(nonStaff);
                     ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(getApplicationContext(), android.R.layout.simple_spinner_item, employees);
                     dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                     spinner.setAdapter(dataAdapter);
@@ -189,9 +201,9 @@ public class DelegateAuthorityActivity extends AppCompatActivity implements Adap
                                 LocalDateTime selectedDate = LocalDateTime.of(year, (monthOfYear + 1), dayOfMonth, 23, 59, 59);
                                 if (selectedDate.isBefore(LocalDateTime.now())) {
                                     Toast.makeText(getApplicationContext(), "select a future date or today for start date please", Toast.LENGTH_LONG).show();
-                                    startDateClear = false;
+                                    endDateClear = false;
                                 } else {
-                                    startDateClear = true;
+                                    endDateClear = true;
                                 }
                             }
                         }, year, month, day);
@@ -216,13 +228,13 @@ public class DelegateAuthorityActivity extends AppCompatActivity implements Adap
                     Toast.makeText(getApplicationContext(), "End date cannot be before start date", Toast.LENGTH_LONG).show();
                 } else {
                     Employee sendingEmployee = new Employee();
-                    sendingEmployee.setId(selectedEmployee.getId());
+                    sendingEmployee.setId(selectedEmployee.getDepartmentId());
                     sendingEmployee.setName(startDateStr);
                     sendingEmployee.setPassword(endDateStr);
                     sendingEmployee.setEmail(String.valueOf(oldDelegate.getId()));
-                    sendingEmployee.setRole(oldDelegate.getRole());
+                    sendingEmployee.setRole("STAFF");
                     sendingEmployee.setDepartmentId(selectedEmployee.getId());
-                    sendingEmployee.setPhoneNum(selectedEmployee.getRole());
+                    sendingEmployee.setPhoneNum("DELEGATE");
 
 
                     Retrofit retrofit = new Retrofit.Builder()
@@ -232,14 +244,15 @@ public class DelegateAuthorityActivity extends AppCompatActivity implements Adap
                             .build();
 
                     ApiInterface apiInterface2 = retrofit.create(ApiInterface.class);
-                    Call<Employee> DeptDelegateCall = apiInterface2.DeptDelegate(sendingEmployee);
+                    Call<Employee> DeptDelegateCall = apiInterface2.DeptDelegate(sendingEmployee, session.getInt("departmentId", 0));
                     DeptDelegateCall.enqueue(new Callback<Employee>() {
                         @Override
                         public void onResponse(Call<Employee> call, Response<Employee> response) {
-                            if(response.code()==200){
-                                Intent intent = new Intent(getApplicationContext(), DepartmentHeadHomePageActivity.class);
-                                startActivity(intent);
-                            }
+                            System.out.println(response.code());
+
+                            Intent intent = new Intent(getApplicationContext(), DepartmentHeadHomePageActivity.class);
+                            startActivity(intent);
+
                         }
 
                         @Override
@@ -257,7 +270,7 @@ public class DelegateAuthorityActivity extends AppCompatActivity implements Adap
 
     @Override
     public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-        selectedEmployee = departmentEmp.get(i);
+        selectedEmployee = nonStaff.get(i);
         //Toast.makeText(getApplicationContext(),adapterView.getItemAtPosition(i).toString(), Toast.LENGTH_LONG).show();
     }
 
