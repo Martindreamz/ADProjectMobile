@@ -31,7 +31,7 @@ import iss.workshop.adprojectmobile.activity.Store.InventoryCheckActivity;
 import iss.workshop.adprojectmobile.model.Stationery;
 
 public class InventoryCheckAdapter extends ArrayAdapter implements Filterable {
-    private Context context;
+    private final Context context;
     private List<Stationery> Stationeries;
     private List<Stationery> filteredList;
     private StationeryFilter stationeryFilter;
@@ -59,32 +59,41 @@ public class InventoryCheckAdapter extends ArrayAdapter implements Filterable {
     public View getView(final int pos, View view, @NonNull ViewGroup parent) {
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Activity.LAYOUT_INFLATER_SERVICE);
         view = inflater.inflate(R.layout.activity_inventory_check_rows, null);
-        s = filteredList.get(pos);
+
 
         TextView txtItemCode = view.findViewById(R.id.TxtItemCode);
-        txtItemCode.setText(Integer.toString(s.getId()));
+
 
         TextView txtDesc = view.findViewById(R.id.TxtDesc);
-        txtDesc.setText(s.getDesc());
+
 
         TextView txtQty = view.findViewById(R.id.TxtQty);
-        txtQty.setText(Integer.toString(s.getInventoryQty()));
 
-        final NumberPicker qty = view.findViewById(R.id.NPInv);
-        qty.setValue(s.getReOrderQty());
-        qty.setMin(0);
-        qty.setValueChangedListener(new ValueChangedListener() {
-            @Override
-            public void valueChanged(int value, ActionEnum action) {
-                for(Stationery stationery:parentStationery){
-                    if(stationery.getId()==filteredList.get(pos).getId()){
-                        stationery.setReOrderQty(value);
-                        System.out.println(stationery);
+
+
+            s = filteredList.get(pos);
+            txtItemCode.setText(Integer.toString(s.getId()));
+            txtDesc.setText(s.getDesc());
+            txtQty.setText(Integer.toString(s.getInventoryQty()));
+
+            final NumberPicker qty = view.findViewById(R.id.NPInv);
+            qty.setValue(s.getReOrderQty());
+            qty.setMin(0);
+            qty.setValueChangedListener(new ValueChangedListener() {
+                @Override
+                public void valueChanged(int value, ActionEnum action) {
+                    for(Stationery stationery:parentStationery){
+                        if(stationery.getId()==filteredList.get(pos).getId()){
+                            stationery.setReOrderQty(value);
+                            System.out.println(stationery);
+                        }
                     }
                 }
-            }
 
-        });
+            });
+
+
+
         return view;
     }
 

@@ -1,42 +1,94 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activity.Store.InventoryCheckActivity"
-    android:orientation="vertical"
-    >
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".activity.Store.InventoryCheckActivity">
     <TextView
-        android:id="@+id/invtUpdate"
+        android:id="@+id/title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
         android:layout_marginBottom="10dp"
-        android:text="@string/discrepencyList"/>
-    <EditText
+        android:textSize="20dp"
+        android:text="@string/discrepencyList"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/list_headers"
+        />
+    <TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/list_headers"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:hint="@string/search"
-        android:inputType="text"
+        android:stretchColumns="*"
+        app:layout_constraintTop_toBottomOf="@id/title"
+        app:layout_constraintBottom_toTopOf="@id/list_layout"
         >
-    </EditText>
-    <TextView
-        android:id="@+id/total"
-        android:layout_width="wrap_content"
+        <TableRow
+
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+
+            >
+            <TextView
+                android:id="@+id/header1"
+                android:layout_column="0"
+                android:padding="10sp"
+                android:gravity="left"
+                android:layout_span="2"
+                android:text="Code"
+                android:textStyle="bold"
+                android:background="#c0c0c0"
+                >
+            </TextView>
+            <TextView
+                android:id="@+id/header2"
+                android:layout_column="1"
+                android:padding="10sp"
+                android:gravity="left"
+                android:text="Description"
+                android:textStyle="bold"
+                android:background="#c0c0c0"
+                >
+            </TextView>
+            <TextView
+                android:id="@+id/header3"
+                android:layout_column="2"
+                android:padding="10sp"
+                android:gravity="left"
+                android:text="Disc Qty"
+                android:textStyle="bold"
+                android:background="#c0c0c0"
+                >
+            </TextView>
+
+        </TableRow>
+    </TableLayout>
+    <LinearLayout
+        android:id="@+id/list_layout"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:layout_marginBottom="10dp"
-        android:layout_marginRight="20dp"
-        android:layout_gravity="right"
-       />
+        app:layout_constraintTop_toBottomOf="@+id/list_headers"
+        android:orientation="vertical"
+        >
+        <ListView
+            android:id="@+id/dl_listView"
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            >
+
+        </ListView>
+
+    </LinearLayout>
+
 
         <Button style="@style/Btn"
             android:id="@+id/reqForAdjVoucherBtn"
             android:text="@string/reqForAdjVoucher"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
+            app:layout_constraintBottom_toBottomOf="parent"
             />
-</LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
