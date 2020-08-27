@@ -27,6 +27,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
+
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 import android.widget.Toast;
@@ -131,7 +132,7 @@ public class CollectionPointLocationsActivity extends FragmentActivity implement
 
                 for (CollectionInfo cInfo : collectionInfo) {
                     Log.d("Collection Point: ", cInfo.getCollectionPoint());
-                    if(cInfo!=null){
+                    if (cInfo != null) {
                         spinnerArray.add(cInfo.getCollectionPoint());
                         coordinateArray.add(new Coordinate(Double.parseDouble(cInfo.getLat()), Double.parseDouble(cInfo.getLongi())));
                     }
@@ -148,18 +149,6 @@ public class CollectionPointLocationsActivity extends FragmentActivity implement
                 Log.e("error", t.getMessage());
             }
         });
-
-        /*spinnerArray.add("Stationery Store - Administration Building");
-        spinnerArray.add("Management School");
-        spinnerArray.add("Medical School");
-        spinnerArray.add("Engineering School");
-        spinnerArray.add("Science School");
-        spinnerArray.add("University Hospital");*/
-
-        /*ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
-                android.R.layout.simple_spinner_item, spinnerArray);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        selectCollectionPoint.setAdapter(adapter);*/
 
         //request location permission
         requestPermission();
@@ -201,7 +190,7 @@ public class CollectionPointLocationsActivity extends FragmentActivity implement
         }
     }
 
-    //to get user location
+    //to get user location (physical device)
     @SuppressLint("MissingPermission")
     private void getMyLocation() {
         mMap.setMyLocationEnabled(true);
@@ -210,10 +199,11 @@ public class CollectionPointLocationsActivity extends FragmentActivity implement
             public void onMyLocationChange(Location location) {
 
                 myLocation = location;
+
                 LatLng ltlng = new LatLng(location.getLatitude(), location.getLongitude());
-                CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(
-                        ltlng, 16f);
-                mMap.animateCamera(cameraUpdate);
+
+                //CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(ltlng, 16f);
+                //mMap.animateCamera(cameraUpdate);
             }
         });
 
@@ -238,13 +228,6 @@ public class CollectionPointLocationsActivity extends FragmentActivity implement
             public void onItemSelected(AdapterView<?> adapterView, View view,
                                        int position, long id) {
                 Object item = adapterView.getItemAtPosition(position);
-
-                /*coordinateArray.add(new Coordinate(1.29661506, 103.77311969));
-                coordinateArray.add(new Coordinate(1.29965698, 103.7755326));
-                coordinateArray.add(new Coordinate(1.30016969, 103.77340937));
-                coordinateArray.add(new Coordinate(1.30021474, 103.77066922));
-                coordinateArray.add(new Coordinate(1.3013946, 103.77256286));
-                coordinateArray.add(new Coordinate(1.30021474, 103.77066922));*/
 
                 double lat = coordinateArray.get(position).v;
                 double lng = coordinateArray.get(position).v1;

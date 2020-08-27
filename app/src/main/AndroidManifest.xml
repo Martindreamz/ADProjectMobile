@@ -4,7 +4,6 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
 
@@ -32,7 +31,7 @@
         <activity android:name=".activity.Store.InventoryCheckActivity" />
         <activity android:name=".activity.Store.StoreClerkHomePageActivity" />
         <activity android:name=".activity.Staff.RaiseRequestActivity" />
-        <activity android:name=".activity.ConfirmDisbursementDistributionActivity" />
+        <activity android:name=".activity.Staff.ConfirmDisbursementDistributionActivity" />
         <activity android:name=".activity.ConfirmDisbursementCollectionActivity" />
         <activity android:name=".activity.Staff.RepresentativeMenuActivity" />
         <activity android:name=".activity.DelegateAuthorityActivity" />

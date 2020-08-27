@@ -13,7 +13,6 @@ import android.widget.Button;
 
 import iss.workshop.adprojectmobile.R;
 import iss.workshop.adprojectmobile.activity.ConfirmDisbursementCollectionActivity;
-import iss.workshop.adprojectmobile.activity.ConfirmDisbursementDistributionActivity;
 
 public class RepresentativeMenuActivity extends AppCompatActivity implements View.OnClickListener {
     Button confirmDisbursement, raiseRequest, findRoutes;
