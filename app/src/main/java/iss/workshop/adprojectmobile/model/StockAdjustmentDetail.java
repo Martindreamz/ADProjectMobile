@@ -1,6 +1,8 @@
 package iss.workshop.adprojectmobile.model;
 
-public class StockAdjustmentDetail {
+import java.io.Serializable;
+
+public class StockAdjustmentDetail implements Serializable {
     private int id;
     private int stockAdjustmentId;
     private int discpQty;

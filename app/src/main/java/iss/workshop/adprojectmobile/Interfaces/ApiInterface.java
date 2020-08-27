@@ -59,7 +59,7 @@ public interface ApiInterface {
 
     @Headers({"Content-Type: application/json"})
     @POST("store/updateInventory")
-    Call<StockAdjustmentDetail>  updateInventory(@Body List<Stationery> stationeries);
+    Call<List<StockAdjustmentDetail>>  updateInventory(@Body List<Stationery> stationeries);
 
 
     @Headers({"Content-Type: application/json"})

@@ -18,9 +18,11 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.SearchView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.travijuu.numberpicker.library.NumberPicker;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -30,8 +32,10 @@ import iss.workshop.adprojectmobile.Interfaces.SSLBypasser;
 import iss.workshop.adprojectmobile.R;
 import iss.workshop.adprojectmobile.activity.Store.DiscrepencyListActivity;
 import iss.workshop.adprojectmobile.adapters.InventoryCheckAdapter;
+import iss.workshop.adprojectmobile.model.DisbursementList;
 import iss.workshop.adprojectmobile.model.RequisitionDetail;
 import iss.workshop.adprojectmobile.model.Stationery;
+import iss.workshop.adprojectmobile.model.StockAdjustmentDetail;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -49,10 +53,6 @@ public class InventoryCheckActivity extends AppCompatActivity
     private boolean fetch_completed;
     private SearchView searchView;
     private MenuItem searchMenuItem;
-    private TextView header1;
-    private TextView header2;
-    private TextView header3;
-    private TextView header4;
     private InventoryCheckAdapter adapter;
     private static HashMap<Integer,Integer> changes;
 
@@ -78,10 +78,6 @@ public class InventoryCheckActivity extends AppCompatActivity
         setContentView(R.layout.activity_inventory_check);
         saveInvtCheckBtn = findViewById(R.id.saveInvtCheckBtn);
         saveInvtCheckBtn.setOnClickListener(this);
-        header1 = findViewById(R.id.header1);
-        header2=findViewById(R.id.header2);
-        header3=findViewById(R.id.header3);
-        header4=findViewById(R.id.header4);
 
         stationeries = new ArrayList();
         changes=new HashMap<>();
@@ -171,18 +167,44 @@ public class InventoryCheckActivity extends AppCompatActivity
           //post and send data to get stock adjustment detail
             //Intent intent = new Intent(this, DiscrepencyListActivity.class);
 //            startActivity(intent);
+            Retrofit retrofit = new Retrofit.Builder()
+                    .baseUrl(ApiInterface.url)
+                    .client(SSLBypasser.getUnsafeOkHttpClient().build())
+                    .addConverterFactory(GsonConverterFactory.create())
+                    .build();
+            ApiInterface apiInterface=retrofit.create(ApiInterface.class);
+            Call<List<StockAdjustmentDetail>> call=apiInterface.updateInventory(stationeries);
+            call.enqueue(new Callback<List<StockAdjustmentDetail>>() {
+                @Override
+                public void onResponse(Call<List<StockAdjustmentDetail>> call, Response<List<StockAdjustmentDetail>> response) {
+                    System.out.println(response.code());
+                    if (response.code() == 200) {
+                        List<StockAdjustmentDetail> sads = response.body();
+                        Intent intent = new Intent(getApplicationContext(), DiscrepencyListActivity.class);
+                        intent.putExtra("sads", (Serializable) sads);
+                        System.out.println(sads);
+                        startActivity(intent);
+                    } else {
+                        Toast.makeText(getApplicationContext(), "Something went wrong please try again", Toast.LENGTH_LONG).show();
+                        Intent failure = new Intent(getApplicationContext(), StationeryRetrievalActivity.class);
+                        startActivity(failure);
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<List<StockAdjustmentDetail>> call, Throwable t) {
+
+                }
+            });
+
+
 
         }
     }
 
     @Override
     public void onItemClick(AdapterView<?> adapterView, View view, int pos, long l) {
-        Object stationery = adapterView.getItemAtPosition(pos);
-        System.out.println("item clicked");
-        System.out.println("from activity"+stationery);
-        final NumberPicker qty =view.findViewById(R.id.NPInv);
-        System.out.println("item clicked"+ qty.getUnit());
-        stationeries.get(pos).setReOrderLevel(qty.getUnit());
+
     }
 
     @Override
