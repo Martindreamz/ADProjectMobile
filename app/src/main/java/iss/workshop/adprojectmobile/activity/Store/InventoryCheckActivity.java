@@ -172,15 +172,15 @@ public class InventoryCheckActivity extends AppCompatActivity
             call.enqueue(new Callback<List<StockAdjustmentDetail>>() {
                 @Override
                 public void onResponse(Call<List<StockAdjustmentDetail>> call, Response<List<StockAdjustmentDetail>> response) {
-                    System.out.println(response.code());
+                    System.out.println("LOOK HERE"+response.body());
                     if (response.code() == 200) {
                         List<StockAdjustmentDetail> sads = response.body();
-                        if(sads==null){
+                        if(response.body().isEmpty()){
                             Toast.makeText(getApplicationContext(), "Inventory Updated with no discrepencies", Toast.LENGTH_LONG).show();
                             Intent intent = new Intent(getApplicationContext(), ViewInventoryActivity.class);
                             startActivity(intent);
                         }
-                        if(sads!=null) {
+                        else if(sads!=null) {
                             Intent intent = new Intent(getApplicationContext(), DiscrepencyListActivity.class);
                             intent.putExtra("sads", (Serializable) sads);
                             System.out.println(sads);

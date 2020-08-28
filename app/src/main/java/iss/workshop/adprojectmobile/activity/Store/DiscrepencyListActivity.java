@@ -74,6 +74,7 @@ public class DiscrepencyListActivity extends AppCompatActivity implements View.O
                 public void onResponse(Call<StockAdjustment> call, Response<StockAdjustment> response) {
                     System.out.println("response"+response.code());
                     if (response.code() == 201) {
+
                         Toast.makeText(getApplicationContext(), "Request sent!", Toast.LENGTH_LONG).show();
                     } else {
                         Toast.makeText(getApplicationContext(), "Something went wrong please try again", Toast.LENGTH_LONG).show();

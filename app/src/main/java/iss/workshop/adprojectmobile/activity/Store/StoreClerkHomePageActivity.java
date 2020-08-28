@@ -2,6 +2,7 @@ package iss.workshop.adprojectmobile.activity.Store;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -12,9 +13,11 @@ import android.view.View;
 import android.widget.Button;
 
 import iss.workshop.adprojectmobile.R;
+import iss.workshop.adprojectmobile.activity.LoginActivity;
 
-public class StoreClerkHomePageActivity extends AppCompatActivity {
-Button requisitinBtn, stockBtn;
+public class StoreClerkHomePageActivity extends AppCompatActivity
+implements View.OnClickListener{
+Button requisitinBtn, stockBtn, logoutBtn;
 
     SharedPreferences session;
     SharedPreferences.Editor session_editor;
@@ -26,6 +29,8 @@ Button requisitinBtn, stockBtn;
         setContentView(R.layout.activity_store_clerk_home_page);
         requisitinBtn=findViewById(R.id.requisitionRelatedBtn);
         stockBtn=findViewById(R.id.stockRelatedBtn);
+        logoutBtn=findViewById(R.id.logOutBtn);
+        logoutBtn.setOnClickListener(this);
 
         session = getSharedPreferences("session", MODE_PRIVATE);
         session_editor = session.edit();
@@ -75,5 +80,16 @@ Button requisitinBtn, stockBtn;
 //                break;
         }
         return super.onContextItemSelected(item);
+    }
+
+    @Override
+    public void onClick(View view) {
+        SharedPreferences pref = getPreferences(Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = pref.edit();
+        editor.clear();
+        editor.commit();
+
+        Intent intent = new Intent(this, LoginActivity.class);
+        startActivity(intent);
     }
 }
