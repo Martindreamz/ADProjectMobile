@@ -217,4 +217,10 @@ public class InventoryCheckActivity extends AppCompatActivity
         adapter.getFilter().filter(s);
         return true;
     }
+
+    @Override
+    public void onBackPressed() {
+        Intent intent = new Intent(this, StoreClerkHomePageActivity.class);
+        startActivity(intent);
+    }
 }

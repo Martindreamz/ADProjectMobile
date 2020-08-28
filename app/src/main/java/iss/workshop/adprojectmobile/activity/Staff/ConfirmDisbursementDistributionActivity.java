@@ -3,6 +3,7 @@ package iss.workshop.adprojectmobile.activity.Staff;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
@@ -267,5 +268,9 @@ public class ConfirmDisbursementDistributionActivity extends AppCompatActivity {
         });
 
     }
-
+    @Override
+    public void onBackPressed() {
+        Intent intent = new Intent(this, RepresentativeMenuActivity.class);
+        startActivity(intent);
+    }
 }

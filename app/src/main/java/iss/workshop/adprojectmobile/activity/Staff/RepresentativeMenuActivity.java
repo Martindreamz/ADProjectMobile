@@ -12,6 +12,8 @@ import android.view.View;
 import android.widget.Button;
 
 import iss.workshop.adprojectmobile.R;
+import iss.workshop.adprojectmobile.activity.LoginActivity;
+import iss.workshop.adprojectmobile.activity.Store.StoreClerkHomePageActivity;
 
 public class RepresentativeMenuActivity extends AppCompatActivity implements View.OnClickListener {
     Button confirmDisbursement, raiseRequest, findRoutes, dCollection, dDistribution;
@@ -97,6 +99,17 @@ public class RepresentativeMenuActivity extends AppCompatActivity implements Vie
     @Override
     public void onClick(View view) {
         Intent intent = new Intent(this, RaiseRequestActivity.class);
+        startActivity(intent);
+    }
+
+    @Override
+    public void onBackPressed() {
+        Intent intent = new Intent(this, LoginActivity.class);
+        session_editor.putString("username", "");
+        session_editor.putString("role", "");
+        session_editor.putInt("departmentId", 0);
+        session_editor.putInt("staffId", 0);
+        session_editor.commit();
         startActivity(intent);
     }
 }

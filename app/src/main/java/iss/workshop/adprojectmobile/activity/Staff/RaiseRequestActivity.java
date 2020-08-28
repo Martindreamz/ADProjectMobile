@@ -2,6 +2,7 @@ package iss.workshop.adprojectmobile.activity.Staff;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
@@ -22,5 +23,11 @@ TextView requisitionForm;
     @Override
     public void onClick(View view) {
 
+    }
+
+    @Override
+    public void onBackPressed() {
+        Intent intent = new Intent(this, RepresentativeMenuActivity.class);
+        startActivity(intent);
     }
 }

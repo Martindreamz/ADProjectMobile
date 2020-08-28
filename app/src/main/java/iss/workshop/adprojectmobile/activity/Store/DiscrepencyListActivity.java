@@ -94,4 +94,10 @@ public class DiscrepencyListActivity extends AppCompatActivity implements View.O
         }
 
     }
+
+    @Override
+    public void onBackPressed() {
+        Intent intent = new Intent(this, InventoryCheckActivity.class);
+        startActivity(intent);
+    }
 }

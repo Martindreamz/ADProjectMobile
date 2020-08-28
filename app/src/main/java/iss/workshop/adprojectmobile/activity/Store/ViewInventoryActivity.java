@@ -74,4 +74,11 @@ implements View.OnClickListener{
         Intent intent = new Intent(this, StoreClerkHomePageActivity.class);
         startActivity(intent);
     }
+
+    @Override
+    public void onBackPressed() {
+        Intent intent = new Intent(this, StoreClerkHomePageActivity.class);
+        startActivity(intent);
+    }
+
 }

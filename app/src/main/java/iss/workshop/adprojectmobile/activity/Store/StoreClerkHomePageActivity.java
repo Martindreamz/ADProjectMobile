@@ -12,6 +12,7 @@ import android.view.View;
 import android.widget.Button;
 
 import iss.workshop.adprojectmobile.R;
+import iss.workshop.adprojectmobile.activity.LoginActivity;
 
 public class StoreClerkHomePageActivity extends AppCompatActivity {
 Button requisitinBtn, stockBtn;
@@ -76,4 +77,16 @@ Button requisitinBtn, stockBtn;
         }
         return super.onContextItemSelected(item);
     }
+
+    @Override
+    public void onBackPressed() {
+        Intent intent = new Intent(this, LoginActivity.class);
+        session_editor.putString("username", "");
+        session_editor.putString("role", "");
+        session_editor.putInt("departmentId", 0);
+        session_editor.putInt("staffId", 0);
+        session_editor.commit();
+        startActivity(intent);
+    }
+
 }

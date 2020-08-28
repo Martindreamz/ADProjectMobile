@@ -24,6 +24,7 @@ import java.util.List;
 import iss.workshop.adprojectmobile.Interfaces.ApiInterface;
 import iss.workshop.adprojectmobile.Interfaces.SSLBypasser;
 import iss.workshop.adprojectmobile.R;
+import iss.workshop.adprojectmobile.activity.Staff.RepresentativeMenuActivity;
 import iss.workshop.adprojectmobile.activity.Store.DisbursementDetailsActivity;
 import iss.workshop.adprojectmobile.activity.Store.StationeryRetrievalActivity;
 import iss.workshop.adprojectmobile.adapters.DisbursementDetailAdapter;
@@ -223,5 +224,11 @@ public class DisbursementListActivity extends AppCompatActivity implements Adapt
 
 
 
+    }
+
+    @Override
+    public void onBackPressed() {
+        Intent intent = new Intent(this, StoreClerkHomePageActivity.class);
+        startActivity(intent);
     }
 }

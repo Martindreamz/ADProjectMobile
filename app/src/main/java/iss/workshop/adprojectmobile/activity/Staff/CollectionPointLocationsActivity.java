@@ -7,6 +7,7 @@ import androidx.fragment.app.FragmentActivity;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.content.SharedPreferences;
@@ -21,6 +22,7 @@ import java.util.List;
 import iss.workshop.adprojectmobile.R;
 import iss.workshop.adprojectmobile.Interfaces.ApiInterface;
 import iss.workshop.adprojectmobile.Interfaces.SSLBypasser;
+import iss.workshop.adprojectmobile.activity.DepartmentHeadHomePageActivity;
 import iss.workshop.adprojectmobile.model.CollectionInfo;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -352,5 +354,10 @@ public class CollectionPointLocationsActivity extends FragmentActivity implement
     public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
         Findroutes(start, end);
 
+    }
+
+    public void onBackPressed() {
+        Intent intent = new Intent(this, RepresentativeMenuActivity.class);
+        startActivity(intent);
     }
 }

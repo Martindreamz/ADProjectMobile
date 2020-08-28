@@ -18,6 +18,7 @@ import java.util.List;
 import iss.workshop.adprojectmobile.Interfaces.ApiInterface;
 import iss.workshop.adprojectmobile.Interfaces.SSLBypasser;
 import iss.workshop.adprojectmobile.R;
+import iss.workshop.adprojectmobile.activity.Staff.RepresentativeMenuActivity;
 import iss.workshop.adprojectmobile.adapters.DisbursementDetailAdapter;
 import iss.workshop.adprojectmobile.model.DisbursementDetail;
 import retrofit2.Call;
@@ -101,5 +102,11 @@ public class DisbursementDetailsActivity extends AppCompatActivity implements Ad
     @Override
     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
 
+    }
+
+    @Override
+    public void onBackPressed() {
+        Intent intent = new Intent(this, DisbursementListActivity.class);
+        startActivity(intent);
     }
 }
