@@ -65,4 +65,16 @@ public class Department {
     public void setCollectionId(String collectionId) {
         CollectionId = collectionId;
     }
+
+    @Override
+    public String toString() {
+        return "Department{" +
+                "id=" + id +
+                ", deptName='" + deptName + '\'' +
+                ", deptCode='" + deptCode + '\'' +
+                ", delgtStartDate='" + delgtStartDate + '\'' +
+                ", delgtEndDate='" + delgtEndDate + '\'' +
+                ", CollectionId='" + CollectionId + '\'' +
+                '}';
+    }
 }

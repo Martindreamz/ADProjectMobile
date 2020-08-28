@@ -49,6 +49,20 @@ public interface ApiInterface {
     @GET("dept/deptEmp/{id}")
     Call<List<Employee>> getAllEmployeesByDept(@Path("id") int id);
 
+    @GET("Dept/{id}")
+    Call<Department> getDepartmentById(@Path("id") int id);
+
+    @GET("Dept/latestDisbursementByDept/{id}")
+    Call<DisbursementList>  getLatestDisbursementByDeptId(@Path("id") int id);
+
+    @GET("Dept/disbursementDetailByDept/{id}")
+    Call<List<DisbursementDetail>> getDisbursementDetailByDeptId(@Path("id") int id);
+
+    @GET("Dept/deptToDeliverReqDetail/{id}")
+    Call<List<RequisitionDetail>> getToDeliverRequisitionDetailByDeptId(@Path("id") int id);
+
+    @GET("Dept/deptToDeliverReq/{id}")
+    Call<List<Requisition>> getToDeliverRequisitionsByDeptId(@Path("id") int id);
 
     @Headers({"Content-Type: application/json"})
     @POST("store/getretrieval")
@@ -69,22 +83,12 @@ public interface ApiInterface {
     @Headers({"Content-Type: application/json"})
     @POST("dept/deptDelegate/{id}")
     Call<Employee> DeptDelegate(@Body Employee employee,@Path("id")int id);
-}
+
+    @POST("dept/deptRevokeDelegate/{deptid}/{staffid}")
+    Call<Employee> RevokeDelegate(@Path("deptid") int deptid,@Path("staffid") int staffid);
+
     @POST("dept/deptDelegate")
     Call<Employee> DeptDelegate(@Body Employee employee);
 
-    @GET("Dept/{id}")
-    Call<Department> getDepartmentById(@Path("id") int id);
 
-    @GET("Dept/latestDisbursementByDept/{id}")
-    Call<DisbursementList>  getLatestDisbursementByDeptId(@Path("id") int id);
-
-    @GET("Dept/disbursementDetailByDept/{id}")
-    Call<List<DisbursementDetail>> getDisbursementDetailByDeptId(@Path("id") int id);
-
-    @GET("Dept/deptToDeliverReqDetail/{id}")
-    Call<List<RequisitionDetail>> getToDeliverRequisitionDetailByDeptId(@Path("id") int id);
-
-    @GET("Dept/deptToDeliverReq/{id}")
-    Call<List<Requisition>> getToDeliverRequisitionsByDeptId(@Path("id") int id);
 }

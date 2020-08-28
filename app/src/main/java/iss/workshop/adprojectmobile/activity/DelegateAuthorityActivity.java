@@ -27,6 +27,7 @@ import iss.workshop.adprojectmobile.Interfaces.ApiInterface;
 import iss.workshop.adprojectmobile.Interfaces.SSLBypasser;
 import iss.workshop.adprojectmobile.R;
 import iss.workshop.adprojectmobile.activity.Store.DisbursementListActivity;
+import iss.workshop.adprojectmobile.model.Department;
 import iss.workshop.adprojectmobile.model.Employee;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -41,7 +42,7 @@ public class DelegateAuthorityActivity extends AppCompatActivity implements Adap
     Spinner spinner;
     List<Employee> departmentReps;
     List<Employee> allEmployee;
-    TextView txtView;
+    TextView txtView, currentDelegate;
     private SharedPreferences session;
     private SharedPreferences.Editor session_editor;
     Employee selectedEmployee, oldDelegate;
@@ -50,7 +51,17 @@ public class DelegateAuthorityActivity extends AppCompatActivity implements Adap
     String startDateStr, endDateStr;
     boolean startDateClear, endDateClear;
     LocalDate startDate, endDate;
-List<Employee> nonStaff;
+    List<Employee> nonStaff;
+    boolean existingdelegate;
+    Department currDept;
+
+    public Department getCurrDept() {
+        return currDept;
+    }
+
+    public void setCurrDept(Department currDept) {
+        this.currDept = currDept;
+    }
 
     public List<Employee> getNonStaff() {
         return nonStaff;
@@ -110,7 +121,10 @@ List<Employee> nonStaff;
         endDateStr = "";
         startDateClear = false;
         endDateClear = false;
-        nonStaff=new ArrayList<>();
+        nonStaff = new ArrayList<>();
+        existingdelegate = false;
+        currentDelegate = findViewById(R.id.currDelegatea);
+        oldDelegate = new Employee();
 
         final Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(ApiInterface.url)
@@ -119,37 +133,113 @@ List<Employee> nonStaff;
                 .build();
 
         final ApiInterface apiInterface = retrofit.create(ApiInterface.class);
-        Call<List<Employee>> call = apiInterface.getAllEmployeesByDept(session.getInt("departmentId", 0));
+        final Call<List<Employee>> empListCall = apiInterface.getAllEmployeesByDept(session.getInt("departmentId", 0));
+        Call<Department> departmentCall = apiInterface.getDepartmentById(session.getInt("departmentId", 0));
 
-        call.enqueue(new Callback<List<Employee>>() {
+        departmentCall.enqueue(new Callback<Department>() {
             @Override
-            public void onResponse(Call<List<Employee>> call, Response<List<Employee>> response) {
+            public void onResponse(Call<Department> call, Response<Department> response) {
+                System.out.println("department call back: " + response.code());
                 if (response.code() == 200) {
-                    departmentEmp = response.body();
-                    setDepartmentEmp(departmentEmp);
-                    for (Employee e : getDepartmentEmp()) {
-                        System.out.println(e);
-                        if (e.getRole().equals("STAFF")) {
-                            employees.add(e.getName());
-                            nonStaff.add(e);
-                        }
-                        if (e.getRole().equals("DELEGATE")) {
-                            oldDelegate = e;
-                            setOldDelegate(oldDelegate);
-                        }
+                    currDept = response.body();
+                    setCurrDept(currDept);
+                    System.out.println(currDept);
+                    System.out.println(currDept.getDelgtStartDate().substring(0, 4));
+                    if (!currDept.getDelgtStartDate().substring(0, 4).equals("0001")) {
+                        System.out.println("got delegate");
+                        existingdelegate = true;
                     }
-                    setNonStaff(nonStaff);
-                    ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(getApplicationContext(), android.R.layout.simple_spinner_item, employees);
-                    dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                    spinner.setAdapter(dataAdapter);
+
+
+                    empListCall.enqueue(new Callback<List<Employee>>() {
+                        @Override
+                        public void onResponse(Call<List<Employee>> call, Response<List<Employee>> response) {
+                            if (response.code() == 200) {
+                                departmentEmp = response.body();
+                                setDepartmentEmp(departmentEmp);
+                                for (Employee e : getDepartmentEmp()) {
+                                    System.out.println(e);
+                                    if (e.getRole().equals("STAFF")) {
+                                        employees.add(e.getName());
+                                        nonStaff.add(e);
+                                    }
+                                    if (e.getRole().equals("DELEGATE")) {
+                                        oldDelegate = e;
+                                        setOldDelegate(oldDelegate);
+                                        existingdelegate = true;
+                                    }
+                                }
+                                setNonStaff(nonStaff);
+                                if (existingdelegate) {
+                                    spinner.setVisibility(View.INVISIBLE);
+                                    startDateBtn.setText(currDept.getDelgtStartDate());
+                                    startDateBtn.setEnabled(false);
+                                    endDateBtn.setText(currDept.getDelgtEndDate());
+                                    endDateBtn.setEnabled(false);
+                                    authorizeBtn.setText("Revoke");
+                                    currentDelegate.setText("Current delegate is: " + getOldDelegate().getName());
+                                } else {
+
+
+                                    ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(getApplicationContext(), android.R.layout.simple_spinner_item, employees);
+                                    dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                                    spinner.setAdapter(dataAdapter);
+                                }
+                            }
+                        }
+
+                        @Override
+                        public void onFailure(Call<List<Employee>> call, Throwable t) {
+
+                        }
+                    });
+
+
                 }
             }
 
             @Override
-            public void onFailure(Call<List<Employee>> call, Throwable t) {
+            public void onFailure(Call<Department> call, Throwable t) {
 
             }
         });
+
+
+//
+//
+//
+//
+//
+//        empListCall.enqueue(new Callback<List<Employee>>() {
+//            @Override
+//            public void onResponse(Call<List<Employee>> call, Response<List<Employee>> response) {
+//                if (response.code() == 200) {
+//                    departmentEmp = response.body();
+//                    setDepartmentEmp(departmentEmp);
+//                    for (Employee e : getDepartmentEmp()) {
+////                        System.out.println(e);
+//                        if (e.getRole().equals("STAFF")) {
+//                            employees.add(e.getName());
+//                            nonStaff.add(e);
+//                        }
+//                        if (e.getRole().equals("DELEGATE")) {
+//                            oldDelegate = e;
+//                            setOldDelegate(oldDelegate);
+//                            existingdelegate = true;
+//                        }
+//                    }
+//                    setNonStaff(nonStaff);
+//                    ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(getApplicationContext(), android.R.layout.simple_spinner_item, employees);
+//                    dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+//                    spinner.setAdapter(dataAdapter);
+//                }
+//            }
+//
+//            @Override
+//            public void onFailure(Call<List<Employee>> call, Throwable t) {
+//
+//            }
+//        });
 
 
         //startDate.setOnClickListener(this);
@@ -215,6 +305,8 @@ List<Employee> nonStaff;
             @RequiresApi(api = Build.VERSION_CODES.O)
             @Override
             public void onClick(View view) {
+
+                if (!existingdelegate) {
                 startDateStr = startDateBtn.getText().toString();
                 endDateStr = endDateBtn.getText().toString();
                 System.out.println(startDateStr);
@@ -264,6 +356,31 @@ List<Employee> nonStaff;
                 }
 
 
+                } else {
+                    Retrofit retrofit = new Retrofit.Builder()
+                            .baseUrl(ApiInterface.url)
+                            .client(SSLBypasser.getUnsafeOkHttpClient().build())
+                            .addConverterFactory(GsonConverterFactory.create())
+                            .build();
+
+                    ApiInterface apiInterface3 = retrofit.create(ApiInterface.class);
+                    Call<Employee> RevokeDelegateCall = apiInterface3.RevokeDelegate(session.getInt("departmentId", 0), oldDelegate.getId());
+                    RevokeDelegateCall.enqueue(new Callback<Employee>() {
+                        @Override
+                        public void onResponse(Call<Employee> call, Response<Employee> response) {
+                            System.out.println(response.code());
+
+                            Intent intent = new Intent(getApplicationContext(), DepartmentHeadHomePageActivity.class);
+                            startActivity(intent);
+                        }
+
+                        @Override
+                        public void onFailure(Call<Employee> call, Throwable t) {
+
+                        }
+                    });
+
+                }
             }
         });
     }
