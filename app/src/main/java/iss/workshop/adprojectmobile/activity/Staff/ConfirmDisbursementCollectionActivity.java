@@ -14,6 +14,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.TableLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.travijuu.numberpicker.library.Enums.ActionEnum;
 import com.travijuu.numberpicker.library.Interface.ValueChangedListener;
@@ -45,7 +46,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class ConfirmDisbursementCollectionActivity extends AppCompatActivity {
 
-    TextView collectionPointView, collectionDateView, collectionTimeView, status;
+    TextView collectionPointView, collectionDateView, collectionTimeView;
     Button completeBtn;
     private TableLayout collectTableLayout;
 
@@ -110,7 +111,6 @@ public class ConfirmDisbursementCollectionActivity extends AppCompatActivity {
         collectionDateView = findViewById(R.id.collectionDate);
         collectionTimeView = findViewById(R.id.collectionTime);
 
-        status = findViewById(R.id.Status);
         completeBtn = findViewById(R.id.completeBtn);
         completeBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -346,6 +346,7 @@ public class ConfirmDisbursementCollectionActivity extends AppCompatActivity {
             }
         });
     }
+
 
 
 }

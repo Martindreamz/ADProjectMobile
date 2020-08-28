@@ -14,7 +14,7 @@ import android.widget.Button;
 import iss.workshop.adprojectmobile.R;
 
 public class RepresentativeMenuActivity extends AppCompatActivity implements View.OnClickListener {
-    Button confirmDisbursement, raiseRequest, findRoutes, dCollection, dDistribution;
+    Button confirmDisbursement, raiseRequest, findRoutes;
 
     SharedPreferences session;
     SharedPreferences.Editor session_editor;
@@ -24,12 +24,17 @@ public class RepresentativeMenuActivity extends AppCompatActivity implements Vie
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_representative_menu);
+        confirmDisbursement = findViewById(R.id.confirmDisbursementBtn);
+        if(confirmDisbursement!=null) {
+            registerForContextMenu(confirmDisbursement);
+        }
+
 
         session = getSharedPreferences("session", MODE_PRIVATE);
         session_editor = session.edit();
         currRole = session.getString("role", null);
         if (currRole.equals("STAFF")) {
-            confirmDisbursement = findViewById(R.id.confirmDisbursementBtn);
+
             confirmDisbursement.setVisibility(View.GONE);
         }
         raiseRequest = findViewById(R.id.raiseBtn);
@@ -46,23 +51,23 @@ public class RepresentativeMenuActivity extends AppCompatActivity implements Vie
             }
         });
 
-        dCollection = (Button) findViewById(R.id.dCollection);
-        dCollection.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(RepresentativeMenuActivity.this, ConfirmDisbursementCollectionActivity.class);
-                startActivity(intent);
-            }
-        });
-
-        dDistribution = (Button) findViewById(R.id.dDistribution);
-        dDistribution.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(RepresentativeMenuActivity.this, ConfirmDisbursementDistributionActivity.class);
-                startActivity(intent);
-            }
-        });
+//        dCollection = (Button) findViewById(R.id.dCollection);
+//        dCollection.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                Intent intent = new Intent(RepresentativeMenuActivity.this, ConfirmDisbursementCollectionActivity.class);
+//                startActivity(intent);
+//            }
+//        });
+//
+//        dDistribution = (Button) findViewById(R.id.dDistribution);
+//        dDistribution.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                Intent intent = new Intent(RepresentativeMenuActivity.this, ConfirmDisbursementDistributionActivity.class);
+//                startActivity(intent);
+//            }
+//        });
 
     }
 
@@ -71,22 +76,18 @@ public class RepresentativeMenuActivity extends AppCompatActivity implements Vie
         if (v.getId() == R.id.confirmDisbursementBtn) {
             super.onCreateContextMenu(menu, v, menuInfo);
             MenuInflater inflater = getMenuInflater();
-            inflater.inflate(R.menu.representative_menu, menu);
+            inflater.inflate(R.menu.disbursement_menu, menu);
         }
     }
 
     @Override
     public boolean onContextItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.collection:
+            case R.id.disbursementCollection:
                 Intent intent = new Intent(this, ConfirmDisbursementCollectionActivity.class);
                 startActivity(intent);
                 break;
-            case R.id.collectionPoint:
-                Intent intent2 = new Intent(this, CollectionPointLocationsActivity.class);
-                startActivity(intent2);
-                break;
-            case R.id.distribution:
+            case R.id.disbursementDistribution:
                 Intent intent3 = new Intent(this, ConfirmDisbursementDistributionActivity.class);
                 startActivity(intent3);
                 break;

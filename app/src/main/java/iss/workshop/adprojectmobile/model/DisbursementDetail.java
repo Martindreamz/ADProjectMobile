@@ -10,8 +10,9 @@ public class DisbursementDetail {
     private String requisitionDetail;
     private int StationeryId;
     private String StationeryDesc;
+    private String requestedEmp;
 
-    public DisbursementDetail(int id, int disbursementListId, int requisitionDetailId, int qty, String disbursementList, String requisitionDetail) {
+    public DisbursementDetail(int id, int disbursementListId, int requisitionDetailId, int qty, String disbursementList, String requisitionDetail, String requestedEmp) {
         this.id = id;
         this.disbursementListId = disbursementListId;
         this.requisitionDetailId = requisitionDetailId;
@@ -20,6 +21,7 @@ public class DisbursementDetail {
         this.requisitionDetail = requisitionDetail;
         this.StationeryId = 0;
         this.StationeryDesc = null;
+        this.requestedEmp = null;
     }
 
     public int getId() {
@@ -85,6 +87,10 @@ public class DisbursementDetail {
     public void setStationeryDesc(String stationeryDesc) {
         this.StationeryDesc = stationeryDesc;
     }
+
+    public String getRequestedEmp() { return requestedEmp; }
+
+    public void setRequestedEmp(String requestedEmp) { this.requestedEmp = requestedEmp; }
 
     @Override
     public String toString() {

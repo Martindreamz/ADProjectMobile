@@ -26,7 +26,7 @@
             android:layout_marginTop="5dp"
             android:inputType="textMultiLine"
             android:lines="5"
-            android:textSize="10sp" />
+            android:textSize="18sp" />
 
         <TextView
             android:id="@+id/collectionDate"
@@ -35,7 +35,7 @@
             android:layout_marginTop="5dp"
             android:inputType="textMultiLine"
             android:lines="5"
-            android:textSize="10sp" />
+            android:textSize="14sp" />
 
         <TextView
             android:id="@+id/collectionTime"
@@ -44,16 +44,7 @@
             android:layout_marginTop="5dp"
             android:inputType="textMultiLine"
             android:lines="5"
-            android:textSize="10sp" />
-
-        <TextView
-            android:id="@+id/Status"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
-            android:inputType="textMultiLine"
-            android:lines="5"
-            android:textSize="10sp" />
+            android:textSize="14sp" />
 
     </LinearLayout>
     <TableLayout

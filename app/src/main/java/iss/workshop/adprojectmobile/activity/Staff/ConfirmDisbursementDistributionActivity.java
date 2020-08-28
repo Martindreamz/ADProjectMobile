@@ -184,29 +184,35 @@ public class ConfirmDisbursementDistributionActivity extends AppCompatActivity {
                                                                                 }
 
                                                                                 if (finalRequisitionDetail != null) {
-                                                                                    for (RequisitionDetail rDetail : finalRequisitionDetail) {
+
+                                                                                    for (DisbursementDetail dDetail : filteredDisbursementDetail) {
+                                                                                        for (RequisitionDetail rDetail : finalRequisitionDetail) {
+                                                                                            if (dDetail.getRequisitionDetailId() == rDetail.getId()) {
+                                                                                                dDetail.setRequestedEmp(rDetail.getEmployeeName());
+                                                                                                dDetail.setStationeryDesc(rDetail.getStationeryDesc());
+                                                                                            }
+                                                                                        }
+                                                                                    }
+
+                                                                                    for (DisbursementDetail dDetail : filteredDisbursementDetail) {
                                                                                         View tableRow = LayoutInflater.from(getApplicationContext()).inflate(R.layout.activity_confirm_disbursement_distribution_item, null, false);
                                                                                         TextView requester = (TextView) tableRow.findViewById(R.id.requestorName);
                                                                                         TextView statDescription = (TextView) tableRow.findViewById(R.id.statDescription);
-                                                                                        TextView requestedQty = (TextView) tableRow.findViewById(R.id.requestedQty);
                                                                                         TextView receivedQty = (TextView) tableRow.findViewById(R.id.receivedQty);
 
-                                                                                        requester.setText(rDetail.getEmployeeName());
-                                                                                        statDescription.setText(rDetail.getStationeryDesc());
-                                                                                        requestedQty.setText(Integer.toString(rDetail.getReqQty()));
-                                                                                        receivedQty.setText(Integer.toString(rDetail.getRcvQty()));
+                                                                                        requester.setText(dDetail.getRequestedEmp());
+                                                                                        statDescription.setText(dDetail.getStationeryDesc());
+                                                                                        receivedQty.setText(Integer.toString(dDetail.getQty()));
                                                                                         tableLayout.addView(tableRow);
                                                                                     }
                                                                                 } else {
                                                                                     View tableRow = LayoutInflater.from(getApplicationContext()).inflate(R.layout.activity_confirm_disbursement_distribution_item, null, false);
                                                                                     TextView requester = (TextView) tableRow.findViewById(R.id.requestorName);
                                                                                     TextView statDescription = (TextView) tableRow.findViewById(R.id.statDescription);
-                                                                                    TextView requestedQty = (TextView) tableRow.findViewById(R.id.requestedQty);
                                                                                     TextView receivedQty = (TextView) tableRow.findViewById(R.id.receivedQty);
 
                                                                                     requester.setText("");
                                                                                     statDescription.setText("No Requisition Data");
-                                                                                    requestedQty.setText("");
                                                                                     receivedQty.setText("");
                                                                                     tableLayout.addView(tableRow);
                                                                                 }
