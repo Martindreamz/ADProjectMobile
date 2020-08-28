@@ -68,7 +68,7 @@ public class DiscrepencyListActivity extends AppCompatActivity implements View.O
                     .build();
             ApiInterface apiInterface=retrofit.create(ApiInterface.class);
             //session.getInt("staffId", 0)
-            Call<StockAdjustment> call = apiInterface.PostTestStkAd(sads,15);
+            Call<StockAdjustment> call = apiInterface.PostTestStkAd(sads,session.getInt("staffId", 0));
             call.enqueue(new Callback<StockAdjustment>() {
                 @Override
                 public void onResponse(Call<StockAdjustment> call, Response<StockAdjustment> response) {

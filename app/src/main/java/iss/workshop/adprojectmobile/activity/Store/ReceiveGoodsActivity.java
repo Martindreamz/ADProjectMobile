@@ -3,6 +3,7 @@ package iss.workshop.adprojectmobile.activity.Store;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
@@ -45,6 +46,7 @@ public class ReceiveGoodsActivity extends AppCompatActivity
     List<Stationery> filteredList;
     List<Stationery> allStationery;
     public static List<Stationery> selectedStationery;
+    private SharedPreferences session;
     List<PurchaseOrder> purchaseOrders;
     List<String> poddl;
     List<PurchaseOrderDetail> pods=new ArrayList<PurchaseOrderDetail>();
@@ -327,7 +329,7 @@ public class ReceiveGoodsActivity extends AppCompatActivity
                     .build();
             ApiInterface apiInterface=retrofit.create(ApiInterface.class);
             //session.getInt("staffId", 0)
-            Call<StockAdjustment> call = apiInterface.PostReceivedGoods(sads,15);
+            Call<StockAdjustment> call = apiInterface.PostReceivedGoods(sads,session.getInt("staffId", 0));
             call.enqueue(new Callback<StockAdjustment>() {
                 @Override
                 public void onResponse(Call<StockAdjustment> call, Response<StockAdjustment> response) {
