@@ -79,6 +79,8 @@ public class ReceiveGoodsActivity extends AppCompatActivity
         purchaseOrders = new ArrayList<>();
         BtnRecive = findViewById(R.id.rcvGoodsSaveBtn);
         BtnRecive.setOnClickListener(this);
+        session = getSharedPreferences("session", MODE_PRIVATE);
+
 
         Date c = Calendar.getInstance().getTime();
         System.out.println("Current time => " + c);
