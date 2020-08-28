@@ -58,21 +58,19 @@ public class ConfirmDisbursementDistributionActivity extends AppCompatActivity i
     List<Employee> employeeList;
     int selectedEmpId;
 
+    public int getSelectedEmpId() {
+        return selectedEmpId;
+    }
+
+    public void setSelectedEmpId(int selectedEmpId) {
+        this.selectedEmpId = selectedEmpId;
+    }
+
     DisbursementList disbursement;
     List<DisbursementDetail> disbursementDetail;
     List<Requisition> requisition;
     List<RequisitionDetail> requisitionDetail;
     List<Stationery> stationery;
-
-    List<RequisitionDetail> requisitionDetailData;
-
-    public List<RequisitionDetail> getRequisitionDetailData() {
-        return requisitionDetailData;
-    }
-
-    public void setRequisitionDetailData(List<RequisitionDetail> requisitionDetailData) {
-        this.requisitionDetailData = requisitionDetailData;
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -113,30 +111,6 @@ public class ConfirmDisbursementDistributionActivity extends AppCompatActivity i
 
             }
         });
-
-        if (getRequisitionDetailData() != null) {
-            for (RequisitionDetail rDetail : getRequisitionDetailData()) {
-                View tableRow = LayoutInflater.from(getApplicationContext()).inflate(R.layout.activity_confirm_disbursement_distribution_item, null, false);
-                TextView statDescription = (TextView) tableRow.findViewById(R.id.statDescription);
-                TextView requestedQty = (TextView) tableRow.findViewById(R.id.requestedQty);
-                TextView receivedQty = (TextView) tableRow.findViewById(R.id.receivedQty);
-
-                statDescription.setText(rDetail.getStationeryDesc());
-                requestedQty.setText(Integer.toString(rDetail.getReqQty()));
-                receivedQty.setText(Integer.toString(rDetail.getRcvQty()));
-                tableLayout.addView(tableRow);
-            }
-        } else {
-            View tableRow = LayoutInflater.from(getApplicationContext()).inflate(R.layout.activity_confirm_disbursement_distribution_item, null, false);
-            TextView statDescription = (TextView) tableRow.findViewById(R.id.statDescription);
-            TextView requestedQty = (TextView) tableRow.findViewById(R.id.requestedQty);
-            TextView receivedQty = (TextView) tableRow.findViewById(R.id.receivedQty);
-
-            statDescription.setText("No Requisition Data");
-            requestedQty.setText("");
-            receivedQty.setText("");
-            tableLayout.addView(tableRow);
-        }
     }
 
     @Override
@@ -155,146 +129,9 @@ public class ConfirmDisbursementDistributionActivity extends AppCompatActivity i
                 if (employeeList != null) {
                     for (Employee employee : employeeList) {
                         if (employee.getName().equals(item)) {
-                            selectedEmpId = employee.getId();
+                            setSelectedEmpId(employee.getId());
                         }
                     }
-
-                    Call<DisbursementList> callDisbursementUnderDept = apiInterface.getLatestDisbursementByDeptId(departmentId);
-
-                    callDisbursementUnderDept.enqueue(new Callback<DisbursementList>() {
-                        @Override
-                        public void onResponse(Call<DisbursementList> call, Response<DisbursementList> response) {
-                            disbursement = response.body();
-
-                            if (disbursement != null) {
-
-                                Call<List<DisbursementDetail>> callDisbursementDetail = apiInterface.getDisbursementDetailByDeptId(departmentId);
-
-                                callDisbursementDetail.enqueue(new Callback<List<DisbursementDetail>>() {
-                                    @RequiresApi(api = Build.VERSION_CODES.O)
-                                    @Override
-                                    public void onResponse(Call<List<DisbursementDetail>> call, Response<List<DisbursementDetail>> response) {
-                                        disbursementDetail = response.body();
-
-                                        final List<DisbursementDetail> filteredDisbursementDetail = new ArrayList<>();
-
-                                        if (disbursementDetail != null) {
-                                            for (DisbursementDetail dDetail : disbursementDetail) {
-                                                if (dDetail.getDisbursementListId() == disbursement.getId()) {
-                                                    filteredDisbursementDetail.add(dDetail);
-                                                }
-                                            }
-                                        }
-
-                                        if (filteredDisbursementDetail != null) {
-                                            Call<List<Requisition>> callRequisitionsUnderDept = apiInterface.getToDeliverRequisitionsByDeptId(departmentId);
-
-                                            callRequisitionsUnderDept.enqueue(new Callback<List<Requisition>>() {
-                                                @Override
-                                                public void onResponse(Call<List<Requisition>> call, Response<List<Requisition>> response) {
-                                                    requisition = response.body();
-
-                                                    final List<Requisition> filteredRequisition = new ArrayList<>();
-
-                                                    if (requisition != null) {
-
-                                                        for (Requisition req : requisition) {
-                                                            if (req.getEmployeeId() == selectedEmpId) {
-                                                                filteredRequisition.add(req);
-                                                            }
-                                                        }
-                                                    }
-
-                                                    if (filteredRequisition != null) {
-                                                        Call<List<RequisitionDetail>> callRequisitionDetail = apiInterface.getToDeliverRequisitionDetailByDeptId(departmentId);
-
-                                                        callRequisitionDetail.enqueue(new Callback<List<RequisitionDetail>>() {
-                                                            @Override
-                                                            public void onResponse(Call<List<RequisitionDetail>> call, Response<List<RequisitionDetail>> response) {
-                                                                requisitionDetail = response.body();
-
-                                                                final List<RequisitionDetail> filteredRequisitionDetail = new ArrayList<>();
-
-                                                                for (RequisitionDetail rDetail : requisitionDetail) {
-                                                                    for (Requisition req : filteredRequisition) {
-                                                                        if (req.getId() == rDetail.getRequisitionId()) {
-                                                                            filteredRequisitionDetail.add(rDetail);
-                                                                        }
-                                                                    }
-                                                                }
-
-                                                                if (filteredRequisitionDetail != null) {
-
-                                                                    final List<RequisitionDetail> finalRequisitionDetail = new ArrayList<>();
-
-                                                                    for (RequisitionDetail rDetail : filteredRequisitionDetail) {
-                                                                        for (DisbursementDetail dDetail : filteredDisbursementDetail) {
-                                                                            if (rDetail.getId() == dDetail.getRequisitionDetailId()) {
-                                                                                finalRequisitionDetail.add(rDetail);
-                                                                            }
-                                                                        }
-                                                                    }
-
-                                                                    if (finalRequisitionDetail != null) {
-                                                                        Call<List<Stationery>> callStationery = apiInterface.getAllStationery();
-
-                                                                        callStationery.enqueue(new Callback<List<Stationery>>() {
-                                                                            @Override
-                                                                            public void onResponse(Call<List<Stationery>> call, Response<List<Stationery>> response) {
-                                                                                stationery = response.body();
-
-                                                                                if (stationery != null) {
-                                                                                    for (RequisitionDetail rDetail : finalRequisitionDetail) {
-                                                                                        for (Stationery stat : stationery) {
-                                                                                            if (rDetail.getStationeryId() == stat.getId()) {
-                                                                                                rDetail.setStationeryDesc(stat.getDesc());
-                                                                                            }
-                                                                                        }
-                                                                                    }
-                                                                                }
-
-                                                                                setRequisitionDetailData(finalRequisitionDetail);
-                                                                            }
-
-                                                                            @Override
-                                                                            public void onFailure(Call<List<Stationery>> call, Throwable t) {
-                                                                                Log.e("error", t.getMessage());
-                                                                            }
-                                                                        });
-                                                                    }
-                                                                }
-
-                                                            }
-
-                                                            @Override
-                                                            public void onFailure(Call<List<RequisitionDetail>> call, Throwable t) {
-                                                                Log.e("error", t.getMessage());
-                                                            }
-                                                        });
-                                                    }
-                                                }
-
-                                                @Override
-                                                public void onFailure(Call<List<Requisition>> call, Throwable t) {
-                                                    Log.e("error", t.getMessage());
-                                                }
-                                            });
-                                        }
-                                    }
-
-                                    @Override
-                                    public void onFailure(Call<List<DisbursementDetail>> call, Throwable t) {
-                                        Log.e("error", t.getMessage());
-                                    }
-                                });
-                            }
-                        }
-
-                        @Override
-                        public void onFailure(Call<DisbursementList> call, Throwable t) {
-                            Log.e("error", t.getMessage());
-                        }
-                    });
 
                 }
             }
@@ -304,10 +141,163 @@ public class ConfirmDisbursementDistributionActivity extends AppCompatActivity i
                 Log.e("error", t.getMessage());
             }
         });
+
+            employeeChanged(selectedEmpId);
     }
 
     @Override
     public void onNothingSelected(AdapterView<?> adapterView) {
 
+    }
+
+
+    public void employeeChanged (final int selectedEmpId) {
+        Call<DisbursementList> callDisbursementUnderDept = apiInterface.getLatestDisbursementByDeptId(departmentId);
+
+        callDisbursementUnderDept.enqueue(new Callback<DisbursementList>() {
+            @Override
+            public void onResponse(Call<DisbursementList> call, Response<DisbursementList> response) {
+                disbursement = response.body();
+
+                if (disbursement != null) {
+
+                    Call<List<DisbursementDetail>> callDisbursementDetail = apiInterface.getDisbursementDetailByDeptId(departmentId);
+
+                    callDisbursementDetail.enqueue(new Callback<List<DisbursementDetail>>() {
+                        @RequiresApi(api = Build.VERSION_CODES.O)
+                        @Override
+                        public void onResponse(Call<List<DisbursementDetail>> call, Response<List<DisbursementDetail>> response) {
+                            disbursementDetail = response.body();
+
+                            final List<DisbursementDetail> filteredDisbursementDetail = new ArrayList<>();
+
+                            if (disbursementDetail != null) {
+                                for (DisbursementDetail dDetail : disbursementDetail) {
+                                    if (dDetail.getDisbursementListId() == disbursement.getId()) {
+                                        filteredDisbursementDetail.add(dDetail);
+                                    }
+                                }
+                            }
+
+                            if (filteredDisbursementDetail != null) {
+                                Call<List<Requisition>> callRequisitionsUnderEmp = apiInterface.getToDeliverRequisitionsByEmpId(selectedEmpId);
+
+                                callRequisitionsUnderEmp.enqueue(new Callback<List<Requisition>>() {
+                                    @Override
+                                    public void onResponse(Call<List<Requisition>> call, Response<List<Requisition>> response) {
+                                        requisition = response.body();
+
+                                        if (requisition != null) {
+                                            Call<List<RequisitionDetail>> callRequisitionDetail = apiInterface.getToDeliverRequisitionDetailByDeptId(departmentId);
+
+                                            callRequisitionDetail.enqueue(new Callback<List<RequisitionDetail>>() {
+                                                @Override
+                                                public void onResponse(Call<List<RequisitionDetail>> call, Response<List<RequisitionDetail>> response) {
+                                                    requisitionDetail = response.body();
+
+                                                    List<RequisitionDetail> filteredRequisitionDetail = new ArrayList<>();
+
+                                                    for (RequisitionDetail rDetail : requisitionDetail) {
+                                                        for (Requisition req : requisition) {
+                                                            if (req.getId() == rDetail.getRequisitionId()) {
+                                                                filteredRequisitionDetail.add(rDetail);
+                                                            }
+                                                        }
+                                                    }
+
+                                                    if (filteredRequisitionDetail != null) {
+
+                                                        final List<RequisitionDetail> finalRequisitionDetail = new ArrayList<>();
+
+                                                        for (RequisitionDetail rDetail : filteredRequisitionDetail) {
+                                                            for (DisbursementDetail dDetail : filteredDisbursementDetail) {
+                                                                if (rDetail.getId() == dDetail.getRequisitionDetailId()) {
+                                                                    finalRequisitionDetail.add(rDetail);
+                                                                }
+                                                            }
+                                                        }
+
+                                                        if (finalRequisitionDetail != null) {
+                                                            Call<List<Stationery>> callStationery = apiInterface.getAllStationery();
+
+                                                            callStationery.enqueue(new Callback<List<Stationery>>() {
+                                                                @Override
+                                                                public void onResponse(Call<List<Stationery>> call, Response<List<Stationery>> response) {
+                                                                    stationery = response.body();
+
+                                                                    if (stationery != null) {
+                                                                        for (RequisitionDetail rDetail : finalRequisitionDetail) {
+                                                                            for (Stationery stat : stationery) {
+                                                                                if (rDetail.getStationeryId() == stat.getId()) {
+                                                                                    rDetail.setStationeryDesc(stat.getDesc());
+                                                                                }
+                                                                            }
+                                                                        }
+                                                                    }
+
+                                                                    if (finalRequisitionDetail != null) {
+                                                                        for (RequisitionDetail rDetail : finalRequisitionDetail) {
+                                                                            View tableRow = LayoutInflater.from(getApplicationContext()).inflate(R.layout.activity_confirm_disbursement_distribution_item, null, false);
+                                                                            TextView statDescription = (TextView) tableRow.findViewById(R.id.statDescription);
+                                                                            TextView requestedQty = (TextView) tableRow.findViewById(R.id.requestedQty);
+                                                                            TextView receivedQty = (TextView) tableRow.findViewById(R.id.receivedQty);
+
+                                                                            statDescription.setText(rDetail.getStationeryDesc());
+                                                                            requestedQty.setText(Integer.toString(rDetail.getReqQty()));
+                                                                            receivedQty.setText(Integer.toString(rDetail.getRcvQty()));
+                                                                            tableLayout.addView(tableRow);
+                                                                        }
+                                                                    } else {
+                                                                        View tableRow = LayoutInflater.from(getApplicationContext()).inflate(R.layout.activity_confirm_disbursement_distribution_item, null, false);
+                                                                        TextView statDescription = (TextView) tableRow.findViewById(R.id.statDescription);
+                                                                        TextView requestedQty = (TextView) tableRow.findViewById(R.id.requestedQty);
+                                                                        TextView receivedQty = (TextView) tableRow.findViewById(R.id.receivedQty);
+
+                                                                        statDescription.setText("No Requisition Data");
+                                                                        requestedQty.setText("");
+                                                                        receivedQty.setText("");
+                                                                        tableLayout.addView(tableRow);
+                                                                    }
+                                                                }
+
+                                                                @Override
+                                                                public void onFailure(Call<List<Stationery>> call, Throwable t) {
+                                                                    Log.e("error", t.getMessage());
+                                                                }
+                                                            });
+                                                        }
+                                                    }
+
+                                                }
+
+                                                @Override
+                                                public void onFailure(Call<List<RequisitionDetail>> call, Throwable t) {
+                                                    Log.e("error", t.getMessage());
+                                                }
+                                            });
+                                        }
+                                    }
+
+                                    @Override
+                                    public void onFailure(Call<List<Requisition>> call, Throwable t) {
+                                        Log.e("error", t.getMessage());
+                                    }
+                                });
+                            }
+                        }
+
+                        @Override
+                        public void onFailure(Call<List<DisbursementDetail>> call, Throwable t) {
+                            Log.e("error", t.getMessage());
+                        }
+                    });
+                }
+            }
+
+            @Override
+            public void onFailure(Call<DisbursementList> call, Throwable t) {
+                Log.e("error", t.getMessage());
+            }
+        });
     }
 }

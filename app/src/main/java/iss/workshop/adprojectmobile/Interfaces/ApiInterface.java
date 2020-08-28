@@ -64,6 +64,9 @@ public interface ApiInterface {
     @GET("Dept/deptToDeliverReq/{id}")
     Call<List<Requisition>> getToDeliverRequisitionsByDeptId(@Path("id") int id);
 
+    @GET("Dept/empToDeliverReq/{id}")
+    Call<List<Requisition>> getToDeliverRequisitionsByEmpId(@Path("id") int id);
+
     @Headers({"Content-Type: application/json"})
     @POST("store/getretrieval")
     Call<Requisition> sendRequisitionToProcess(@Body Requisition requisitions);
@@ -88,6 +91,5 @@ public interface ApiInterface {
 
     @POST("dept/deptDelegate")
     Call<Employee> DeptDelegate(@Body Employee employee);
-
 
 }
