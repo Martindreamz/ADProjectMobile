@@ -4,7 +4,6 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
 
@@ -15,23 +14,21 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+
         <activity android:name=".activity.DepartmentHeadHomePageActivity"></activity>
         <activity android:name=".activity.Store.DisbursementListActivity" />
-        android:theme="@style/AppTheme">
         <activity android:name=".activity.Store.ViewInventoryActivity">
             <meta-data
                 android:name="android.app.searchable"
                 android:resource="@xml/searchable"></meta-data>
         </activity>
         <activity android:name=".activity.Store.DiscrepencyListActivity" />
-
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyAHNMTRIbyTlFWugBR81KZYK33G3eZl1zA" />
         <meta-data
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
-
         <activity android:name=".activity.Store.RaisePurchaseOrderSubmitActivity" />
         <activity android:name=".activity.Store.RaisePurchaseOrderActivity" />
         <activity android:name=".activity.Store.DisbursementDetailsActivity" />
@@ -41,13 +38,18 @@
         <activity android:name=".activity.Staff.CollectionPointLocationsActivity" />
         <activity android:name=".activity.Staff.RepresentativeMenuActivity" />
         <activity android:name=".activity.DelegateAuthorityActivity" />
+        <activity android:name=".activity.Store.StationeryRetrievalActivity"></activity>
         <activity android:name=".activity.Store.ReceiveGoodsActivity">
             <meta-data
                 android:name="android.app.searchable"
                 android:resource="@xml/searchable"></meta-data>
         </activity>
-                <action android:name="android.intent.action.MAIN" />
-        <activity android:name=".activity.Store.StationeryRetrievalActivity"></activity>
+        <activity android:name=".activity.Store.InventoryCheckActivity">
+            <meta-data
+                android:name="android.app.searchable"
+                android:resource="@xml/searchable"></meta-data>
+        </activity>
+
         <activity android:name=".activity.LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -55,12 +57,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".activity.Store.InventoryCheckActivity">
-            <meta-data
-                android:name="android.app.searchable"
-                android:resource="@xml/searchable"></meta-data>
-                <category android:name="android.intent.category.LAUNCHER" />
-        </activity>
+
         <activity android:name=".activity.MainActivity" />
     </application>
 
