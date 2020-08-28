@@ -39,10 +39,10 @@ public class RepresentativeMenuActivity extends AppCompatActivity implements Vie
 
             confirmDisbursement.setVisibility(View.GONE);
         }
-        raiseRequest = findViewById(R.id.raiseBtn);
+        /*raiseRequest = findViewById(R.id.raiseBtn);
         raiseRequest.setOnClickListener(this);
         if (confirmDisbursement != null)
-            registerForContextMenu(confirmDisbursement);
+            registerForContextMenu(confirmDisbursement);*/
 
         findRoutes = (Button) findViewById(R.id.findRoutesBtn);
         findRoutes.setOnClickListener(new View.OnClickListener() {
