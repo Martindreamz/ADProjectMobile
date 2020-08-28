@@ -6,7 +6,7 @@
     <item
         android:id="@+id/rcvGoods"
         android:title="@string/rcvGoods"/>
-    <item
-        android:id="@+id/raisePO"
-        android:title="@string/raisePO"/>
+<!--    <item-->
+<!--        android:id="@+id/raisePO"-->
+<!--        android:title="@string/raisePO"/>-->
 </menu>

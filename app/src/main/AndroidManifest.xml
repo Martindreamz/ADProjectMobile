@@ -29,7 +29,7 @@
         <activity android:name=".activity.Store.RaisePurchaseOrderActivity" />
         <activity android:name=".activity.Store.ReceiveGoodsActivity" />
         <activity android:name=".activity.Store.DiscrepencyListActivity" />
-
+        <activity android:name=".activity.Store.DisbursementDetailsActivity" />
         <activity android:name=".activity.Store.StoreClerkHomePageActivity" />
         <activity android:name=".activity.Staff.RaiseRequestActivity" />
         <activity android:name=".activity.Staff.ConfirmDisbursementDistributionActivity" />

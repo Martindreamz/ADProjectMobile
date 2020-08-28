@@ -53,7 +53,7 @@ public class DisbursementDetailsActivity extends AppCompatActivity implements Ad
         ddList = new ArrayList<>();
         title = findViewById(R.id.DDtitle);
         rep = findViewById(R.id.DDrep);
-        back = findViewById(R.id.DDback);
+//        back = findViewById(R.id.DDback);
 
         title.setText(session.getString("selected_dl_dept", "not found"));
         rep.setText(session.getString("selected_dl_rep", "not found"));
@@ -89,13 +89,13 @@ public class DisbursementDetailsActivity extends AppCompatActivity implements Ad
             }
         });
 
-        back.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(), DisbursementListActivity.class);
-                startActivity(intent);
-            }
-        });
+//        back.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                Intent intent = new Intent(getApplicationContext(), DisbursementListActivity.class);
+//                startActivity(intent);
+//            }
+//        });
     }
 
     @Override

@@ -42,7 +42,7 @@ public class DelegateAuthorityActivity extends AppCompatActivity implements Adap
     Spinner spinner;
     List<Employee> departmentReps;
     List<Employee> allEmployee;
-    TextView txtView, currentDelegate;
+    TextView txtView, currentDelegate,welcome;
     private SharedPreferences session;
     private SharedPreferences.Editor session_editor;
     Employee selectedEmployee, oldDelegate;
@@ -54,6 +54,7 @@ public class DelegateAuthorityActivity extends AppCompatActivity implements Adap
     List<Employee> nonStaff;
     boolean existingdelegate;
     Department currDept;
+
 
     public Department getCurrDept() {
         return currDept;
@@ -125,6 +126,9 @@ public class DelegateAuthorityActivity extends AppCompatActivity implements Adap
         existingdelegate = false;
         currentDelegate = findViewById(R.id.currDelegatea);
         oldDelegate = new Employee();
+        welcome = findViewById(R.id.welcome);
+
+        welcome.setText("Welcome, " + session.getString("username",null));
 
         final Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(ApiInterface.url)
