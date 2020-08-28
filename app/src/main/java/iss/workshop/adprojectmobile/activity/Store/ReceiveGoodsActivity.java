@@ -79,6 +79,8 @@ public class ReceiveGoodsActivity extends AppCompatActivity
         purchaseOrders = new ArrayList<>();
         BtnRecive = findViewById(R.id.rcvGoodsSaveBtn);
         BtnRecive.setOnClickListener(this);
+        session = getSharedPreferences("session", MODE_PRIVATE);
+
 
         Date c = Calendar.getInstance().getTime();
         System.out.println("Current time => " + c);
@@ -233,7 +235,7 @@ public class ReceiveGoodsActivity extends AppCompatActivity
 
         if (spinnerId == R.id.supplier) {
             Toast.makeText(ReceiveGoodsActivity.this, item, Toast.LENGTH_SHORT).show();
-            if(purchaseOrders!=null) {
+            if(purchaseOrders.size()!=0) {
                 List<String> newPoddl = new ArrayList<String>();
                 for (Supplier supplier : suppliers) {
                     if (supplier.getName().equals(item)) {
@@ -245,7 +247,10 @@ public class ReceiveGoodsActivity extends AppCompatActivity
                         }
                     }
                 }
-                poddl = newPoddl;
+                if(newPoddl!=null) {
+                    poddl = newPoddl;
+                    System.out.println(newPoddl);
+                }
             }
             //get supplier id 
             //set po reference to only supplier's poddl
