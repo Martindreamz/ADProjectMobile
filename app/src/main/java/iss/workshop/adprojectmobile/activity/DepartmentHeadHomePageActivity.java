@@ -33,6 +33,14 @@ public class DepartmentHeadHomePageActivity extends AppCompatActivity implements
             Intent intent = new Intent(this, DelegateAuthorityActivity.class);
             startActivity(intent);
         }
+
+        if(id==R.id.logOutBtn){
+            session_editor.clear();
+            session_editor.commit();
+
+            Intent intent = new Intent(this, LoginActivity.class);
+            startActivity(intent);
+        }
     }
 
     @Override
