@@ -9,7 +9,7 @@
     <string name="collection">Collection</string>
     <string name="collectionPoint">Collection Point Locations</string>
     <string name="distribution">Distribution</string>
-    <string name="confirmDisbursement">Confirm Disbursement</string>
+    <string name="confirmDisbursement">Disbursement</string>
     <string name="selectEmployee">Select Employee: </string>
     <string name="startDate">Start Date: </string>
     <string name="endDate">End Date: </string>
