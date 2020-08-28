@@ -11,7 +11,7 @@
         android:layout_weight="0.1"
         android:gravity="center"
         android:text="Sample Text"
-        android:textColor="#FFFFFF" />
+        android:textColor="#000000" />
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/itemDesc"
@@ -20,7 +20,7 @@
         android:layout_weight="0.4"
         android:gravity="center"
         android:text="Sample Text"
-        android:textColor="#FFFFFF" />
+        android:textColor="#000000" />
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/itemRqt"
@@ -29,7 +29,7 @@
         android:layout_weight="0.2"
         android:gravity="center"
         android:text="Sample Text"
-        android:textColor="#FFFFFF" />
+        android:textColor="#000000" />
 
     <com.travijuu.numberpicker.library.NumberPicker
         android:layout_width="0dp"

@@ -11,7 +11,7 @@
         android:layout_weight="0.3"
         android:gravity="center"
         android:text="Sample Text"
-        android:textColor="#FFFFFF" />
+        android:textColor="#000000" />
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/statDescription"
@@ -20,7 +20,7 @@
         android:layout_weight="0.5"
         android:gravity="center"
         android:text="Sample Text"
-        android:textColor="#FFFFFF" />
+        android:textColor="#000000" />
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/receivedQty"
@@ -29,6 +29,6 @@
         android:layout_weight="0.2"
         android:gravity="center"
         android:text="Sample Text"
-        android:textColor="#FFFFFF" />
+        android:textColor="#000000" />
 
 </TableRow>
