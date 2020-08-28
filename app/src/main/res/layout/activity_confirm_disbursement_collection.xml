@@ -56,10 +56,57 @@
             android:textSize="10sp" />
 
     </LinearLayout>
+    <TableLayout
+        android:id="@+id/collectTableLayout"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:padding="5dp"
+        android:orientation="vertical">
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/code"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.2"
+                android:gravity="center"
+                android:text="Item Code" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/desc"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="0.4"
+                android:gravity="center"
+                android:text="Description" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/rqt"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="0.2"
+                android:gravity="center"
+                android:text="Requested" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/rcv"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="0.2"
+                android:gravity="center"
+                android:text="Received" />
+        </TableRow>
+    </TableLayout>
 
     <Button
         android:id="@+id/completeBtn"
         style="@style/Btn"
         android:layout_gravity="center"
+        android:layout_marginTop="25dp"
         android:text="@string/complete" />
 </LinearLayout>

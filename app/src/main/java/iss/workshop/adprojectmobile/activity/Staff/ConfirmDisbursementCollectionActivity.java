@@ -7,8 +7,11 @@ import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.TableLayout;
 import android.widget.TextView;
 
 import java.text.ParseException;
@@ -37,6 +40,7 @@ public class ConfirmDisbursementCollectionActivity extends AppCompatActivity {
 
     TextView collectionPointView, collectionDateView, collectionTimeView, status;
     Button completeBtn;
+    private TableLayout collectTableLayout;
 
     int departmentId;
 
@@ -53,7 +57,6 @@ public class ConfirmDisbursementCollectionActivity extends AppCompatActivity {
     String collectionDateData;
     String collectionTimeData;
     String collectionPointData;
-
 
     public String getCollectionTimeData() {
         return collectionTimeData;
@@ -84,6 +87,8 @@ public class ConfirmDisbursementCollectionActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_confirm_disbursement_collection);
+
+        collectTableLayout = (TableLayout) findViewById(R.id.collectTableLayout);
 
         //defining textViews & Buttons
         collectionPointView = findViewById(R.id.collectionPoint);
@@ -223,10 +228,32 @@ public class ConfirmDisbursementCollectionActivity extends AppCompatActivity {
                                                     }
                                                 }
 
-                                                for (DisbursementDetail testDDetail : filteredDisbursementDetail){
-                                                    System.out.println(testDDetail.getStationeryId());
-                                                    System.out.println(testDDetail.getStationeryDesc());
-                                                    System.out.println(testDDetail.getQty());
+                                                if (filteredDisbursementDetail != null) {
+                                                    for (DisbursementDetail dDetail : filteredDisbursementDetail) {
+                                                        View tableRow = LayoutInflater.from(getApplicationContext()).inflate(R.layout.activity_confirm_disbursement_collection_item, null, false);
+                                                        TextView itemCode = (TextView) tableRow.findViewById(R.id.itemCode);
+                                                        TextView itemDesc = (TextView) tableRow.findViewById(R.id.itemDesc);
+                                                        TextView itemRqt = (TextView) tableRow.findViewById(R.id.itemRqt);
+                                                        TextView itemRcv = (TextView) tableRow.findViewById(R.id.itemRcv);
+
+                                                        itemCode.setText(Integer.toString(dDetail.getStationeryId()));
+                                                        itemDesc.setText(dDetail.getStationeryDesc());
+                                                        itemRqt.setText(Integer.toString(dDetail.getQty()));
+                                                        itemRcv.setText(Integer.toString(dDetail.getQty()));
+                                                        collectTableLayout.addView(tableRow);
+                                                    }
+                                                } else {
+                                                    View tableRow = LayoutInflater.from(getApplicationContext()).inflate(R.layout.activity_confirm_disbursement_collection_item, null, false);
+                                                    TextView itemCode = (TextView) tableRow.findViewById(R.id.itemCode);
+                                                    TextView itemDesc = (TextView) tableRow.findViewById(R.id.itemDesc);
+                                                    TextView itemRqt = (TextView) tableRow.findViewById(R.id.itemRqt);
+                                                    TextView itemRcv = (TextView) tableRow.findViewById(R.id.itemRcv);
+
+                                                    itemCode.setText("");
+                                                    itemDesc.setText("No Disbursement Data");
+                                                    itemRqt.setText("");
+                                                    itemRcv.setText("");
+                                                    collectTableLayout.addView(tableRow);
                                                 }
                                             }
 
