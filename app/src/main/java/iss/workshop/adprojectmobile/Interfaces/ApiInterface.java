@@ -79,7 +79,6 @@ public interface ApiInterface {
     @POST("store/updateInventory")
     Call<StockAdjustmentDetail>  updateInventory(@Body List<Stationery> stationeries);
 
-
     @Headers({"Content-Type: application/json"})
     @POST("dept/deptDelegate/{id}")
     Call<Employee> DeptDelegate(@Body Employee employee,@Path("id")int id);
