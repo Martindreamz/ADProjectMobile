@@ -112,7 +112,7 @@
                 android:id="@+id/header1"
                 android:layout_column="0"
                 android:padding="10sp"
-                android:gravity="left"
+                android:gravity="center"
                 android:layout_span="2"
                 android:text="Code"
                 android:textStyle="bold"

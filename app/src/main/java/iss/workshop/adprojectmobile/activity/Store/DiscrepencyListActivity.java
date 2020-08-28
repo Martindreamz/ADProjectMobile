@@ -88,6 +88,9 @@ public class DiscrepencyListActivity extends AppCompatActivity implements View.O
                 }
             });
 
+            Intent intent = new Intent(this,ViewInventoryActivity.class);
+            startActivity(intent);
+
         }
 
     }

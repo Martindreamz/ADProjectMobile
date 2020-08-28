@@ -6,6 +6,7 @@ import iss.workshop.adprojectmobile.model.DisbursementDetail;
 import iss.workshop.adprojectmobile.model.DisbursementList;
 import iss.workshop.adprojectmobile.model.Employee;
 import iss.workshop.adprojectmobile.model.PurchaseOrder;
+import iss.workshop.adprojectmobile.model.PurchaseOrderDetail;
 import iss.workshop.adprojectmobile.model.Requisition;
 import iss.workshop.adprojectmobile.model.RequisitionDetail;
 import iss.workshop.adprojectmobile.model.Stationery;
@@ -42,6 +43,9 @@ public interface ApiInterface {
     @GET("store/getAllPOs")
     Call<List<PurchaseOrder>> GetAllPos();
 
+    @GET("store/getPOD/{id}")
+    Call<List<PurchaseOrderDetail>> GetPurchaseOrderDetail(@Path("id") int id);
+
     @GET("store/Suppliers")
     Call<List<Supplier>> GetAllSuppliers();
 
@@ -74,8 +78,17 @@ public interface ApiInterface {
     @POST("store/stkAd/{id}")
     Call<StockAdjustment> PostTestStkAd(@Body List<StockAdjustmentDetail> stockAdjustmentDetails, @Path("id") int id);
 
+    @Headers({"Content-Type: application/json"})
+    @POST("store/receivedGoods/{id}")
+    Call<StockAdjustment> PostReceivedGoods(@Body List<StockAdjustmentDetail> StockAdjustmentDetails, @Path("id") int id);
+
+
 
     @Headers({"Content-Type: application/json"})
     @POST("deptDelegate")
     Call<Employee> DeptDelegate(@Body Employee employee);
+
+    @Headers({"Content-Type: application/json"})
+    @POST("store/PORecieved/{id}")
+    Call<PurchaseOrder> PORecieved(@Path("id")int id);
 }

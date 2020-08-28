@@ -63,6 +63,8 @@ public class InventoryCheckActivity extends AppCompatActivity
         this.stationeries = stationeries;
     }
 
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

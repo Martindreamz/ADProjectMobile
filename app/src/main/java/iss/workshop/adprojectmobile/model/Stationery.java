@@ -20,6 +20,9 @@ public class Stationery {
         this.inventoryQty = inventoryQty;
     }
 
+    public Stationery() {
+    }
+
     public int getId() {
         return id;
     }

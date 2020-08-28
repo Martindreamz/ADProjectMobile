@@ -20,6 +20,7 @@ import java.util.List;
 
 import iss.workshop.adprojectmobile.R;
 import iss.workshop.adprojectmobile.activity.Store.InventoryCheckActivity;
+import iss.workshop.adprojectmobile.activity.Store.ReceiveGoodsActivity;
 import iss.workshop.adprojectmobile.model.Stationery;
 import iss.workshop.adprojectmobile.model.StockAdjustmentDetail;
 
@@ -36,7 +37,7 @@ public class GenericAdapter<T> extends ArrayAdapter<T> {
         this.list=Object;
         this.filteredList=Object;
         this.context=context;
-        this.parentStationery = InventoryCheckActivity.getStationeries();
+        this.parentStationery = ReceiveGoodsActivity.getSelectedStationery();
     }
     public View getView(final int pos, View view, @NonNull ViewGroup parent) {
         System.out.println("from adapter");
@@ -50,8 +51,6 @@ public class GenericAdapter<T> extends ArrayAdapter<T> {
 
         titem = filteredList.get(pos);
         if(titem instanceof StockAdjustmentDetail){
-
-
             StockAdjustmentDetail item=(StockAdjustmentDetail) titem;
             txtItemCode.setText(Integer.toString(item.getStationeryId()));
             txtDesc.setText(item.getStatus());
@@ -59,7 +58,6 @@ public class GenericAdapter<T> extends ArrayAdapter<T> {
         }
 
         if(titem instanceof Stationery){
-            if(titem instanceof Stationery){
                 Stationery item = (Stationery)titem;
                 txtItemCode.setText(Integer.toString(item.getId()));
                 txtDesc.setText(item.getDesc());
@@ -67,7 +65,7 @@ public class GenericAdapter<T> extends ArrayAdapter<T> {
             }
 
 
-        }
+
 
         return view;
     }
@@ -107,12 +105,18 @@ public class GenericAdapter<T> extends ArrayAdapter<T> {
 
 
                 }
+                if(!filteredList.isEmpty()){
+                    filterResults.count = tempList.size();
+                    filterResults.values = tempList;
+                }
 
-                filterResults.count = tempList.size();
-                filterResults.values = tempList;
+
             } else {
-                filterResults.count = list.size();
-                filterResults.values = list;
+                if(!filteredList.isEmpty()){
+                    filterResults.count = list.size();
+                    filterResults.values = list;
+                }
+
             }
 
             return filterResults;

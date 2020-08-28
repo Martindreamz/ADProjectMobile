@@ -19,6 +19,9 @@ public class StockAdjustmentDetail implements Serializable {
         this.stationeryId=stationeryId;
     }
 
+    public StockAdjustmentDetail() {
+    }
+
     public int getStationeryId() {
         return stationeryId;
     }
