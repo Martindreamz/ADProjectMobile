@@ -4,17 +4,27 @@ import java.io.Serializable;
 
 public class StockAdjustmentDetail implements Serializable {
     private int id;
+    public int stationeryId;
     private int stockAdjustmentId;
     private int discpQty;
     public String comment;
     public String status;
 
-    public StockAdjustmentDetail(int id, int stockAdjustmentId, int discpQty, String comment, String status){
+    public StockAdjustmentDetail(int id, int stationeryId, int stockAdjustmentId, int discpQty, String comment, String status){
         this.id=id;
         this.stockAdjustmentId=stockAdjustmentId;
         this.discpQty=discpQty;
         this.comment=comment;
         this.status=status;
+        this.stationeryId=stationeryId;
+    }
+
+    public int getStationeryId() {
+        return stationeryId;
+    }
+
+    public void setStationeryId(int stationeryId) {
+        this.stationeryId = stationeryId;
     }
 
     public int getId() {

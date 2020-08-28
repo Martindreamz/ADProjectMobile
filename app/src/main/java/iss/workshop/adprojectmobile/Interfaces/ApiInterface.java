@@ -5,6 +5,7 @@ import java.util.List;
 import iss.workshop.adprojectmobile.model.DisbursementDetail;
 import iss.workshop.adprojectmobile.model.DisbursementList;
 import iss.workshop.adprojectmobile.model.Employee;
+import iss.workshop.adprojectmobile.model.PurchaseOrder;
 import iss.workshop.adprojectmobile.model.Requisition;
 import iss.workshop.adprojectmobile.model.RequisitionDetail;
 import iss.workshop.adprojectmobile.model.Stationery;
@@ -36,6 +37,9 @@ public interface ApiInterface {
     @GET("store/disbursements/{id}")
     Call<List<DisbursementList>> getAllDisbursementLists(@Path("id") int id); //find by clerk ID
 
+    @GET("store/getAllPOs")
+    Call<List<PurchaseOrder>> GetAllPos();
+
     @GET("store/departmentReps")
     Call<List<Employee>> getAllDepartmentReps();
 
@@ -60,6 +64,10 @@ public interface ApiInterface {
     @Headers({"Content-Type: application/json"})
     @POST("store/updateInventory")
     Call<List<StockAdjustmentDetail>>  updateInventory(@Body List<Stationery> stationeries);
+
+    @Headers({"Content-Type: application/json"})
+    @POST("store/stkAd/{id}")
+    Call<List<StockAdjustmentDetail>> PostTestStkAd(@Body List<StockAdjustmentDetail> stockAdjustmentDetails, @Path("id") int id);
 
 
     @Headers({"Content-Type: application/json"})

@@ -19,39 +19,55 @@ import java.util.ArrayList;
 import java.util.List;
 
 import iss.workshop.adprojectmobile.R;
+import iss.workshop.adprojectmobile.activity.Store.InventoryCheckActivity;
 import iss.workshop.adprojectmobile.model.Stationery;
 import iss.workshop.adprojectmobile.model.StockAdjustmentDetail;
 
-public class DiscrepencyAdapter<T> extends ArrayAdapter<T> {
+public class GenericAdapter<T> extends ArrayAdapter<T> {
     private List<T> list;
     private List<T>filteredList;
     private Context context;
     private T titem;
     private TFilter tFilter;
+    private List<Stationery> parentStationery;
 
-    public DiscrepencyAdapter(@NonNull Context context, int resource,List Object) {
+    public GenericAdapter(@NonNull Context context, int resource, List Object) {
         super(context, resource,Object);
         this.list=Object;
         this.filteredList=Object;
         this.context=context;
+        this.parentStationery = InventoryCheckActivity.getStationeries();
     }
     public View getView(final int pos, View view, @NonNull ViewGroup parent) {
         System.out.println("from adapter");
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Activity.LAYOUT_INFLATER_SERVICE);
-        view = inflater.inflate(R.layout.activity_inventory_check_rows, null);
+        view = inflater.inflate(R.layout.activity_discrepency_list_rows, null);
 
         TextView txtItemCode = view.findViewById(R.id.TxtItemCode);
         TextView txtDesc = view.findViewById(R.id.TxtDesc);
         TextView txtQty = view.findViewById(R.id.TxtQty);
 
+
         titem = filteredList.get(pos);
         if(titem instanceof StockAdjustmentDetail){
+
+
             StockAdjustmentDetail item=(StockAdjustmentDetail) titem;
-            txtItemCode.setText(Integer.toString(item.getId()));
+            txtItemCode.setText(Integer.toString(item.getStationeryId()));
             txtDesc.setText(item.getStatus());
             txtQty.setText(Integer.toString(item.getDiscpQty()));
         }
 
+        if(titem instanceof Stationery){
+            if(titem instanceof Stationery){
+                Stationery item = (Stationery)titem;
+                txtItemCode.setText(Integer.toString(item.getId()));
+                txtDesc.setText(item.getDesc());
+                txtQty.setText(Integer.toString(item.getInventoryQty()));
+            }
+
+
+        }
 
         return view;
     }
@@ -59,7 +75,7 @@ public class DiscrepencyAdapter<T> extends ArrayAdapter<T> {
     @Override
     public Filter getFilter() {
         if (tFilter == null) {
-            tFilter = new DiscrepencyAdapter.TFilter();
+            tFilter = new GenericAdapter.TFilter();
         }
 
         return tFilter;
@@ -75,12 +91,20 @@ public class DiscrepencyAdapter<T> extends ArrayAdapter<T> {
 
                 // search content in friend list
                 for (T titem : list) {
-                    if(titem instanceof StockAdjustmentDetail){
-                        StockAdjustmentDetail item = (StockAdjustmentDetail)titem;
+                    if(titem instanceof StockAdjustmentDetail) {
+                        StockAdjustmentDetail item = (StockAdjustmentDetail) titem;
                         if (item.getStatus().toLowerCase().contains(constraint.toString().toLowerCase())) {
                             tempList.add(titem);
                         }
                     }
+                        if(titem instanceof Stationery){
+                            Stationery item = (Stationery) titem;
+                            if (item.getDesc().toLowerCase().contains(constraint.toString().toLowerCase())) {
+                                tempList.add(titem);
+                            }
+
+                            }
+
 
                 }
 
