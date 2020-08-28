@@ -39,5 +39,36 @@
         android:layout_height="match_parent"
         android:padding="5dp"
         android:orientation="vertical">
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/Description"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.4"
+                android:gravity="center"
+                android:text="Stationery Description" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/rqQty"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="0.3"
+                android:gravity="center"
+                android:text="Requested Qty" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/rcvQty"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="0.3"
+                android:gravity="center"
+                android:text="Received Qty" />
+        </TableRow>
     </TableLayout>
 </LinearLayout>

@@ -64,6 +64,16 @@ public class ConfirmDisbursementDistributionActivity extends AppCompatActivity i
     List<RequisitionDetail> requisitionDetail;
     List<Stationery> stationery;
 
+    List<RequisitionDetail> requisitionDetailData;
+
+    public List<RequisitionDetail> getRequisitionDetailData() {
+        return requisitionDetailData;
+    }
+
+    public void setRequisitionDetailData(List<RequisitionDetail> requisitionDetailData) {
+        this.requisitionDetailData = requisitionDetailData;
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -103,6 +113,30 @@ public class ConfirmDisbursementDistributionActivity extends AppCompatActivity i
 
             }
         });
+
+        if (getRequisitionDetailData() != null) {
+            for (RequisitionDetail rDetail : getRequisitionDetailData()) {
+                View tableRow = LayoutInflater.from(getApplicationContext()).inflate(R.layout.activity_confirm_disbursement_distribution_item, null, false);
+                TextView statDescription = (TextView) tableRow.findViewById(R.id.statDescription);
+                TextView requestedQty = (TextView) tableRow.findViewById(R.id.requestedQty);
+                TextView receivedQty = (TextView) tableRow.findViewById(R.id.receivedQty);
+
+                statDescription.setText(rDetail.getStationeryDesc());
+                requestedQty.setText(Integer.toString(rDetail.getReqQty()));
+                receivedQty.setText(Integer.toString(rDetail.getRcvQty()));
+                tableLayout.addView(tableRow);
+            }
+        } else {
+            View tableRow = LayoutInflater.from(getApplicationContext()).inflate(R.layout.activity_confirm_disbursement_distribution_item, null, false);
+            TextView statDescription = (TextView) tableRow.findViewById(R.id.statDescription);
+            TextView requestedQty = (TextView) tableRow.findViewById(R.id.requestedQty);
+            TextView receivedQty = (TextView) tableRow.findViewById(R.id.receivedQty);
+
+            statDescription.setText("No Requisition Data");
+            requestedQty.setText("");
+            receivedQty.setText("");
+            tableLayout.addView(tableRow);
+        }
     }
 
     @Override
@@ -219,20 +253,7 @@ public class ConfirmDisbursementDistributionActivity extends AppCompatActivity i
                                                                                     }
                                                                                 }
 
-                                                                                for (RequisitionDetail rDetail : finalRequisitionDetail) {
-                                                                                    System.out.println(rDetail.getStationeryDesc());
-                                                                                    System.out.println(rDetail.getReqQty());
-                                                                                    System.out.println(rDetail.getRcvQty());
-
-                                                                                    View tableRow = LayoutInflater.from(getApplicationContext()).inflate(R.layout.activity_confirm_disbursement_distribution_item, null, false);
-                                                                                    TextView statDescription = (TextView) tableRow.findViewById(R.id.statDescription);
-                                                                                    TextView requestedQty = (TextView) tableRow.findViewById(R.id.requestedQty);
-                                                                                    TextView receivedQty = (TextView) tableRow.findViewById(R.id.receivedQty);
-
-                                                                                    statDescription.setText(rDetail.getStationeryDesc());
-                                                                                    requestedQty.setText(rDetail.getStationeryDesc());
-                                                                                    receivedQty.setText(rDetail.getStationeryDesc());
-                                                                                }
+                                                                                setRequisitionDetailData(finalRequisitionDetail);
                                                                             }
 
                                                                             @Override
