@@ -76,8 +76,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                         session_editor.commit();
                         System.out.println("from login preference"+ session.getInt("staffId",0)+"from currEMP "+currEmp.getId());
 
-                        if (currEmp.getRole().equals("STRMGR") || currEmp.getRole().equals("STRSUPV")) {
-                            Toast.makeText(getApplication(), "Hi there, " + currEmp.getName() + " sorry you are not authorized for this mobile app", Toast.LENGTH_LONG).show();
+                        if (currEmp.getRole().equals("STRMGR") || currEmp.getRole().equals("STRSUPV")||currEmp.getRole().equals("DELEGATE")||currEmp.getRole().equals("STAFF")) {
+                            Toast.makeText(getApplication(), "Hi there, " + currEmp.getName() +"("+currEmp.getRole()+")"+ " sorry you are not authorized for this mobile app", Toast.LENGTH_LONG).show();
 
                         } else {
                             Toast.makeText(getApplication(), "Welcome, " + currEmp.getName(), Toast.LENGTH_LONG).show();
@@ -86,8 +86,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                                 case "HEAD":
                                     intent = new Intent(getApplicationContext(), DepartmentHeadHomePageActivity.class);
                                     break;
-                                case "DELEGATE":
-                                case "STAFF":
+
                                 case "REPRESENTATIVE":
                                     intent = new Intent(getApplicationContext(), RepresentativeMenuActivity.class);
                                     break;
