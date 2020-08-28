@@ -14,22 +14,50 @@
         android:layout_marginTop="10dp"
         android:layout_marginBottom="10dp"
         android:text="Distribution"/>
-    <LinearLayout
+
+    <TableLayout
+        android:id="@+id/tableLayout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
+        android:padding="5dp"
         android:orientation="vertical">
-        <TextView
-            android:id="@+id/selectRequestorTxt"
-            android:layout_width="wrap_content"
+
+        <TableRow
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="30dp"
-            android:text="@string/selectRequestor"/>
-        <Spinner
-            android:id="@+id/selectRequestor"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:prompt="@string/selectRequestor"
-            android:layout_marginTop="10dp"
-            />
-    </LinearLayout>
+            android:orientation="horizontal">
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/Requestor"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.2"
+                android:gravity="center"
+                android:text="Requestor" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/Description"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.4"
+                android:gravity="center"
+                android:text="Stationery Description" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/rqQty"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="0.2"
+                android:gravity="center"
+                android:text="Reqt Qty" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/rcvQty"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="0.2"
+                android:gravity="center"
+                android:text="Recv Qty" />
+        </TableRow>
+    </TableLayout>
 </LinearLayout>

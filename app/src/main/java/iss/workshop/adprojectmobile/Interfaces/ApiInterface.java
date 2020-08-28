@@ -2,6 +2,7 @@ package iss.workshop.adprojectmobile.Interfaces;
 
 import java.util.List;
 
+import iss.workshop.adprojectmobile.model.Department;
 import iss.workshop.adprojectmobile.model.DisbursementDetail;
 import iss.workshop.adprojectmobile.model.DisbursementList;
 import iss.workshop.adprojectmobile.model.Employee;
@@ -58,6 +59,26 @@ public interface ApiInterface {
     @GET("store/disbursementlist/{id}")
     Call<DisbursementList> getDisbursementList(@Path("id") int id);
 
+    @GET("dept/deptEmp/{id}")
+    Call<List<Employee>> getAllEmployeesByDept(@Path("id") int id);
+
+    @GET("Dept/{id}")
+    Call<Department> getDepartmentById(@Path("id") int id);
+
+    @GET("Dept/latestDisbursementByDept/{id}")
+    Call<DisbursementList>  getLatestDisbursementByDeptId(@Path("id") int id);
+
+    @GET("Dept/disbursementDetailByDept/{id}")
+    Call<List<DisbursementDetail>> getDisbursementDetailByDeptId(@Path("id") int id);
+
+    @GET("Dept/deptToDeliverReqDetail/{id}")
+    Call<List<RequisitionDetail>> getToDeliverRequisitionDetailByDeptId(@Path("id") int id);
+
+    @GET("Dept/deptToDeliverReq/{id}")
+    Call<List<Requisition>> getToDeliverRequisitionsByDeptId(@Path("id") int id);
+
+    @GET("Dept/empToDeliverReq/{id}")
+    Call<List<Requisition>> getToDeliverRequisitionsByEmpId(@Path("id") int id);
 
     @Headers({"Content-Type: application/json"})
     @POST("store/getretrieval")
@@ -66,6 +87,7 @@ public interface ApiInterface {
     @Headers({"Content-Type: application/json"})
     @POST("store/processRetrieval/{id}/{year}/{month}/{day}")
     Call<List<DisbursementList>> processRetrieval(@Body List<RequisitionDetail> requisitions, @Path("id") int id, @Path("year") int year, @Path("month") int month, @Path("day") int day);
+
     @Headers({"Content-Type: application/json"})
     @POST("login/post")
     Call<Employee> login(@Body Employee employee);
@@ -83,12 +105,22 @@ public interface ApiInterface {
     Call<StockAdjustment> PostReceivedGoods(@Body List<StockAdjustmentDetail> StockAdjustmentDetails, @Path("id") int id);
 
 
-
     @Headers({"Content-Type: application/json"})
-    @POST("deptDelegate")
+    @POST("dept/deptDelegate/{id}")
+    Call<Employee> DeptDelegate(@Body Employee employee,@Path("id")int id);
+
+    @POST("dept/deptRevokeDelegate/{deptid}/{staffid}")
+    Call<Employee> RevokeDelegate(@Path("deptid") int deptid,@Path("staffid") int staffid);
+
+    @POST("dept/deptDelegate")
     Call<Employee> DeptDelegate(@Body Employee employee);
 
     @Headers({"Content-Type: application/json"})
     @POST("store/PORecieved/{id}")
     Call<PurchaseOrder> PORecieved(@Path("id")int id);
+
+    @Headers({"Content-Type: application/json"})
+    @POST("dept/confirmDisbursementByDept")
+    Call<List<DisbursementDetail>> SendDisbursementDetail (@Body List<DisbursementDetail> updatedDisbursementDetailList);
+
 }

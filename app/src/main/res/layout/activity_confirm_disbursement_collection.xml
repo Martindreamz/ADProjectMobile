@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activity.ConfirmDisbursementCollectionActivity"
+    tools:context=".activity.Staff.ConfirmDisbursementCollectionActivity"
     android:orientation="vertical"
     >
     <TextView
@@ -18,18 +18,95 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
+
         <TextView
-            android:id="@+id/collectionInfo"
+            android:id="@+id/collectionPoint"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="30dp"
+            android:layout_marginTop="5dp"
             android:inputType="textMultiLine"
             android:lines="5"
-            />
+            android:textSize="10sp" />
+
+        <TextView
+            android:id="@+id/collectionDate"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:inputType="textMultiLine"
+            android:lines="5"
+            android:textSize="10sp" />
+
+        <TextView
+            android:id="@+id/collectionTime"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:inputType="textMultiLine"
+            android:lines="5"
+            android:textSize="10sp" />
+
+        <TextView
+            android:id="@+id/Status"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:inputType="textMultiLine"
+            android:lines="5"
+            android:textSize="10sp" />
+
     </LinearLayout>
-    <Button style="@style/Btn"
+    <TableLayout
+        android:id="@+id/collectTableLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="5dp"
+        android:orientation="vertical">
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/code"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.1"
+                android:gravity="center"
+                android:text="Item Code" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/desc"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="0.4"
+                android:gravity="center"
+                android:text="Description" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/rqt"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="0.2"
+                android:gravity="center"
+                android:text="Requested" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/rcv"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="0.3"
+                android:gravity="center"
+                android:text="Received" />
+        </TableRow>
+    </TableLayout>
+
+    <Button
         android:id="@+id/completeBtn"
-        android:text="@string/complete"
+        style="@style/Btn"
         android:layout_gravity="center"
-        />
+        android:layout_marginTop="25dp"
+        android:text="@string/complete" />
 </LinearLayout>

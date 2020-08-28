@@ -4,81 +4,87 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activity.DelegateAuthorityActivity"
     android:orientation="vertical"
-    >
+    tools:context=".activity.DelegateAuthorityActivity">
+
     <TextView
         android:id="@+id/welcome"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
         android:layout_marginBottom="10dp"
-        android:text="Welcome"/>
-   
-        <TextView android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dip"
-        android:text="Select Employee:"
-        android:layout_marginBottom="5dp"/>
-    
-        <Spinner android:id="@+id/spinner"
+        android:text="Welcome" />
+
+    <TextView
+        android:id="@+id/currDelegatea"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:prompt="@string/spinnerTitle"/>
-    
+        android:layout_marginTop="10dip"
+        android:layout_marginBottom="5dp"
+        android:text="Select Employee:" />
+
+    <Spinner
+        android:id="@+id/spinner"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:prompt="@string/spinnerTitle" />
+
+    <TextView
+        android:id="@+id/selectedEmployeeTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:orientation="horizontal">
+
         <TextView
-            android:id="@+id/selectedEmployeeTextView"
+            android:id="@+id/startDate"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            />
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:orientation="horizontal">
-            <TextView
-                android:id="@+id/startDate"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:text="@string/startDate"
-                />
-            <Button
-                android:id="@+id/startDatePicker"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="80dp"
-                android:layout_marginTop="10dp"
-                android:ems="10"
-                android:hint="@string/clickHereDate" />
-        </LinearLayout>
-    
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:orientation="horizontal">
-            <TextView
-                android:id="@+id/endDate"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:text="@string/endDate"
-                />
-            <Button
-                android:id="@+id/endDatePicker"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="80dp"
-                android:layout_marginTop="10dp"
-                android:ems="10"
-                android:hint="@string/clickHereDate" />
-        </LinearLayout>
-        <Button style="@style/Btn"
-            android:id="@+id/authorizeDelegate"
-            android:text="@string/authorizeDelegate"
-            android:layout_gravity="center"
             android:layout_marginTop="10dp"
-            />
+            android:text="@string/startDate" />
+
+        <Button
+            android:id="@+id/startDatePicker"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="80dp"
+            android:layout_marginTop="10dp"
+            android:ems="10"
+            android:hint="@string/clickHereDate" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/endDate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="@string/endDate" />
+
+        <Button
+            android:id="@+id/endDatePicker"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="80dp"
+            android:layout_marginTop="10dp"
+            android:ems="10"
+            android:hint="@string/clickHereDate" />
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/authorizeDelegate"
+        style="@style/Btn"
+        android:layout_gravity="center"
+        android:layout_marginTop="10dp"
+        android:text="@string/authorizeDelegate" />
 </LinearLayout>

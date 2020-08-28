@@ -18,6 +18,7 @@ Button requisitinBtn, stockBtn;
 
     SharedPreferences session;
     SharedPreferences.Editor session_editor;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -68,10 +69,10 @@ Button requisitinBtn, stockBtn;
                 Intent intent4=new Intent(this, ReceiveGoodsActivity.class);
                 startActivity(intent4);
                 break;
-            case R.id.raisePO:
-                Intent intent5=new Intent(this, RaisePurchaseOrderActivity.class);
-                startActivity(intent5);
-                break;
+//            case R.id.raisePO:
+//                Intent intent5=new Intent(this, RaisePurchaseOrderActivity.class);
+//                startActivity(intent5);
+//                break;
         }
         return super.onContextItemSelected(item);
     }

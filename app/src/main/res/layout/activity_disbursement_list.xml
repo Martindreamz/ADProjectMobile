@@ -44,7 +44,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
-        android:text="@string/selectCollectionPoint" />
+        android:text="Select Disbursement List below:" />
 
     <LinearLayout
         android:layout_width="match_parent"

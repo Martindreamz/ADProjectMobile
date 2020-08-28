@@ -160,9 +160,9 @@ public class DisbursementListActivity extends AppCompatActivity implements Adapt
 
         });
         //Test Data
-        String cInfo = "Collection Date: 09/08/2020" + System.lineSeparator() +
-                "Collection Time: 9:30am" + System.lineSeparator() + "Delivered By: Store Clerk 1";
-        collectionInfo.setText(cInfo);
+//        String cInfo = "Collection Date: 09/08/2020" + System.lineSeparator() +
+//                "Collection Time: 9:30am" + System.lineSeparator() + "Delivered By: Store Clerk 1";
+//        collectionInfo.setText(cInfo);
     }
 
     @RequiresApi(api = Build.VERSION_CODES.O)
