@@ -175,15 +175,17 @@ public class InventoryCheckActivity extends AppCompatActivity
                     System.out.println(response.code());
                     if (response.code() == 200) {
                         List<StockAdjustmentDetail> sads = response.body();
-                        if(sads!=null){
+                        if(sads==null){
                             Toast.makeText(getApplicationContext(), "Inventory Updated with no discrepencies", Toast.LENGTH_LONG).show();
                             Intent intent = new Intent(getApplicationContext(), ViewInventoryActivity.class);
                             startActivity(intent);
                         }
-                        Intent intent = new Intent(getApplicationContext(), DiscrepencyListActivity.class);
-                        intent.putExtra("sads", (Serializable) sads);
-                        System.out.println(sads);
-                        startActivity(intent);
+                        if(sads!=null) {
+                            Intent intent = new Intent(getApplicationContext(), DiscrepencyListActivity.class);
+                            intent.putExtra("sads", (Serializable) sads);
+                            System.out.println(sads);
+                            startActivity(intent);
+                        }
                     } else {
                         Toast.makeText(getApplicationContext(), "Something went wrong please try again", Toast.LENGTH_LONG).show();
                     }
