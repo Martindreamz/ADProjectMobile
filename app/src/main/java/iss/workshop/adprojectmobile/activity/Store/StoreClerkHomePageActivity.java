@@ -103,5 +103,6 @@ Button requisitinBtn, stockBtn, logoutBtn;
 
         Intent intent = new Intent(this, LoginActivity.class);
         startActivity(intent);
+
     }
 }

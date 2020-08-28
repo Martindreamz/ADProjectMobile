@@ -17,7 +17,7 @@ import iss.workshop.adprojectmobile.activity.Store.StoreClerkHomePageActivity;
 
 public class RepresentativeMenuActivity extends AppCompatActivity implements View.OnClickListener {
     Button confirmDisbursement, raiseRequest, findRoutes;
-
+Button logout;
     SharedPreferences session;
     SharedPreferences.Editor session_editor;
     String currRole;
@@ -27,6 +27,8 @@ public class RepresentativeMenuActivity extends AppCompatActivity implements Vie
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_representative_menu);
         confirmDisbursement = findViewById(R.id.confirmDisbursementBtn);
+        logout = findViewById(R.id.logOutBtn);
+        logout.setOnClickListener(this);
         if(confirmDisbursement!=null) {
             registerForContextMenu(confirmDisbursement);
         }
@@ -99,8 +101,15 @@ public class RepresentativeMenuActivity extends AppCompatActivity implements Vie
 
     @Override
     public void onClick(View view) {
-        Intent intent = new Intent(this, RaiseRequestActivity.class);
-        startActivity(intent);
+        int id = view.getId();
+
+        if(id==R.id.logOutBtn){
+            session_editor.clear();
+            session_editor.commit();
+
+            Intent intent = new Intent(this, LoginActivity.class);
+            startActivity(intent);
+        }
     }
 
     @Override
