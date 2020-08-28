@@ -114,7 +114,9 @@ public class InventoryCheckActivity extends AppCompatActivity
 
             @Override
             public void onFailure(Call<List<Stationery>> call, Throwable t) {
+
             }
+
         });
 
 

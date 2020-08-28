@@ -1,101 +1,159 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".activity.DelegateAuthorityActivity"
-    android:orientation="vertical"
-    >
+    android:orientation="vertical">
     <TextView
-        android:id="@+id/rcvGoodsTxt"
+        android:id="@+id/title"
+        android:layout_column="0"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
         android:layout_marginBottom="10dp"
-        android:text="@string/rcvGoods"/>
+        android:text="@string/rcvGoods"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:textStyle="bold"
+        android:textSize="20dp"
+        />
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:orientation="horizontal">
+    <TableLayout
+        android:id="@+id/ddl"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:stretchColumns="*"
+        app:layout_constraintTop_toBottomOf="@id/title"
+        >
+    <TableRow
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        >
         <TextView
             android:id="@+id/supplierTxt"
+            android:layout_column="0"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:gravity="left"
             android:layout_marginTop="10dp"
             android:text="@string/supplier"/>
         <Spinner
             android:id="@+id/supplier"
+            android:layout_column="1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:prompt="@string/search"
             android:layout_marginTop="10dp"
             android:layout_marginLeft="50dp"
+            android:gravity="center"
             />
-        </LinearLayout>
-        <LinearLayout
+    </TableRow>
+        <TableRow
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:orientation="horizontal">
+            >
             <TextView
                 android:layout_width="wrap_content"
+                android:layout_column="0"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
+                android:gravity="left"
                 android:text="@string/poNoRef"
                 />
             <Spinner
                 android:id="@+id/PoNumberRef"
+                android:layout_column="1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="50dp"
+                android:gravity="center"
                 android:layout_marginTop="10dp"
                 android:ems="10" />
-        </LinearLayout>
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:orientation="horizontal">
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:text="@string/deliveryOrderNo"
-                />
-            <EditText
-                android:id="@+id/deliveryOrderNo"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="50dp"
-                android:layout_marginTop="10dp"
-                android:ems="10" />
-        </LinearLayout>
-    <LinearLayout
+        </TableRow>
+
+
+    <TableRow
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:orientation="horizontal">
+        >
         <TextView
             android:layout_width="wrap_content"
+            android:layout_column="0"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:text="@string/rcvDate"
+            android:gravity="left"
             />
         <TextView
             android:id="@+id/rcvDate"
+            android:layout_column="1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="50dp"
             android:layout_marginTop="10dp"
+            android:gravity="center"
             android:ems="10" />
-    </LinearLayout>
+    </TableRow>
+    </TableLayout>
+    <TableLayout
+        android:id="@+id/headers"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:stretchColumns="*"
+        app:layout_constraintTop_toBottomOf="@id/ddl"
+        >
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            >
+            <TextView
+                android:id="@+id/header1"
+                android:layout_column="0"
+                android:padding="10sp"
+                android:gravity="left"
+                android:layout_span="2"
+                android:text="Code"
+                android:textStyle="bold"
+                android:background="#c0c0c0"
+                >
+            </TextView>
+            <TextView
+                android:id="@+id/header2"
+                android:layout_column="1"
+                android:padding="10sp"
+                android:gravity="left"
+                android:text="Description"
+                android:textStyle="bold"
+                android:background="#c0c0c0"
+                >
+            </TextView>
+            <TextView
+                android:id="@+id/header3"
+                android:layout_column="2"
+                android:padding="10sp"
+                android:gravity="left"
+                android:text="Qty"
+                android:textStyle="bold"
+                android:background="#c0c0c0"
+                >
+            </TextView>
+        </TableRow>
+        <ListView
+            android:id="@+id/rcvListView"
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            >
+        </ListView>
+    </TableLayout>
         <Button style="@style/Btn"
             android:id="@+id/rcvGoodsSaveBtn"
-            android:text="@string/save"
+            android:text="Confirm Recieved"
             android:layout_gravity="center"
             android:layout_marginTop="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="parent"
             />
-    </LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,23 +1,16 @@
 package iss.workshop.adprojectmobile.model;
 
 import java.util.Date;
+import java.util.List;
 
 public class PurchaseOrder {
     private int id;
     private int clerkId;
     private int supplierId;
-    private Date dateOfOrder;
+    private String dateOfOrder;
     private String status;
     private int stockAdjustmentId;
-
-    public PurchaseOrder(int id, int clerkId, int supplierId, Date dateOfOrder, String status, int stockAdjustmentId) {
-        this.id = id;
-        this.clerkId = clerkId;
-        this.supplierId = supplierId;
-        this.dateOfOrder = dateOfOrder;
-        this.status = status;
-        this.stockAdjustmentId = stockAdjustmentId;
-    }
+    private List<PurchaseOrderDetail> DetailList;
 
     public int getId() {
         return id;
@@ -43,11 +36,11 @@ public class PurchaseOrder {
         this.supplierId = supplierId;
     }
 
-    public Date getDateOfOrder() {
+    public String getDateOfOrder() {
         return dateOfOrder;
     }
 
-    public void setDateOfOrder(Date dateOfOrder) {
+    public void setDateOfOrder(String dateOfOrder) {
         this.dateOfOrder = dateOfOrder;
     }
 
@@ -65,5 +58,13 @@ public class PurchaseOrder {
 
     public void setStockAdjustmentId(int stockAdjustmentId) {
         this.stockAdjustmentId = stockAdjustmentId;
+    }
+
+    public List<PurchaseOrderDetail> getDetailList() {
+        return DetailList;
+    }
+
+    public void setDetailList(List<PurchaseOrderDetail> detailList) {
+        DetailList = detailList;
     }
 }

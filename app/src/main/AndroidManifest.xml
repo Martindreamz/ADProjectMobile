@@ -28,7 +28,7 @@
 
         <activity android:name=".activity.Store.RaisePurchaseOrderSubmitActivity" />
         <activity android:name=".activity.Store.RaisePurchaseOrderActivity" />
-        <activity android:name=".activity.Store.ReceiveGoodsActivity" />
+
         <activity android:name=".activity.Store.StoreClerkHomePageActivity" />
         <activity android:name=".activity.Staff.RaiseRequestActivity" />
         <activity android:name=".activity.Staff.ConfirmDisbursementDistributionActivity" />
@@ -38,7 +38,8 @@
         <activity android:name=".activity.DelegateAuthorityActivity" />
         <activity android:name=".activity.Store.StationeryRetrievalActivity"></activity>
         <activity android:name=".activity.LoginActivity" />
-        <activity android:name=".activity.Store.InventoryCheckActivity">
+        <activity android:name=".activity.Store.InventoryCheckActivity"/>
+        <activity android:name=".activity.Store.ReceiveGoodsActivity" >
             <meta-data
                 android:name="android.app.searchable"
                 android:resource="@xml/searchable"></meta-data>
