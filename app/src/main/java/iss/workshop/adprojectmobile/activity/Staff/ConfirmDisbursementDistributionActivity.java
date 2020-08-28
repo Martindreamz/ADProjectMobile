@@ -7,10 +7,13 @@ import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
+import android.widget.TableLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -35,6 +38,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class ConfirmDisbursementDistributionActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
     Spinner spinner;
+    private TableLayout tableLayout;
 
     int departmentId;
 
@@ -64,6 +68,7 @@ public class ConfirmDisbursementDistributionActivity extends AppCompatActivity i
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_confirm_disbursement_distribution);
+        tableLayout = (TableLayout) findViewById(R.id.tableLayout);
 
         spinner = findViewById(R.id.selectRequestor);
         spinner.setOnItemSelectedListener(this);
@@ -218,6 +223,15 @@ public class ConfirmDisbursementDistributionActivity extends AppCompatActivity i
                                                                                     System.out.println(rDetail.getStationeryDesc());
                                                                                     System.out.println(rDetail.getReqQty());
                                                                                     System.out.println(rDetail.getRcvQty());
+
+                                                                                    View tableRow = LayoutInflater.from(getApplicationContext()).inflate(R.layout.activity_confirm_disbursement_distribution_item, null, false);
+                                                                                    TextView statDescription = (TextView) tableRow.findViewById(R.id.statDescription);
+                                                                                    TextView requestedQty = (TextView) tableRow.findViewById(R.id.requestedQty);
+                                                                                    TextView receivedQty = (TextView) tableRow.findViewById(R.id.receivedQty);
+
+                                                                                    statDescription.setText(rDetail.getStationeryDesc());
+                                                                                    requestedQty.setText(rDetail.getStationeryDesc());
+                                                                                    receivedQty.setText(rDetail.getStationeryDesc());
                                                                                 }
                                                                             }
 
