@@ -18,6 +18,7 @@ Button requisitinBtn, stockBtn;
 
     SharedPreferences session;
     SharedPreferences.Editor session_editor;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

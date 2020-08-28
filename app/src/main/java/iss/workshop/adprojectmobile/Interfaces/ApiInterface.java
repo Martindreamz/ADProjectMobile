@@ -93,4 +93,8 @@ public interface ApiInterface {
     @POST("dept/deptDelegate")
     Call<Employee> DeptDelegate(@Body Employee employee);
 
+    @Headers({"Content-Type: application/json"})
+    @POST("dept/confirmDisbursementByDept")
+    Call<List<DisbursementDetail>> SendDisbursementDetail (@Body List<DisbursementDetail> updatedDisbursementDetailList);
+
 }

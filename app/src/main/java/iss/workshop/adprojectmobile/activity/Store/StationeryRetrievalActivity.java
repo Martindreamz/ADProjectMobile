@@ -232,7 +232,7 @@ public class StationeryRetrievalActivity extends AppCompatActivity implements Ad
                 }
                 for (int i : changes.keySet()) {
                     System.out.println("RD " + i + " needed " + changes.get(i));
-                    rdl_tosend.add(new RequisitionDetail(i, 0, 0, changes.get(i), 0, "", "", ""));
+                    rdl_tosend.add(new RequisitionDetail(i, 0, 0, changes.get(i), 0, "", "", "", ""));
                 }
 
 

@@ -11,8 +11,9 @@ public class RequisitionDetail {
     private String requisition;
     private String stationery;
     private String stationeryDesc;
+    private String employeeName;
 
-    public RequisitionDetail(int id, int requisitionId, int stationeryId, int reqQty, int rcvQty, String status, String requisition, String stationery) {
+    public RequisitionDetail(int id, int requisitionId, int stationeryId, int reqQty, int rcvQty, String status, String requisition, String stationery, String employeeName) {
         this.id = id;
         this.requisitionId = requisitionId;
         this.stationeryId = stationeryId;
@@ -22,6 +23,7 @@ public class RequisitionDetail {
         this.requisition = requisition;
         this.stationery = stationery;
         this.stationeryDesc = null;
+        this.employeeName = null;
     }
 
     public int getId() {
@@ -88,13 +90,13 @@ public class RequisitionDetail {
         this.stationery = stationery;
     }
 
-    public String getStationeryDesc() {
-        return stationeryDesc;
-    }
+    public String getStationeryDesc() { return stationeryDesc; }
 
-    public void setStationeryDesc(String stationeryDesc) {
-        this.stationeryDesc = stationeryDesc;
-    }
+    public void setStationeryDesc(String stationeryDesc) { this.stationeryDesc = stationeryDesc; }
+
+    public String getEmployeeName() { return employeeName; }
+
+    public void setEmployeeName(String employeeName) { this.employeeName = employeeName; }
 
     @Override
     public String toString() {

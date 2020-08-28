@@ -5,10 +5,18 @@
     android:orientation="horizontal">
 
     <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/requestorName"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="0.2"
+        android:gravity="center"
+        android:text="Sample Text" />
+
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/statDescription"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_weight="0.25"
+        android:layout_weight="0.4"
         android:gravity="center"
         android:text="Sample Text" />
 
@@ -16,7 +24,7 @@
         android:id="@+id/requestedQty"
         android:layout_width="0dp"
         android:layout_height="match_parent"
-        android:layout_weight="0.25"
+        android:layout_weight="0.2"
         android:gravity="center"
         android:text="Sample Text" />
 
@@ -24,7 +32,7 @@
         android:id="@+id/receivedQty"
         android:layout_width="0dp"
         android:layout_height="match_parent"
-        android:layout_weight="0.25"
+        android:layout_weight="0.2"
         android:gravity="center"
         android:text="Sample Text" />
 

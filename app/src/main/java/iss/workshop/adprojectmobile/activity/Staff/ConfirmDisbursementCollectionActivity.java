@@ -3,6 +3,7 @@ package iss.workshop.adprojectmobile.activity.Staff;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
@@ -29,9 +30,11 @@ import java.util.List;
 import iss.workshop.adprojectmobile.Interfaces.ApiInterface;
 import iss.workshop.adprojectmobile.Interfaces.SSLBypasser;
 import iss.workshop.adprojectmobile.R;
+import iss.workshop.adprojectmobile.activity.DepartmentHeadHomePageActivity;
 import iss.workshop.adprojectmobile.model.CollectionInfo;
 import iss.workshop.adprojectmobile.model.DisbursementDetail;
 import iss.workshop.adprojectmobile.model.DisbursementList;
+import iss.workshop.adprojectmobile.model.Employee;
 import iss.workshop.adprojectmobile.model.RequisitionDetail;
 import iss.workshop.adprojectmobile.model.Stationery;
 import retrofit2.Call;
@@ -57,7 +60,7 @@ public class ConfirmDisbursementCollectionActivity extends AppCompatActivity {
     List<DisbursementDetail> disbursementDetail;
     List<RequisitionDetail> requisitionDetail;
     List<Stationery> stationery;
-List<DisbursementDetail> filteredDisbursementDetail;
+    List<DisbursementDetail> filteredDisbursementDetail;
     String collectionDateData;
     String collectionTimeData;
     String collectionPointData;
@@ -112,9 +115,33 @@ List<DisbursementDetail> filteredDisbursementDetail;
         completeBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                for(DisbursementDetail dd:filteredDisbursementDetail){
+                for (DisbursementDetail dd : filteredDisbursementDetail) {
                     System.out.println(dd);
                 }
+
+                Retrofit retrofit = new Retrofit.Builder()
+                        .baseUrl(ApiInterface.url)
+                        .client(SSLBypasser.getUnsafeOkHttpClient().build())
+                        .addConverterFactory(GsonConverterFactory.create())
+                        .build();
+
+                ApiInterface apiInterfaceSendDisbursementDetail = retrofit.create(ApiInterface.class);
+                Call<List<DisbursementDetail>> sendDisbursementDetailCall = apiInterfaceSendDisbursementDetail.SendDisbursementDetail(filteredDisbursementDetail);
+
+                sendDisbursementDetailCall.enqueue(new Callback<List<DisbursementDetail>>() {
+                    @Override
+                    public void onResponse(Call<List<DisbursementDetail>> call, Response<List<DisbursementDetail>> response) {
+                        System.out.println(response.code());
+
+                        Intent intent = new Intent(getApplicationContext(), RepresentativeMenuActivity.class);
+                        startActivity(intent);
+                    }
+
+                    @Override
+                    public void onFailure(Call<List<DisbursementDetail>> call, Throwable t) {
+
+                    }
+                });
             }
         });
 
@@ -222,7 +249,7 @@ List<DisbursementDetail> filteredDisbursementDetail;
                                         System.out.println("Response here: " + response.code());
                                         requisitionDetail = response.body();
 
-                                        for (RequisitionDetail rDetail: requisitionDetail) {
+                                        for (RequisitionDetail rDetail : requisitionDetail) {
                                             for (DisbursementDetail dDetail : filteredDisbursementDetail) {
                                                 if (dDetail.getRequisitionDetailId() == rDetail.getId()) {
                                                     dDetail.setStationeryId(rDetail.getStationeryId());
@@ -238,9 +265,9 @@ List<DisbursementDetail> filteredDisbursementDetail;
                                                 System.out.println("Response here: " + response.code());
                                                 stationery = response.body();
 
-                                                if(stationery != null) {
+                                                if (stationery != null) {
                                                     for (DisbursementDetail dDetail2 : filteredDisbursementDetail) {
-                                                        for (Stationery stat: stationery) {
+                                                        for (Stationery stat : stationery) {
                                                             if (dDetail2.getStationeryId() == stat.getId()) {
                                                                 dDetail2.setStationeryDesc(stat.getDesc());
                                                             }

@@ -11,8 +11,9 @@ public class Requisition {
     private String comment;
     private String employee;
     private String authorizer;
+    private String employeeName;
 
-    public Requisition(int id, int employeeId, String dateOfRequest, String dateOfAuthorizing, int authorizerId, String status, String comment, String employee, String authorizer) {
+    public Requisition(int id, int employeeId, String dateOfRequest, String dateOfAuthorizing, int authorizerId, String status, String comment, String employee, String authorizer, String employeeName) {
         this.id = id;
         this.employeeId = employeeId;
         this.dateOfRequest = dateOfRequest;
@@ -22,6 +23,7 @@ public class Requisition {
         this.comment = comment;
         this.employee = employee;
         this.authorizer = authorizer;
+        this.employeeName = null;
     }
 
     public int getId() {
@@ -95,6 +97,10 @@ public class Requisition {
     public void setAuthorizer(String authorizer) {
         this.authorizer = authorizer;
     }
+
+    public String getEmployeeName() { return employeeName; }
+
+    public void setEmployeeName(String employeeName) { this.employeeName = employeeName; }
 
     @Override
     public String toString() {

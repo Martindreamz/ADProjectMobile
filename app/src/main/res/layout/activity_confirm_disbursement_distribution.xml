@@ -14,24 +14,6 @@
         android:layout_marginTop="10dp"
         android:layout_marginBottom="10dp"
         android:text="Distribution"/>
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
-        <TextView
-            android:id="@+id/selectRequestorTxt"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="30dp"
-            android:text="@string/selectRequestor"/>
-        <Spinner
-            android:id="@+id/selectRequestor"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:prompt="@string/selectRequestor"
-            android:layout_marginTop="10dp"
-            />
-    </LinearLayout>
 
     <TableLayout
         android:id="@+id/tableLayout"
@@ -45,6 +27,13 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal">
 
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/Requestor"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.2"
+                android:gravity="center"
+                android:text="Requestor" />
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/Description"
@@ -58,17 +47,17 @@
                 android:id="@+id/rqQty"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_weight="0.3"
+                android:layout_weight="0.2"
                 android:gravity="center"
-                android:text="Requested Qty" />
+                android:text="Reqt Qty" />
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/rcvQty"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_weight="0.3"
+                android:layout_weight="0.2"
                 android:gravity="center"
-                android:text="Received Qty" />
+                android:text="Recv Qty" />
         </TableRow>
     </TableLayout>
 </LinearLayout>
