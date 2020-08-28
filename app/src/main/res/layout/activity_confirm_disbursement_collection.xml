@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activity.ConfirmDisbursementCollectionActivity"
+    tools:context=".activity.Staff.ConfirmDisbursementCollectionActivity"
     android:orientation="vertical"
     >
     <TextView
@@ -18,18 +18,48 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
+
         <TextView
-            android:id="@+id/collectionInfo"
+            android:id="@+id/collectionPoint"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="30dp"
+            android:layout_marginTop="5dp"
             android:inputType="textMultiLine"
             android:lines="5"
-            />
+            android:textSize="10sp" />
+
+        <TextView
+            android:id="@+id/collectionDate"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:inputType="textMultiLine"
+            android:lines="5"
+            android:textSize="10sp" />
+
+        <TextView
+            android:id="@+id/collectionTime"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:inputType="textMultiLine"
+            android:lines="5"
+            android:textSize="10sp" />
+
+        <TextView
+            android:id="@+id/Status"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:inputType="textMultiLine"
+            android:lines="5"
+            android:textSize="10sp" />
+
     </LinearLayout>
-    <Button style="@style/Btn"
+
+    <Button
         android:id="@+id/completeBtn"
-        android:text="@string/complete"
+        style="@style/Btn"
         android:layout_gravity="center"
-        />
+        android:text="@string/complete" />
 </LinearLayout>

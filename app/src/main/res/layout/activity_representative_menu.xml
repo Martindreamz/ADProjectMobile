@@ -35,6 +35,24 @@
             android:layout_marginTop="10dp"
             android:text="Collection Point Test" />
 
+        <Button
+            android:id="@+id/dCollection"
+            style="@style/Btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="10dp"
+            android:text="Disbursement Collection" />
+
+        <Button
+            android:id="@+id/dDistribution"
+            style="@style/Btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="10dp"
+            android:text="Disbursement Distribution" />
+
         <Button style="@style/LogOutBtn"
             android:id="@+id/logOutBtn"
             android:text="@string/logout"

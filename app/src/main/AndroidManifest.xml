@@ -33,7 +33,7 @@
         <activity android:name=".activity.Store.StoreClerkHomePageActivity" />
         <activity android:name=".activity.Staff.RaiseRequestActivity" />
         <activity android:name=".activity.Staff.ConfirmDisbursementDistributionActivity" />
-        <activity android:name=".activity.ConfirmDisbursementCollectionActivity" />
+        <activity android:name=".activity.Staff.ConfirmDisbursementCollectionActivity" />
         <activity android:name=".activity.Staff.CollectionPointLocationsActivity" />
         <activity android:name=".activity.Staff.RepresentativeMenuActivity" />
         <activity android:name=".activity.DelegateAuthorityActivity" />
