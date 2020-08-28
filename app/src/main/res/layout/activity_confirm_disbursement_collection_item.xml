@@ -4,13 +4,14 @@
     android:layout_height="40dp"
     android:orientation="horizontal">
 
-     <androidx.appcompat.widget.AppCompatTextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/itemCode"
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_weight="0.1"
         android:gravity="center"
-        android:text="Sample Text" />
+        android:text="Sample Text"
+        android:textColor="#FFFFFF" />
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/itemDesc"
@@ -18,7 +19,8 @@
         android:layout_height="match_parent"
         android:layout_weight="0.4"
         android:gravity="center"
-        android:text="Sample Text" />
+        android:text="Sample Text"
+        android:textColor="#FFFFFF" />
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/itemRqt"
@@ -26,7 +28,8 @@
         android:layout_height="match_parent"
         android:layout_weight="0.2"
         android:gravity="center"
-        android:text="Sample Text" />
+        android:text="Sample Text"
+        android:textColor="#FFFFFF" />
 
     <com.travijuu.numberpicker.library.NumberPicker
         android:layout_width="0dp"

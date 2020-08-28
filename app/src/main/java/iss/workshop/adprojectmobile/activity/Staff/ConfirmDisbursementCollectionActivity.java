@@ -45,7 +45,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class ConfirmDisbursementCollectionActivity extends AppCompatActivity {
 
-    TextView collectionPointView, collectionDateView, collectionTimeView, status;
+    TextView collectionPointView, collectionDateView, collectionTimeView;
     Button completeBtn;
     private TableLayout collectTableLayout;
 
@@ -110,7 +110,6 @@ public class ConfirmDisbursementCollectionActivity extends AppCompatActivity {
         collectionDateView = findViewById(R.id.collectionDate);
         collectionTimeView = findViewById(R.id.collectionTime);
 
-        status = findViewById(R.id.Status);
         completeBtn = findViewById(R.id.completeBtn);
         completeBtn.setOnClickListener(new View.OnClickListener() {
             @Override
