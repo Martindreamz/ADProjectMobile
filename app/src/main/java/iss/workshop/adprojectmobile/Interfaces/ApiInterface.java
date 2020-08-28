@@ -81,4 +81,7 @@ public interface ApiInterface {
 
     @GET("Dept/deptToDeliverReqDetail/{id}")
     Call<List<RequisitionDetail>> getToDeliverRequisitionDetailByDeptId(@Path("id") int id);
+
+    @GET("Dept/deptToDeliverReq/{id}")
+    Call<List<Requisition>> getToDeliverRequisitionsByDeptId(@Path("id") int id);
 }

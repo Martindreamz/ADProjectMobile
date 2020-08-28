@@ -14,7 +14,7 @@ import android.widget.Button;
 import iss.workshop.adprojectmobile.R;
 
 public class RepresentativeMenuActivity extends AppCompatActivity implements View.OnClickListener {
-    Button confirmDisbursement, raiseRequest, findRoutes, dCollection;
+    Button confirmDisbursement, raiseRequest, findRoutes, dCollection, dDistribution;
 
     SharedPreferences session;
     SharedPreferences.Editor session_editor;
@@ -51,6 +51,15 @@ public class RepresentativeMenuActivity extends AppCompatActivity implements Vie
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(RepresentativeMenuActivity.this, ConfirmDisbursementCollectionActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        dDistribution = (Button) findViewById(R.id.dDistribution);
+        dDistribution.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(RepresentativeMenuActivity.this, ConfirmDisbursementDistributionActivity.class);
                 startActivity(intent);
             }
         });

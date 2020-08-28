@@ -40,7 +40,7 @@ public class ConfirmDisbursementCollectionActivity extends AppCompatActivity {
 
     int departmentId;
 
-    //for retrieving collection info
+    //for retrieving info
     private SharedPreferences session;
     private SharedPreferences.Editor session_editor;
 
@@ -93,8 +93,7 @@ public class ConfirmDisbursementCollectionActivity extends AppCompatActivity {
         status = findViewById(R.id.Status);
         completeBtn = findViewById(R.id.completeBtn);
 
-        //retrieving collection info
-        collectionInfo = new ArrayList();
+        //retrieving info
         session = getSharedPreferences("session", MODE_PRIVATE);
         session_editor = session.edit();
         departmentId = session.getInt("departmentId", 0);
@@ -105,7 +104,7 @@ public class ConfirmDisbursementCollectionActivity extends AppCompatActivity {
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 
-        //getting all collection info to be processed
+        //getting all info to be processed
         final ApiInterface apiInterface = retrofit.create(ApiInterface.class);
 
         Call<DisbursementList> callDisbursementForCollection = apiInterface.getLatestDisbursementByDeptId(departmentId);

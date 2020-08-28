@@ -10,6 +10,7 @@ public class RequisitionDetail {
     private String status;
     private String requisition;
     private String stationery;
+    private String stationeryDesc;
 
     public RequisitionDetail(int id, int requisitionId, int stationeryId, int reqQty, int rcvQty, String status, String requisition, String stationery) {
         this.id = id;
@@ -20,6 +21,7 @@ public class RequisitionDetail {
         this.status = status;
         this.requisition = requisition;
         this.stationery = stationery;
+        this.stationeryDesc = null;
     }
 
     public int getId() {
@@ -84,6 +86,14 @@ public class RequisitionDetail {
 
     public void setStationery(String stationery) {
         this.stationery = stationery;
+    }
+
+    public String getStationeryDesc() {
+        return stationeryDesc;
+    }
+
+    public void setStationeryDesc(String stationeryDesc) {
+        this.stationeryDesc = stationeryDesc;
     }
 
     @Override
