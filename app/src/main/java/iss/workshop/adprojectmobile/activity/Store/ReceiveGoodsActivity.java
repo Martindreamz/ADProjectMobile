@@ -40,6 +40,7 @@ TextView rcvDate;
         supplier.setOnItemSelectedListener(this);
         //Test Data for supplier
         List<String> suppliers = new ArrayList<String>();
+        //get all suppliers
         suppliers.add("Main Supplier");
         suppliers.add("Supplier 2");
         suppliers.add("Supplier 3");

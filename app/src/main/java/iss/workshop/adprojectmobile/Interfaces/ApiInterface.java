@@ -9,8 +9,10 @@ import iss.workshop.adprojectmobile.model.PurchaseOrder;
 import iss.workshop.adprojectmobile.model.Requisition;
 import iss.workshop.adprojectmobile.model.RequisitionDetail;
 import iss.workshop.adprojectmobile.model.Stationery;
+import iss.workshop.adprojectmobile.model.StockAdjustment;
 import iss.workshop.adprojectmobile.model.StockAdjustmentDetail;
 import iss.workshop.adprojectmobile.model.CollectionInfo;
+import iss.workshop.adprojectmobile.model.Supplier;
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
@@ -40,6 +42,9 @@ public interface ApiInterface {
     @GET("store/getAllPOs")
     Call<List<PurchaseOrder>> GetAllPos();
 
+    @GET("store/Suppliers")
+    Call<List<Supplier>> GetAllSuppliers();
+
     @GET("store/departmentReps")
     Call<List<Employee>> getAllDepartmentReps();
 
@@ -67,7 +72,7 @@ public interface ApiInterface {
 
     @Headers({"Content-Type: application/json"})
     @POST("store/stkAd/{id}")
-    Call<List<StockAdjustmentDetail>> PostTestStkAd(@Body List<StockAdjustmentDetail> stockAdjustmentDetails, @Path("id") int id);
+    Call<StockAdjustment> PostTestStkAd(@Body List<StockAdjustmentDetail> stockAdjustmentDetails, @Path("id") int id);
 
 
     @Headers({"Content-Type: application/json"})

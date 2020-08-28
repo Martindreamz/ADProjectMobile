@@ -5,22 +5,16 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Typeface;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.SearchView;
-import android.widget.TextView;
 import android.widget.Toast;
-
-import com.travijuu.numberpicker.library.NumberPicker;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -30,10 +24,7 @@ import java.util.List;
 import iss.workshop.adprojectmobile.Interfaces.ApiInterface;
 import iss.workshop.adprojectmobile.Interfaces.SSLBypasser;
 import iss.workshop.adprojectmobile.R;
-import iss.workshop.adprojectmobile.activity.Store.DiscrepencyListActivity;
 import iss.workshop.adprojectmobile.adapters.InventoryCheckAdapter;
-import iss.workshop.adprojectmobile.model.DisbursementList;
-import iss.workshop.adprojectmobile.model.RequisitionDetail;
 import iss.workshop.adprojectmobile.model.Stationery;
 import iss.workshop.adprojectmobile.model.StockAdjustmentDetail;
 import retrofit2.Call;
@@ -180,14 +171,17 @@ public class InventoryCheckActivity extends AppCompatActivity
                     System.out.println(response.code());
                     if (response.code() == 200) {
                         List<StockAdjustmentDetail> sads = response.body();
+                        if(sads!=null){
+                            Toast.makeText(getApplicationContext(), "Inventory Updated with no discrepencies", Toast.LENGTH_LONG).show();
+                            Intent intent = new Intent(getApplicationContext(), ViewInventoryActivity.class);
+                            startActivity(intent);
+                        }
                         Intent intent = new Intent(getApplicationContext(), DiscrepencyListActivity.class);
                         intent.putExtra("sads", (Serializable) sads);
                         System.out.println(sads);
                         startActivity(intent);
                     } else {
                         Toast.makeText(getApplicationContext(), "Something went wrong please try again", Toast.LENGTH_LONG).show();
-                        Intent failure = new Intent(getApplicationContext(), StationeryRetrievalActivity.class);
-                        startActivity(failure);
                     }
                 }
 

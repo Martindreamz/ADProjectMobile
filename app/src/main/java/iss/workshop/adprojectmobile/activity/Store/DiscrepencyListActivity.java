@@ -18,6 +18,7 @@ import iss.workshop.adprojectmobile.Interfaces.ApiInterface;
 import iss.workshop.adprojectmobile.Interfaces.SSLBypasser;
 import iss.workshop.adprojectmobile.R;
 import iss.workshop.adprojectmobile.adapters.GenericAdapter;
+import iss.workshop.adprojectmobile.model.StockAdjustment;
 import iss.workshop.adprojectmobile.model.StockAdjustmentDetail;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -66,13 +67,13 @@ public class DiscrepencyListActivity extends AppCompatActivity implements View.O
                     .addConverterFactory(GsonConverterFactory.create())
                     .build();
             ApiInterface apiInterface=retrofit.create(ApiInterface.class);
-            //Call<List<StockAdjustmentDetail>> call = apiInterface.PostTestStkAd(sads,session.getInt("staffId", 0));
-            Call<List<StockAdjustmentDetail>> call1 = apiInterface.PostTestStkAd(sads,15);
-            call1.enqueue(new Callback<List<StockAdjustmentDetail>>() {
+            //session.getInt("staffId", 0)
+            Call<StockAdjustment> call = apiInterface.PostTestStkAd(sads,15);
+            call.enqueue(new Callback<StockAdjustment>() {
                 @Override
-                public void onResponse(Call<List<StockAdjustmentDetail>> call, Response<List<StockAdjustmentDetail>> response) {
+                public void onResponse(Call<StockAdjustment> call, Response<StockAdjustment> response) {
                     System.out.println("response"+response.code());
-                    if (response.code() == 200) {
+                    if (response.code() == 201) {
                         Toast.makeText(getApplicationContext(), "Request sent!", Toast.LENGTH_LONG).show();
                     } else {
                         Toast.makeText(getApplicationContext(), "Something went wrong please try again", Toast.LENGTH_LONG).show();
@@ -82,7 +83,7 @@ public class DiscrepencyListActivity extends AppCompatActivity implements View.O
                 }
 
                 @Override
-                public void onFailure(Call<List<StockAdjustmentDetail>> call, Throwable t) {
+                public void onFailure(Call<StockAdjustment> call, Throwable t) {
                     Toast.makeText(getApplicationContext(), "FAILURE", Toast.LENGTH_LONG).show();
                 }
             });
