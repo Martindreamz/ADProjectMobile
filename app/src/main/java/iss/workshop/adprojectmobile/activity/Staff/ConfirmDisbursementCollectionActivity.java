@@ -57,7 +57,7 @@ public class ConfirmDisbursementCollectionActivity extends AppCompatActivity {
     private SharedPreferences.Editor session_editor;
 
     List<CollectionInfo> collectionInfo;
-    DisbursementList disbursement;
+    List<DisbursementList> disbursement;
     List<DisbursementDetail> disbursementDetail;
     List<RequisitionDetail> requisitionDetail;
     List<Stationery> stationery;
@@ -159,12 +159,12 @@ public class ConfirmDisbursementCollectionActivity extends AppCompatActivity {
         //getting all info to be processed
         final ApiInterface apiInterface = retrofit.create(ApiInterface.class);
 
-        Call<DisbursementList> callDisbursementForCollection = apiInterface.getNearestDisbursementByDeptId(departmentId);
+        Call<List<DisbursementList>> callDisbursementForCollection = apiInterface.getNearestDisbursementByDeptId(departmentId);
 
-        callDisbursementForCollection.enqueue(new Callback<DisbursementList>() {
+        callDisbursementForCollection.enqueue(new Callback<List<DisbursementList>>() {
             @RequiresApi(api = Build.VERSION_CODES.O)
             @Override
-            public void onResponse(Call<DisbursementList> call, Response<DisbursementList> response) {
+            public void onResponse(Call<List<DisbursementList>> call, Response<List<DisbursementList>> response) {
                 System.out.println("Response here: " + response.code());
                 disbursement = response.body();
 
@@ -178,18 +178,18 @@ public class ConfirmDisbursementCollectionActivity extends AppCompatActivity {
                             collectionInfo = response.body();
 
                             for (CollectionInfo cInfo : collectionInfo) {
-                                if (cInfo.getCollectionPoint().equals(disbursement.getDeliveryPoint())) {
+                                if (cInfo.getCollectionPoint().equals(disbursement.get(0).getDeliveryPoint())) {
                                     LocalTime lt = LocalTime.of(Integer.parseInt(cInfo.getCollectionTime().substring(11, 13)),
                                             Integer.parseInt(cInfo.getCollectionTime().substring(14, 16)),
                                             Integer.parseInt(cInfo.getCollectionTime().substring(17, 19)));
 
-                                    LocalDate ld = LocalDate.of(Integer.parseInt(disbursement.getDate().substring(0, 4)),
-                                            Integer.parseInt(disbursement.getDate().substring(5, 7)),
-                                            Integer.parseInt(disbursement.getDate().substring(8, 10)));
+                                    LocalDate ld = LocalDate.of(Integer.parseInt(disbursement.get(0).getDate().substring(0, 4)),
+                                            Integer.parseInt(disbursement.get(0).getDate().substring(5, 7)),
+                                            Integer.parseInt(disbursement.get(0).getDate().substring(8, 10)));
 
                                     setCollectionTimeData(lt.toString());
                                     setCollectionDateData(ld.toString());
-                                    setCollectionPointData(disbursement.getDeliveryPoint());
+                                    setCollectionPointData(disbursement.get(0).getDeliveryPoint());
 
                                     collectionPointView.setText(collectionPointData);
                                     collectionDateView.setText(collectionDateData);
@@ -207,22 +207,22 @@ public class ConfirmDisbursementCollectionActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onFailure(Call<DisbursementList> call, Throwable t) {
+            public void onFailure(Call<List<DisbursementList>> call, Throwable t) {
                 Log.e("error", t.getMessage());
             }
         });
 
 
-        Call<DisbursementList> callDisbursementForDisbursementDetail = apiInterface.getNearestDisbursementByDeptId(departmentId);
+        Call<List<DisbursementList>> callDisbursementForDisbursementDetail = apiInterface.getNearestDisbursementByDeptId(departmentId);
 
-        callDisbursementForDisbursementDetail.enqueue(new Callback<DisbursementList>() {
+        callDisbursementForDisbursementDetail.enqueue(new Callback<List<DisbursementList>>() {
             @RequiresApi(api = Build.VERSION_CODES.O)
             @Override
-            public void onResponse(Call<DisbursementList> call, Response<DisbursementList> response) {
+            public void onResponse(Call<List<DisbursementList>> call, Response<List<DisbursementList>> response) {
                 System.out.println("Response here: " + response.code());
                 disbursement = response.body();
 
-                if (disbursement != null && disbursement.getStatus() == "Delivering") {
+                if (disbursement != null) {
 
                     Call<List<DisbursementDetail>> callDisbursementDetail = apiInterface.getDisbursementDetailByDeptId(departmentId);
 
@@ -235,8 +235,10 @@ public class ConfirmDisbursementCollectionActivity extends AppCompatActivity {
                             final List<DisbursementDetail> filteredDisbursementDetail = new ArrayList<>();
 
                             for (DisbursementDetail dDetail : disbursementDetail) {
-                                if (dDetail.getDisbursementListId() == disbursement.getId()) {
-                                    filteredDisbursementDetail.add(dDetail);
+                                for (DisbursementList dList : disbursement) {
+                                    if (dDetail.getDisbursementListId() == dList.getId()) {
+                                        filteredDisbursementDetail.add(dDetail);
+                                    }
                                 }
                             }
 
@@ -343,7 +345,7 @@ public class ConfirmDisbursementCollectionActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onFailure(Call<DisbursementList> call, Throwable t) {
+            public void onFailure(Call<List<DisbursementList>> call, Throwable t) {
                 Log.e("error", t.getMessage());
             }
         });
