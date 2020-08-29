@@ -5,8 +5,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.text.method.PasswordTransformationMethod;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -25,21 +27,27 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
 
     Button loginBtn;
+    ImageButton hideBtn;
     TextView username;
     TextView password;
     SharedPreferences session;
     SharedPreferences.Editor session_editor;
+    boolean hidden = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+        hideBtn = findViewById(R.id.hide);
+        hideBtn.setOnClickListener(this);
         loginBtn = findViewById(R.id.loginBtn);
         loginBtn.setOnClickListener(this);
         username = findViewById(R.id.username);
         password = findViewById(R.id.password);
+        password.setTransformationMethod(new PasswordTransformationMethod());
         session = getSharedPreferences("session", MODE_PRIVATE);
         session_editor = session.edit();
+
 
 //sharedpref name = session <- every on create u must instantiate
         //based on session (which is a sharedpref), you call the key name for value.
@@ -47,6 +55,12 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
     @Override
     public void onClick(View view) {
+        if (view == hideBtn){
+            hidden = !hidden;
+            if(hidden){password.setTransformationMethod(new PasswordTransformationMethod());}
+            else{
+            password.setTransformationMethod(null);}
+        }
         if (view == loginBtn) {
             Employee emp = new Employee(username.getText().toString().trim(), password.getText().toString().trim());
 

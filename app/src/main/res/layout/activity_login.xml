@@ -23,17 +23,37 @@
             android:inputType="text"
             android:layout_gravity="center"
             />
-        <EditText
-            android:id="@+id/password"
-            android:layout_width="wrap_content"
+
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:ems="10"
-            android:gravity="top|left"
-            android:hint="@string/enter_psw"
-            android:inputType="text"
             android:layout_gravity="center"
-            />
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <EditText
+                android:id="@+id/password"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="10dp"
+                android:ems="10"
+                android:gravity="top|left"
+                android:hint="@string/enter_psw"
+                android:inputType="text" />
+
+            <ImageButton
+                android:id="@+id/hide"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:adjustViewBounds="true"
+                android:scaleType="fitCenter"
+                android:src="@drawable/hide">
+
+            </ImageButton>
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
         <Button style="@style/Btn"
             android:id="@+id/loginBtn"
             android:text="@string/login"
