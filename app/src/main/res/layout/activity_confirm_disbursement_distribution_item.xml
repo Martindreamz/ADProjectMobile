@@ -5,19 +5,10 @@
     android:orientation="horizontal">
 
     <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/requestorName"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_weight="0.3"
-        android:gravity="center"
-        android:text="Sample Text"
-        android:textColor="#000000" />
-
-    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/statDescription"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_weight="0.5"
+        android:layout_weight="0.7"
         android:gravity="center"
         android:text="Sample Text"
         android:textColor="#000000" />
@@ -26,7 +17,7 @@
         android:id="@+id/receivedQty"
         android:layout_width="0dp"
         android:layout_height="match_parent"
-        android:layout_weight="0.2"
+        android:layout_weight="0.3"
         android:gravity="center"
         android:text="Sample Text"
         android:textColor="#000000" />
