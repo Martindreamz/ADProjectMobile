@@ -11,8 +11,9 @@ public class DisbursementDetail {
     private int StationeryId;
     private String StationeryDesc;
     private String requestedEmp;
+    private String bitmap;
 
-    public DisbursementDetail(int id, int disbursementListId, int requisitionDetailId, int qty, String disbursementList, String requisitionDetail, String requestedEmp) {
+    public DisbursementDetail(int id, int disbursementListId, int requisitionDetailId, int qty, String disbursementList, String requisitionDetail, String requestedEmp,String bitmap) {
         this.id = id;
         this.disbursementListId = disbursementListId;
         this.requisitionDetailId = requisitionDetailId;
@@ -22,6 +23,7 @@ public class DisbursementDetail {
         this.StationeryId = 0;
         this.StationeryDesc = null;
         this.requestedEmp = null;
+        this.bitmap=bitmap;
     }
 
     public int getId() {
@@ -91,6 +93,14 @@ public class DisbursementDetail {
     public String getRequestedEmp() { return requestedEmp; }
 
     public void setRequestedEmp(String requestedEmp) { this.requestedEmp = requestedEmp; }
+
+    public String getBitmap() {
+        return bitmap;
+    }
+
+    public void setBitmap(String bitmap) {
+        this.bitmap = bitmap;
+    }
 
     @Override
     public String toString() {

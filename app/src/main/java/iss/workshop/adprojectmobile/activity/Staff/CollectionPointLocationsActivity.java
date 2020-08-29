@@ -22,7 +22,6 @@ import java.util.List;
 import iss.workshop.adprojectmobile.R;
 import iss.workshop.adprojectmobile.Interfaces.ApiInterface;
 import iss.workshop.adprojectmobile.Interfaces.SSLBypasser;
-import iss.workshop.adprojectmobile.activity.DepartmentHeadHomePageActivity;
 import iss.workshop.adprojectmobile.model.CollectionInfo;
 import retrofit2.Call;
 import retrofit2.Callback;

@@ -12,6 +12,8 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.github.gcacace.signaturepad.views.SignaturePad;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -27,7 +29,8 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-public class DisbursementDetailsActivity extends AppCompatActivity implements AdapterView.OnItemClickListener {
+public class DisbursementDetailsActivity extends AppCompatActivity
+        implements AdapterView.OnItemClickListener, View.OnClickListener {
     private SharedPreferences session;
     private SharedPreferences.Editor session_editor;
     private ListView ddTable;
@@ -54,7 +57,8 @@ public class DisbursementDetailsActivity extends AppCompatActivity implements Ad
         ddList = new ArrayList<>();
         title = findViewById(R.id.DDtitle);
         rep = findViewById(R.id.DDrep);
-//        back = findViewById(R.id.DDback);
+        back = findViewById(R.id.DDback);
+        back.setOnClickListener(this);
 
         title.setText(session.getString("selected_dl_dept", "not found"));
         rep.setText(session.getString("selected_dl_rep", "not found"));
@@ -89,14 +93,6 @@ public class DisbursementDetailsActivity extends AppCompatActivity implements Ad
                 Toast.makeText(getApplicationContext(), "Server Down", Toast.LENGTH_LONG).show();
             }
         });
-
-//        back.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Intent intent = new Intent(getApplicationContext(), DisbursementListActivity.class);
-//                startActivity(intent);
-//            }
-//        });
     }
 
     @Override
@@ -108,5 +104,16 @@ public class DisbursementDetailsActivity extends AppCompatActivity implements Ad
     public void onBackPressed() {
         Intent intent = new Intent(this, DisbursementListActivity.class);
         startActivity(intent);
+    }
+
+    @Override
+    public void onClick(View view) {
+        int id = view.getId();
+        if(id==R.id.DDback){
+            Intent intent=new Intent(this, SignaturePadActivity.class);
+            startActivity(intent);
+
+        }
+
     }
 }

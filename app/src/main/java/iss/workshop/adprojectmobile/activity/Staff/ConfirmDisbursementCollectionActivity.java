@@ -10,32 +10,25 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.TableLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.travijuu.numberpicker.library.Enums.ActionEnum;
 import com.travijuu.numberpicker.library.Interface.ValueChangedListener;
 import com.travijuu.numberpicker.library.NumberPicker;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import iss.workshop.adprojectmobile.Interfaces.ApiInterface;
 import iss.workshop.adprojectmobile.Interfaces.SSLBypasser;
 import iss.workshop.adprojectmobile.R;
-import iss.workshop.adprojectmobile.activity.DepartmentHeadHomePageActivity;
 import iss.workshop.adprojectmobile.model.CollectionInfo;
 import iss.workshop.adprojectmobile.model.DisbursementDetail;
 import iss.workshop.adprojectmobile.model.DisbursementList;
-import iss.workshop.adprojectmobile.model.Employee;
 import iss.workshop.adprojectmobile.model.RequisitionDetail;
 import iss.workshop.adprojectmobile.model.Stationery;
 import retrofit2.Call;

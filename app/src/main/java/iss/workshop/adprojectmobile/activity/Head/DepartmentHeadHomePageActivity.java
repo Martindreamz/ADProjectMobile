@@ -1,4 +1,4 @@
-package iss.workshop.adprojectmobile.activity;
+package iss.workshop.adprojectmobile.activity.Head;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.Button;
 
 import iss.workshop.adprojectmobile.R;
+import iss.workshop.adprojectmobile.activity.LoginActivity;
 
 public class DepartmentHeadHomePageActivity extends AppCompatActivity implements View.OnClickListener {
     Button delegateAuthority, logoutBtn;
