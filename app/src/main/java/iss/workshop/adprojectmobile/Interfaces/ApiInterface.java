@@ -123,4 +123,9 @@ public interface ApiInterface {
     @POST("dept/confirmDisbursementByDept")
     Call<List<DisbursementDetail>> SendDisbursementDetail (@Body List<DisbursementDetail> updatedDisbursementDetailList);
 
+    @Headers({"Content-Type: application/json"})
+    @POST("store/updateDisbursementBitmap/{DLid}")
+    Call<DisbursementList> updateDisbursementBitmap(@Body String bitmap, @Path("DLid") int id);
+
+
 }
