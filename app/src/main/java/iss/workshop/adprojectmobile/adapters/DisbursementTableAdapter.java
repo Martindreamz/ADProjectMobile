@@ -51,6 +51,9 @@ public class DisbursementTableAdapter extends ArrayAdapter {
         TextView representative = view.findViewById(R.id.dl_representative);
         representative.setText(DBL.get(pos).getRepName());
 
+        TextView status = view.findViewById(R.id.dl_status);
+        status.setText(DBL.get(pos).getStatus());
+
         return view;
     }
 

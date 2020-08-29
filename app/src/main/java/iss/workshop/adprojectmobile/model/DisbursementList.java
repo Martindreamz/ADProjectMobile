@@ -12,9 +12,9 @@ public class DisbursementList {
     private String date;
     private String deliveryPoint;
     private String status;
-    private String Department;
+    private String department;
     private String repName;
-
+    private String bitmap;
 //    private DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 
     public DisbursementList(int id, int departmentId, String date, String deliveryPoint, String status, String department) {
@@ -23,7 +23,7 @@ public class DisbursementList {
         this.date = date;
         this.deliveryPoint = deliveryPoint;
         this.status = status;
-        Department = department;
+        this.department = department;
         repName = null;
     }
 
@@ -68,16 +68,28 @@ public class DisbursementList {
         this.deliveryPoint = deliveryPoint;
     }
 
-    public String getStatus() { return status; }
+    public String getStatus() {
+        return status;
+    }
 
-    public void setStatus(String status) { this.status = status; }
+    public void setStatus(String status) {
+        this.status = status;
+    }
 
     public String getDepartment() {
-        return Department;
+        return department;
     }
 
     public void setDepartment(String department) {
-        Department = department;
+        this.department = department;
+    }
+
+    public String getBitmap() {
+        return bitmap;
+    }
+
+    public void setBitmap(String bitmap) {
+        this.bitmap = bitmap;
     }
 
     @Override
@@ -87,7 +99,9 @@ public class DisbursementList {
                 ", DepartmentId=" + departmentId +
                 ", date=" + date +
                 ", deliveryPoint='" + deliveryPoint + '\'' +
-                ", Department='" + Department + '\'' +
+                ", Department='" + department + '\'' +
                 '}';
     }
+
+
 }

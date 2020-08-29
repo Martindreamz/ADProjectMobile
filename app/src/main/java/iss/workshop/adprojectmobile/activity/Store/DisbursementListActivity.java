@@ -94,7 +94,7 @@ public class DisbursementListActivity extends AppCompatActivity implements Adapt
 
         final ApiInterface apiInterface = retrofit.create(ApiInterface.class);
 
-        Call<List<DisbursementList>> call = apiInterface.getAllDisbursementLists(session.getInt("staffId",0));
+        Call<List<DisbursementList>> call = apiInterface.getAllDisbursementLists(session.getInt("staffId", 0));
 
         call.enqueue(new Callback<List<DisbursementList>>() {
             @RequiresApi(api = Build.VERSION_CODES.O)
@@ -189,39 +189,30 @@ public class DisbursementListActivity extends AppCompatActivity implements Adapt
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-        Toast.makeText(getApplicationContext(), Integer.toString(currDisbursementLists.get(i).getId()),Toast.LENGTH_LONG);
+        Toast.makeText(getApplicationContext(), Integer.toString(currDisbursementLists.get(i).getId()), Toast.LENGTH_LONG);
         System.out.println(Integer.toString(currDisbursementLists.get(i).getId()));
-        session_editor.putInt("selected_dl",currDisbursementLists.get(i).getId());
-        session_editor.putString("selected_dl_dept",currDisbursementLists.get(i).getDepartment());
-        session_editor.putString("selected_dl_rep",currDisbursementLists.get(i).getRepName());
-        session_editor.commit();
-        Intent intent = new Intent(getApplicationContext(), DisbursementDetailsActivity.class);
-        startActivity(intent);
+//        session_editor.putInt("selected_dl", currDisbursementLists.get(i).getId());
+//        session_editor.putString("selected_dl_dept", currDisbursementLists.get(i).getDepartment());
+//        session_editor.putString("selected_dl_rep", currDisbursementLists.get(i).getRepName());
+//        session_editor.putString("selected_dl_status",currDisbursementLists.get(i).getStatus());
+//        session_editor.commit();
 
-//        AlertDialog.Builder dlg = new AlertDialog.Builder(this)
-//                .setTitle(currDisbursementLists.get(i).getDepartment()+"\n\n"+currDisbursementLists.get(i).getRepName())
-//                .setAdapter(new DisbursementDetailAdapter(this, 0, currDisbursementLists), new DialogInterface.OnClickListener() {
-//                    @Override
-//                    public void onClick(DialogInterface dialogInterface, int i) {
-//                        System.out.println(currDisbursementLists.get(i).getId());
-//                    }
-//                })
-//                .setPositiveButton("Delivered", new DialogInterface.OnClickListener() {
-//                    @Override
-//                    public void onClick(DialogInterface dialogInterface, int i) {
-//                        System.out.println("delivered");
-//                    }
-//                })
-//                .setNegativeButton("cancel", new DialogInterface.OnClickListener() {
-//                    @Override
-//                    public void onClick(DialogInterface dialogInterface, int i) {
-//                        System.out.println("cancel");
-//                    }
-//                });
-
-//        dlg.show();
-
-
+        if (currDisbursementLists.get(i).getStatus().equals("delivering")) {
+            Intent intent = new Intent(getApplicationContext(), SignaturePadActivity.class);
+            intent.putExtra("selected_dl", currDisbursementLists.get(i).getId());
+            intent.putExtra("selected_dl_dept", currDisbursementLists.get(i).getDepartment());
+            intent.putExtra("selected_dl_rep", currDisbursementLists.get(i).getRepName());
+            intent.putExtra("selected_dl_status",currDisbursementLists.get(i).getStatus());
+            startActivity(intent);
+        } else {
+            Intent intent = new Intent(getApplicationContext(), DisbursementDetailsActivity.class);
+            intent.putExtra("selected_dl", currDisbursementLists.get(i).getId());
+            intent.putExtra("selected_dl_dept", currDisbursementLists.get(i).getDepartment());
+            intent.putExtra("selected_dl_rep", currDisbursementLists.get(i).getRepName());
+            intent.putExtra("selected_dl_status",currDisbursementLists.get(i).getStatus());
+            intent.putExtra("selected_dl_bitmap",currDisbursementLists.get(i).getBitmap());
+            startActivity(intent);
+        }
 
 
     }
