@@ -231,42 +231,55 @@ public class ReceiveGoodsActivity extends AppCompatActivity
         // On selecting a spinner item
         int spinnerId = parent.getId();
         String item = parent.getItemAtPosition(position).toString();
+        List<String> newSupplierddl = new ArrayList<String>();
 
 
         if (spinnerId == R.id.supplier) {
-            Toast.makeText(ReceiveGoodsActivity.this, item, Toast.LENGTH_SHORT).show();
-            if(purchaseOrders.size()!=0) {
-                List<String> newPoddl = new ArrayList<String>();
-                for (Supplier supplier : suppliers) {
-                    if (supplier.getName().equals(item)) {
-                        int supId = supplier.getId();
-                        for (PurchaseOrder po : purchaseOrders) {
-                            if (po.getSupplierId() == supId) {
-                                newPoddl.add(Integer.toString(po.getId()));
+            for (Supplier s : suppliers) {
+                int sid = s.getId();
+
+                for (PurchaseOrder po : purchaseOrders) {
+                    if (po.getSupplierId() == sid) {
+                        newSupplierddl.add(s.getName());
+                    }
+                }
+            }
+
+                supplierddl = newSupplierddl;
+
+                if (purchaseOrders.size() != 0) {
+                    List<String> newPoddl = new ArrayList<String>();
+                    for (Supplier supplier : suppliers) {
+                        if (supplier.getName().equals(item)) {
+                            int supId = supplier.getId();
+                            for (PurchaseOrder po : purchaseOrders) {
+                                if (po.getSupplierId() == supId) {
+                                    newPoddl.add(Integer.toString(po.getId()));
+                                }
                             }
                         }
                     }
+                    if (newPoddl != null) {
+                        poddl = newPoddl;
+                        //System.out.println(newPoddl);
+                        poNoRef = findViewById(R.id.PoNumberRef);
+
+                        ArrayAdapter<String> dataAdapter2 = new ArrayAdapter<String>(getApplicationContext(), android.R.layout.simple_spinner_item, poddl);
+                        dataAdapter2.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+                        poNoRef.setAdapter(dataAdapter2);
+                        poNoRef.setVisibility(View.VISIBLE);
+                        poNoRef.setOnItemSelectedListener(this);
+                    }
+
+                    if (newPoddl == null) {
+                        Toast.makeText(ReceiveGoodsActivity.this, "No purchase orders made with selected supplier", Toast.LENGTH_SHORT).show();
+
+                    }
                 }
-                if(newPoddl!=null) {
-                    poddl = newPoddl;
-                    //System.out.println(newPoddl);
-                    poNoRef = findViewById(R.id.PoNumberRef);
+                //get supplier id
+                //set po reference to only supplier's poddl
 
-                    ArrayAdapter<String> dataAdapter2 = new ArrayAdapter<String>(getApplicationContext(), android.R.layout.simple_spinner_item, poddl);
-                    dataAdapter2.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-
-                    poNoRef.setAdapter(dataAdapter2);
-                    poNoRef.setVisibility(View.VISIBLE);
-                    poNoRef.setOnItemSelectedListener(this);
-                }
-
-                if(newPoddl==null) {
-                    Toast.makeText(ReceiveGoodsActivity.this, "No purchase orders made with selected supplier", Toast.LENGTH_SHORT).show();
-
-                }
-            }
-            //get supplier id 
-            //set po reference to only supplier's poddl
         }
         System.out.println("from po"+purchaseOrders);
 
