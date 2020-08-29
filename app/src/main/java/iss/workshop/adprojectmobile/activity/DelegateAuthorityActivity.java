@@ -265,7 +265,7 @@ public class DelegateAuthorityActivity extends AppCompatActivity implements Adap
                                 startDate = LocalDate.of(year, (monthOfYear + 1), dayOfMonth);
                                 LocalDateTime selectedDate = LocalDateTime.of(year, (monthOfYear + 1), dayOfMonth, 23, 59, 59);
                                 if (selectedDate.isBefore(LocalDateTime.now())) {
-                                    Toast.makeText(getApplicationContext(), "select a future date or today for end date  please", Toast.LENGTH_LONG).show();
+                                    Toast.makeText(getApplicationContext(), "select a future date or today for start date  please", Toast.LENGTH_LONG).show();
                                     startDateClear = false;
                                 } else {
                                     startDateClear = true;
@@ -294,7 +294,7 @@ public class DelegateAuthorityActivity extends AppCompatActivity implements Adap
                                 endDate = LocalDate.of(year, (monthOfYear + 1), dayOfMonth);
                                 LocalDateTime selectedDate = LocalDateTime.of(year, (monthOfYear + 1), dayOfMonth, 23, 59, 59);
                                 if (selectedDate.isBefore(LocalDateTime.now())) {
-                                    Toast.makeText(getApplicationContext(), "select a future date or today for start date please", Toast.LENGTH_LONG).show();
+                                    Toast.makeText(getApplicationContext(), "select a future date or today for end date please", Toast.LENGTH_LONG).show();
                                     endDateClear = false;
                                 } else {
                                     endDateClear = true;

@@ -159,7 +159,7 @@ public class ConfirmDisbursementCollectionActivity extends AppCompatActivity {
         //getting all info to be processed
         final ApiInterface apiInterface = retrofit.create(ApiInterface.class);
 
-        Call<DisbursementList> callDisbursementForCollection = apiInterface.getLatestDisbursementByDeptId(departmentId);
+        Call<DisbursementList> callDisbursementForCollection = apiInterface.getNearestDisbursementByDeptId(departmentId);
 
         callDisbursementForCollection.enqueue(new Callback<DisbursementList>() {
             @RequiresApi(api = Build.VERSION_CODES.O)
@@ -213,7 +213,7 @@ public class ConfirmDisbursementCollectionActivity extends AppCompatActivity {
         });
 
 
-        Call<DisbursementList> callDisbursementForDisbursementDetail = apiInterface.getLatestDisbursementByDeptId(departmentId);
+        Call<DisbursementList> callDisbursementForDisbursementDetail = apiInterface.getNearestDisbursementByDeptId(departmentId);
 
         callDisbursementForDisbursementDetail.enqueue(new Callback<DisbursementList>() {
             @RequiresApi(api = Build.VERSION_CODES.O)
@@ -222,7 +222,7 @@ public class ConfirmDisbursementCollectionActivity extends AppCompatActivity {
                 System.out.println("Response here: " + response.code());
                 disbursement = response.body();
 
-                if (disbursement != null) {
+                if (disbursement != null && disbursement.getStatus() == "Delivering") {
 
                     Call<List<DisbursementDetail>> callDisbursementDetail = apiInterface.getDisbursementDetailByDeptId(departmentId);
 
@@ -300,20 +300,6 @@ public class ConfirmDisbursementCollectionActivity extends AppCompatActivity {
                                                         collectTableLayout.addView(tableRow);
 
                                                     }
-                                                } else {
-                                                    View tableRow = LayoutInflater.from(getApplicationContext()).inflate(R.layout.activity_confirm_disbursement_collection_item, null, false);
-                                                    TextView itemCode = (TextView) tableRow.findViewById(R.id.itemCode);
-                                                    TextView itemDesc = (TextView) tableRow.findViewById(R.id.itemDesc);
-                                                    TextView itemRqt = (TextView) tableRow.findViewById(R.id.itemRqt);
-
-                                                    final NumberPicker qty = tableRow.findViewById(R.id.itemRcv);
-                                                    qty.setValue(0);
-                                                    qty.setMin(0);
-
-                                                    itemCode.setText("");
-                                                    itemDesc.setText("No Disbursement Data");
-                                                    itemRqt.setText("");
-                                                    collectTableLayout.addView(tableRow);
                                                 }
                                             }
 
@@ -337,6 +323,22 @@ public class ConfirmDisbursementCollectionActivity extends AppCompatActivity {
                             Log.e("error", t.getMessage());
                         }
                     });
+                } else {
+                    View tableRow = LayoutInflater.from(getApplicationContext()).inflate(R.layout.activity_confirm_disbursement_collection_item, null, false);
+                    TextView itemCode = (TextView) tableRow.findViewById(R.id.itemCode);
+                    TextView itemDesc = (TextView) tableRow.findViewById(R.id.itemDesc);
+                    TextView itemRqt = (TextView) tableRow.findViewById(R.id.itemRqt);
+
+                    final NumberPicker qty = tableRow.findViewById(R.id.itemRcv);
+                    qty.setValue(0);
+                    qty.setMin(0);
+                    qty.setVisibility(View.GONE);
+                    completeBtn.setVisibility(View.GONE);
+
+                    itemCode.setText("");
+                    itemDesc.setText("All items are collected!");
+                    itemRqt.setText("");
+                    collectTableLayout.addView(tableRow);
                 }
             }
 

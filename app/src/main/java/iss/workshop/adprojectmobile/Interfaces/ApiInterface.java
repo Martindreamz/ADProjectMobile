@@ -65,8 +65,8 @@ public interface ApiInterface {
     @GET("Dept/{id}")
     Call<Department> getDepartmentById(@Path("id") int id);
 
-    @GET("Dept/latestDisbursementByDept/{id}")
-    Call<DisbursementList>  getLatestDisbursementByDeptId(@Path("id") int id);
+    @GET("Dept/nearestDisbursementByDept/{id}")
+    Call<DisbursementList>  getNearestDisbursementByDeptId(@Path("id") int id);
 
     @GET("Dept/disbursementDetailByDept/{id}")
     Call<List<DisbursementDetail>> getDisbursementDetailByDeptId(@Path("id") int id);

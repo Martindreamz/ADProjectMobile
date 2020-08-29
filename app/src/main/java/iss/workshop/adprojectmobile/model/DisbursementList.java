@@ -11,15 +11,17 @@ public class DisbursementList {
     private int departmentId;
     private String date;
     private String deliveryPoint;
+    private String status;
     private String Department;
     private String repName;
 //    private DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 
-    public DisbursementList(int id, int departmentId, String date, String deliveryPoint, String department) {
+    public DisbursementList(int id, int departmentId, String date, String deliveryPoint, String status, String department) {
         this.id = id;
         this.departmentId = departmentId;
         this.date = date;
         this.deliveryPoint = deliveryPoint;
+        this.status = status;
         Department = department;
         repName = null;
     }
@@ -64,6 +66,10 @@ public class DisbursementList {
     public void setDeliveryPoint(String deliveryPoint) {
         this.deliveryPoint = deliveryPoint;
     }
+
+    public String getStatus() { return status; }
+
+    public void setStatus(String status) { this.status = status; }
 
     public String getDepartment() {
         return Department;

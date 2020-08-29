@@ -76,14 +76,15 @@ public class ConfirmDisbursementDistributionActivity extends AppCompatActivity {
         departmentId = session.getInt("departmentId", 0);
 
 
-        Call<DisbursementList> callDisbursementUnderDept = apiInterface.getLatestDisbursementByDeptId(departmentId);
+        Call<DisbursementList> callDisbursementUnderDept = apiInterface.getNearestDisbursementByDeptId(departmentId);
 
         callDisbursementUnderDept.enqueue(new Callback<DisbursementList>() {
+            @RequiresApi(api = Build.VERSION_CODES.O)
             @Override
             public void onResponse(Call<DisbursementList> call, Response<DisbursementList> response) {
                 disbursement = response.body();
 
-                if (disbursement != null) {
+                if (disbursement != null && (disbursement.getStatus() == "Delivered" || disbursement.getStatus() == "Complete")) {
 
                     Call<List<DisbursementDetail>> callDisbursementDetail = apiInterface.getDisbursementDetailByDeptId(departmentId);
 
@@ -206,16 +207,6 @@ public class ConfirmDisbursementDistributionActivity extends AppCompatActivity {
                                                                                         receivedQty.setText(Integer.toString(dDetail.getQty()));
                                                                                         tableLayout.addView(tableRow);
                                                                                     }
-                                                                                } else {
-                                                                                    View tableRow = LayoutInflater.from(getApplicationContext()).inflate(R.layout.activity_confirm_disbursement_distribution_item, null, false);
-                                                                                    TextView requester = (TextView) tableRow.findViewById(R.id.requestorName);
-                                                                                    TextView statDescription = (TextView) tableRow.findViewById(R.id.statDescription);
-                                                                                    TextView receivedQty = (TextView) tableRow.findViewById(R.id.receivedQty);
-
-                                                                                    requester.setText("");
-                                                                                    statDescription.setText("No Requisition Data");
-                                                                                    receivedQty.setText("");
-                                                                                    tableLayout.addView(tableRow);
                                                                                 }
                                                                             }
 
@@ -258,6 +249,16 @@ public class ConfirmDisbursementDistributionActivity extends AppCompatActivity {
                             Log.e("error", t.getMessage());
                         }
                     });
+                } else {
+                    View tableRow = LayoutInflater.from(getApplicationContext()).inflate(R.layout.activity_confirm_disbursement_distribution_item, null, false);
+                    TextView requester = (TextView) tableRow.findViewById(R.id.requestorName);
+                    TextView statDescription = (TextView) tableRow.findViewById(R.id.statDescription);
+                    TextView receivedQty = (TextView) tableRow.findViewById(R.id.receivedQty);
+
+                    requester.setText("");
+                    statDescription.setText("Items are not collected yet!");
+                    receivedQty.setText("");
+                    tableLayout.addView(tableRow);
                 }
             }
 
