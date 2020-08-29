@@ -73,7 +73,7 @@ public class ReceiveGoodsActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_receive_goods);
         supplier = findViewById(R.id.supplier);
-        poNoRef = findViewById(R.id.PoNumberRef);
+
         rcvDate = findViewById(R.id.rcvDate);
         suppliers = new ArrayList<>();
         purchaseOrders = new ArrayList<>();
@@ -90,7 +90,7 @@ public class ReceiveGoodsActivity extends AppCompatActivity
         rcvDate.setText(formattedDate);
 
         supplier.setOnItemSelectedListener(this);
-        poNoRef.setOnItemSelectedListener(this);
+        //poNoRef.setOnItemSelectedListener(this);
 
 
         final Retrofit retrofit = new Retrofit.Builder()
@@ -156,10 +156,10 @@ public class ReceiveGoodsActivity extends AppCompatActivity
                         }
                     }
 
-                    ArrayAdapter<String> dataAdapter2 = new ArrayAdapter<String>(getApplicationContext(), android.R.layout.simple_spinner_item, poddl);
+                   /* ArrayAdapter<String> dataAdapter2 = new ArrayAdapter<String>(getApplicationContext(), android.R.layout.simple_spinner_item, poddl);
                     dataAdapter2.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
-                    poNoRef.setAdapter(dataAdapter2);
+                    poNoRef.setAdapter(dataAdapter2);*/
 
 
                     //get and set PODS to POs
@@ -249,7 +249,20 @@ public class ReceiveGoodsActivity extends AppCompatActivity
                 }
                 if(newPoddl!=null) {
                     poddl = newPoddl;
-                    System.out.println(newPoddl);
+                    //System.out.println(newPoddl);
+                    poNoRef = findViewById(R.id.PoNumberRef);
+
+                    ArrayAdapter<String> dataAdapter2 = new ArrayAdapter<String>(getApplicationContext(), android.R.layout.simple_spinner_item, poddl);
+                    dataAdapter2.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+                    poNoRef.setAdapter(dataAdapter2);
+                    poNoRef.setVisibility(View.VISIBLE);
+                    poNoRef.setOnItemSelectedListener(this);
+                }
+
+                if(newPoddl==null) {
+                    Toast.makeText(ReceiveGoodsActivity.this, "No purchase orders made with selected supplier", Toast.LENGTH_SHORT).show();
+
                 }
             }
             //get supplier id 
