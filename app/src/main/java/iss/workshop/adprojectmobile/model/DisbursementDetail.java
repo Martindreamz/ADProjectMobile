@@ -11,9 +11,10 @@ public class DisbursementDetail {
     private int StationeryId;
     private String StationeryDesc;
     private String requestedEmp;
+    private String deliveryPoint;
     private String bitmap;
 
-    public DisbursementDetail(int id, int disbursementListId, int requisitionDetailId, int qty, String disbursementList, String requisitionDetail, String requestedEmp,String bitmap) {
+    public DisbursementDetail(int id, int disbursementListId, int requisitionDetailId, int qty, String disbursementList, String requisitionDetail, String requestedEmp, String deliveryPoint, String bitmap) {
         this.id = id;
         this.disbursementListId = disbursementListId;
         this.requisitionDetailId = requisitionDetailId;
@@ -23,6 +24,7 @@ public class DisbursementDetail {
         this.StationeryId = 0;
         this.StationeryDesc = null;
         this.requestedEmp = null;
+        this.deliveryPoint = null;
         this.bitmap=bitmap;
     }
 
@@ -94,6 +96,10 @@ public class DisbursementDetail {
 
     public void setRequestedEmp(String requestedEmp) { this.requestedEmp = requestedEmp; }
 
+    public String getDeliveryPoint() { return deliveryPoint; }
+
+    public void setDeliveryPoint(String deliveryPoint) { this.deliveryPoint = deliveryPoint; }
+
     public String getBitmap() {
         return bitmap;
     }
@@ -106,11 +112,15 @@ public class DisbursementDetail {
     public String toString() {
         return "DisbursementDetail{" +
                 "id=" + id +
-                ", DisbursementListId=" + disbursementListId +
-                ", RequisitionDetailId=" + requisitionDetailId +
+                ", disbursementListId=" + disbursementListId +
+                ", requisitionDetailId=" + requisitionDetailId +
                 ", qty=" + qty +
-                ", DisbursementList='" + disbursementList + '\'' +
-                ", RequisitionDetail='" + requisitionDetail + '\'' +
+                ", disbursementList='" + disbursementList + '\'' +
+                ", requisitionDetail='" + requisitionDetail + '\'' +
+                ", StationeryId=" + StationeryId +
+                ", StationeryDesc='" + StationeryDesc + '\'' +
+                ", requestedEmp='" + requestedEmp + '\'' +
+                ", deliveryPoint='" + deliveryPoint + '\'' +
                 '}';
     }
 }
