@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -57,7 +58,7 @@ public class ConfirmDisbursementCollectionActivity extends AppCompatActivity imp
     List<CollectionInfo> collectionInfo;
     List<DisbursementList> disbursement;
     List<DisbursementDetail> disbursementDetail;
-    List<DisbursementDetail> finalDisbursementDetail;
+    List<DisbursementDetail> latestDisbursementDetail;
     List<DisbursementDetail> currDisbursementDetail = new ArrayList<>();
     List<RequisitionDetail> requisitionDetail;
     List<Stationery> stationery;
@@ -98,12 +99,12 @@ public class ConfirmDisbursementCollectionActivity extends AppCompatActivity imp
         this.collectionPointData = collectionPointData;
     }
 
-    public List<DisbursementDetail> getFinalDisbursementDetail() {
-        return finalDisbursementDetail;
+    public List<DisbursementDetail> getLatestDisbursementDetail() {
+        return latestDisbursementDetail;
     }
 
-    public void setFinalDisbursementDetail(List<DisbursementDetail> finalDisbursementDetail) {
-        this.finalDisbursementDetail = finalDisbursementDetail;
+    public void setLatestDisbursementDetail(List<DisbursementDetail> latestDisbursementDetail) {
+        this.latestDisbursementDetail = latestDisbursementDetail;
     }
 
     @RequiresApi(api = Build.VERSION_CODES.O)
@@ -112,8 +113,7 @@ public class ConfirmDisbursementCollectionActivity extends AppCompatActivity imp
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_confirm_disbursement_collection);
 
-        finalDisbursementDetail = new ArrayList<>();
-
+        latestDisbursementDetail = new ArrayList<>();
         collectTableLayout = (TableLayout) findViewById(R.id.collectTableLayout);
 
         //defining textViews & Buttons
@@ -238,7 +238,6 @@ public class ConfirmDisbursementCollectionActivity extends AppCompatActivity imp
             @RequiresApi(api = Build.VERSION_CODES.O)
             @Override
             public void onResponse(Call<List<DisbursementList>> call, Response<List<DisbursementList>> response) {
-                System.out.println("Response here: " + response.code());
                 disbursement = response.body();
 
                 if (disbursement != null) {
@@ -248,7 +247,6 @@ public class ConfirmDisbursementCollectionActivity extends AppCompatActivity imp
                     callDisbursementDetail.enqueue(new Callback<List<DisbursementDetail>>() {
                         @Override
                         public void onResponse(Call<List<DisbursementDetail>> call, Response<List<DisbursementDetail>> response) {
-                            System.out.println("Response here: " + response.code());
                             disbursementDetail = response.body();
 
                                 Call<List<RequisitionDetail>> callRequisitionDetail = apiInterface.getToDeliverRequisitionDetailByDeptId(departmentId);
@@ -256,7 +254,6 @@ public class ConfirmDisbursementCollectionActivity extends AppCompatActivity imp
                                 callRequisitionDetail.enqueue(new Callback<List<RequisitionDetail>>() {
                                     @Override
                                     public void onResponse(Call<List<RequisitionDetail>> call, Response<List<RequisitionDetail>> response) {
-                                        System.out.println("Response here: " + response.code());
                                         requisitionDetail = response.body();
 
                                         Call<List<Stationery>> callStationery = apiInterface.getAllStationery();
@@ -264,7 +261,6 @@ public class ConfirmDisbursementCollectionActivity extends AppCompatActivity imp
                                         callStationery.enqueue(new Callback<List<Stationery>>() {
                                             @Override
                                             public void onResponse(Call<List<Stationery>> call, Response<List<Stationery>> response) {
-                                                System.out.println("Response here: " + response.code());
                                                 stationery = response.body();
 
                                                 final List<DisbursementDetail> filteredDisbursementDetail = new ArrayList<>();
@@ -301,13 +297,8 @@ public class ConfirmDisbursementCollectionActivity extends AppCompatActivity imp
                                                             }
                                                         }
                                                     }
-
-                                                    for (DisbursementDetail dDetail : filteredDisbursementDetail) {
-                                                        System.out.println(dDetail);
-                                                    }
-
                                                 }
-                                                setFinalDisbursementDetail(filteredDisbursementDetail);
+                                                setLatestDisbursementDetail(filteredDisbursementDetail);
                                             }
 
                                             @Override
@@ -345,45 +336,49 @@ public class ConfirmDisbursementCollectionActivity extends AppCompatActivity imp
         final String item = parent.getItemAtPosition(position).toString();
         Toast.makeText(ConfirmDisbursementCollectionActivity.this, item, Toast.LENGTH_SHORT).show();
 
-        System.out.println("GET DISBURSEMENT" + getFinalDisbursementDetail().size());
+        new CountDownTimer(1000, 1000) {
+            public void onFinish() {
+                System.out.println(getLatestDisbursementDetail());
 
-        List<DisbursementDetail> emptyList = new ArrayList<>();
+                List<DisbursementDetail> emptyList = new ArrayList<>();
 
-        for (DisbursementDetail dDetail : getFinalDisbursementDetail()) {
-            if (dDetail.getDeliveryPoint().equals(item)) {
-                emptyList.add(dDetail);
-            }
-        }
-
-        System.out.println("EMPTY LIST: " + emptyList);
-
-        currDisbursementDetail = emptyList;
-
-        System.out.println("CURRENT LIST: " + currDisbursementDetail);
-
-        for (final DisbursementDetail dDetail : currDisbursementDetail) {
-            View tableRow = LayoutInflater.from(getApplicationContext()).inflate(R.layout.activity_confirm_disbursement_collection_item, null, false);
-            TextView itemCode = (TextView) tableRow.findViewById(R.id.itemCode);
-            TextView itemDesc = (TextView) tableRow.findViewById(R.id.itemDesc);
-            TextView itemRqt = (TextView) tableRow.findViewById(R.id.itemRqt);
-
-            final NumberPicker qty = tableRow.findViewById(R.id.itemRcv);
-            qty.setValue(dDetail.getQty());
-            qty.setMin(0);
-            qty.setValueChangedListener(new ValueChangedListener() {
-                @Override
-                public void valueChanged(int value, ActionEnum action) {
-                    dDetail.setQty(value);
+                for (DisbursementDetail dDetail : getLatestDisbursementDetail()) {
+                    if (dDetail.getDeliveryPoint().equals(item)) {
+                        emptyList.add(dDetail);
+                    }
                 }
-            });
 
-            setFilteredDisbursementDetail(filteredDisbursementDetail);
+                currDisbursementDetail = emptyList;
 
-            itemCode.setText(Integer.toString(dDetail.getStationeryId()));
-            itemDesc.setText(dDetail.getStationeryDesc());
-            itemRqt.setText(Integer.toString(dDetail.getQty()));
-            collectTableLayout.addView(tableRow);
-        }
+                for (final DisbursementDetail dDetail : currDisbursementDetail) {
+                    View tableRow = LayoutInflater.from(getApplicationContext()).inflate(R.layout.activity_confirm_disbursement_collection_item, null, false);
+                    TextView itemCode = (TextView) tableRow.findViewById(R.id.itemCode);
+                    TextView itemDesc = (TextView) tableRow.findViewById(R.id.itemDesc);
+                    TextView itemRqt = (TextView) tableRow.findViewById(R.id.itemRqt);
+
+                    final NumberPicker qty = tableRow.findViewById(R.id.itemRcv);
+                    qty.setValue(dDetail.getQty());
+                    qty.setMin(0);
+                    qty.setValueChangedListener(new ValueChangedListener() {
+                        @Override
+                        public void valueChanged(int value, ActionEnum action) {
+                            dDetail.setQty(value);
+                        }
+                    });
+
+                    setFilteredDisbursementDetail(filteredDisbursementDetail);
+
+                    itemCode.setText(Integer.toString(dDetail.getStationeryId()));
+                    itemDesc.setText(dDetail.getStationeryDesc());
+                    itemRqt.setText(Integer.toString(dDetail.getQty()));
+                    collectTableLayout.addView(tableRow);
+                }
+            }
+
+            public void onTick(long millisUntilFinished) {
+                // millisUntilFinished    The amount of time until finished.
+            }
+        }.start();
     }
 
     @Override
