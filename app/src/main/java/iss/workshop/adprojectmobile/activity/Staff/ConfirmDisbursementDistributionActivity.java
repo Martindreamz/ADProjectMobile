@@ -10,10 +10,12 @@ import android.os.CountDownTimer;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 import android.widget.TableLayout;
+import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -314,6 +316,12 @@ public class ConfirmDisbursementDistributionActivity extends AppCompatActivity i
 
                 currDisbursementDetail = emptyList;
 
+                int count = tableLayout.getChildCount();
+                for (int i = 0; i < count; i++) {
+                    View child = tableLayout.getChildAt(i+1);
+                    if (child instanceof TableRow) ((ViewGroup) child).removeAllViews();
+                }
+
                 for (DisbursementDetail dDetail : currDisbursementDetail) {
                     View tableRow = LayoutInflater.from(getApplicationContext()).inflate(R.layout.activity_confirm_disbursement_distribution_item, null, false);
                     TextView statDescription = (TextView) tableRow.findViewById(R.id.statDescription);
@@ -321,6 +329,7 @@ public class ConfirmDisbursementDistributionActivity extends AppCompatActivity i
 
                     statDescription.setText(dDetail.getStationeryDesc());
                     receivedQty.setText(Integer.toString(dDetail.getQty()));
+
                     tableLayout.addView(tableRow);
                 }
             }

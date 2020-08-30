@@ -11,11 +11,13 @@ import android.os.CountDownTimer;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.TableLayout;
+import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -354,6 +356,12 @@ public class ConfirmDisbursementCollectionActivity extends AppCompatActivity imp
                 }
 
                 currDisbursementDetail = emptyList;
+
+                int count = collectTableLayout.getChildCount();
+                for (int i = 0; i < count; i++) {
+                    View child = collectTableLayout.getChildAt(i+1);
+                    if (child instanceof TableRow) ((ViewGroup) child).removeAllViews();
+                }
 
                 for (final DisbursementDetail dDetail : currDisbursementDetail) {
                     View tableRow = LayoutInflater.from(getApplicationContext()).inflate(R.layout.activity_confirm_disbursement_collection_item, null, false);
