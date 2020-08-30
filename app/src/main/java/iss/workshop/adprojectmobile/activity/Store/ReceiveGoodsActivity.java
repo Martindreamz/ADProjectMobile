@@ -185,7 +185,7 @@ public class ReceiveGoodsActivity extends AppCompatActivity
 
                             }
                         });
-                       // po.setDetailList(pods);
+                        // po.setDetailList(pods);
                         //System.out.println("pods set"+pods);
                     }
 
@@ -235,50 +235,55 @@ public class ReceiveGoodsActivity extends AppCompatActivity
 
 
         if (spinnerId == R.id.supplier) {
-            for (Supplier s : suppliers) {
-                int sid = s.getId();
 
-                for (PurchaseOrder po : purchaseOrders) {
-                    if (po.getSupplierId() == sid) {
-                        newSupplierddl.add(s.getName());
-                    }
-                }
-            }
 
-                supplierddl = newSupplierddl;
+            supplierddl = newSupplierddl;
 
-                if (purchaseOrders.size() != 0) {
-                    List<String> newPoddl = new ArrayList<String>();
-                    for (Supplier supplier : suppliers) {
-                        if (supplier.getName().equals(item)) {
-                            int supId = supplier.getId();
-                            for (PurchaseOrder po : purchaseOrders) {
-                                if (po.getSupplierId() == supId) {
-                                    newPoddl.add(Integer.toString(po.getId()));
-                                }
+            if (purchaseOrders.size() != 0) {
+                List<String> newPoddl = new ArrayList<String>();
+                for (Supplier supplier : suppliers) {
+                    if (supplier.getName().equals(item)) {
+                        int supId = supplier.getId();
+                        for (PurchaseOrder po : purchaseOrders) {
+                            if (po.getSupplierId() == supId) {
+                                newPoddl.add(Integer.toString(po.getId()));
                             }
                         }
                     }
-                    if (newPoddl != null) {
-                        poddl = newPoddl;
-                        //System.out.println(newPoddl);
-                        poNoRef = findViewById(R.id.PoNumberRef);
-
-                        ArrayAdapter<String> dataAdapter2 = new ArrayAdapter<String>(getApplicationContext(), android.R.layout.simple_spinner_item, poddl);
-                        dataAdapter2.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-
-                        poNoRef.setAdapter(dataAdapter2);
-                        poNoRef.setVisibility(View.VISIBLE);
-                        poNoRef.setOnItemSelectedListener(this);
-                    }
-
-                    if (newPoddl == null) {
-                        Toast.makeText(ReceiveGoodsActivity.this, "No purchase orders made with selected supplier", Toast.LENGTH_SHORT).show();
-
-                    }
                 }
-                //get supplier id
-                //set po reference to only supplier's poddl
+
+                if (newPoddl.size()!=0) {
+                    poddl = newPoddl;
+                    //System.out.println(newPoddl);
+                    poNoRef = findViewById(R.id.PoNumberRef);
+
+                    ArrayAdapter<String> dataAdapter2 = new ArrayAdapter<String>(getApplicationContext(), android.R.layout.simple_spinner_item, poddl);
+                    dataAdapter2.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+                    poNoRef.setAdapter(dataAdapter2);
+                    poNoRef.setVisibility(View.VISIBLE);
+                    poNoRef.setOnItemSelectedListener(this);
+                }
+
+                if (newPoddl.size()==0) {
+                    Toast.makeText(ReceiveGoodsActivity.this, "No purchase orders made with selected supplier", Toast.LENGTH_SHORT).show();
+                    selectedStationery.clear();
+                    System.out.println("cleared"+selectedStationery);
+
+
+                    poNoRef.setVisibility(View.INVISIBLE);
+
+                    GenericAdapter<Stationery> adapter = new GenericAdapter<>(this,R.layout.activity_discrepency_list_rows,selectedStationery);
+                    ListView listView=findViewById(R.id.rcvListView);
+
+                    if(listView!=null){
+                        listView.setAdapter(adapter);
+                    }
+
+                }
+            }
+            //get supplier id
+            //set po reference to only supplier's poddl
 
         }
         System.out.println("from po"+purchaseOrders);
@@ -286,20 +291,17 @@ public class ReceiveGoodsActivity extends AppCompatActivity
         if (spinnerId == R.id.PoNumberRef) {
 
             int poNum = Integer.parseInt(parent.getItemAtPosition(position).toString());
-
-            if(purchaseOrders==null){System.out.println("it is null");}
-
             for (PurchaseOrder po : purchaseOrders) {
                 if (po.getId() == poNum) {
                     List<Stationery> select = new ArrayList<Stationery>();
                     String desc="";
 
                     for(PurchaseOrderDetail pod :pods){
-                    if(pod.getPurchaseOrderId()==po.getId()) {
-                        Stationery s = new Stationery();
-                        s.setId(pod.getStationeryId());
-                        s.setInventoryQty(pod.getQty());
-                        s.setReOrderQty(po.getId());
+                        if(pod.getPurchaseOrderId()==po.getId()) {
+                            Stationery s = new Stationery();
+                            s.setId(pod.getStationeryId());
+                            s.setInventoryQty(pod.getQty());
+                            s.setReOrderQty(po.getId());
 
                             for (Stationery stationery : allStationery) {
                                 if (stationery.getId() == pod.getStationeryId()) {
@@ -313,6 +315,7 @@ public class ReceiveGoodsActivity extends AppCompatActivity
                     }
 
                     selectedStationery= select;
+
                     //set supplier
                     GenericAdapter<Stationery> adapter = new GenericAdapter<>(this,R.layout.activity_discrepency_list_rows,selectedStationery);
                     ListView listView=findViewById(R.id.rcvListView);
@@ -323,8 +326,6 @@ public class ReceiveGoodsActivity extends AppCompatActivity
 
                 }
             }
-
-            Toast.makeText(ReceiveGoodsActivity.this, item, Toast.LENGTH_SHORT).show();
 
         }
 

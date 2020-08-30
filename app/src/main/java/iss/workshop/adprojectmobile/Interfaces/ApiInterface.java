@@ -50,6 +50,9 @@ public interface ApiInterface {
     @GET("store/Suppliers")
     Call<List<Supplier>> GetAllSuppliers();
 
+    @GET("store/getSupplier/{id}")
+    Call<Supplier> GetSupplier(@Path("id") int id);
+
     @GET("store/departmentReps")
     Call<List<Employee>> getAllDepartmentReps();
 
