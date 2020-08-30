@@ -4,49 +4,62 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activity.LoginActivity"
-    android:orientation="horizontal"
-    >
+    android:layout_marginBottom="150dp"
+    android:gravity="center"
+    android:orientation="vertical"
+    tools:context=".activity.LoginActivity">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:gravity="center"
+        android:text="Logic University"
+        android:textAlignment="center"
+        android:textSize="40dp" />
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:layout_gravity="center">
+        android:layout_gravity="center"
+        android:orientation="vertical">
+
         <EditText
             android:id="@+id/username"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="center"
             android:layout_marginTop="10dp"
             android:ems="10"
             android:gravity="top|left"
             android:hint="@string/enter_username"
-            android:inputType="text"
-            android:layout_gravity="center"
-            />
+            android:inputType="text" />
 
 
         <androidx.appcompat.widget.LinearLayoutCompat
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_width="210dp"
+            android:layout_height="50dp"
             android:layout_gravity="center"
+            android:layout_marginTop="10dp"
             android:gravity="center"
             android:orientation="horizontal">
 
             <EditText
                 android:id="@+id/password"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="160dp"
+                android:layout_height="50dp"
                 android:layout_gravity="center"
-                android:layout_marginTop="10dp"
                 android:ems="10"
                 android:gravity="top|left"
                 android:hint="@string/enter_psw"
                 android:inputType="text" />
 
+
             <ImageButton
                 android:id="@+id/hide"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
+                android:layout_gravity="top"
                 android:adjustViewBounds="true"
                 android:scaleType="fitCenter"
                 android:src="@drawable/hide">
@@ -54,11 +67,12 @@
             </ImageButton>
         </androidx.appcompat.widget.LinearLayoutCompat>
 
-        <Button style="@style/Btn"
+        <Button
             android:id="@+id/loginBtn"
-            android:text="@string/login"
+            style="@style/Btn"
             android:layout_gravity="center"
+            android:layout_marginTop="10dp"
+            android:text="@string/login" />
 
-            />
     </LinearLayout>
 </LinearLayout>

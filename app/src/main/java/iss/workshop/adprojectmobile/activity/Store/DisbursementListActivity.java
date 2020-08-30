@@ -197,7 +197,7 @@ public class DisbursementListActivity extends AppCompatActivity implements Adapt
 //        session_editor.putString("selected_dl_status",currDisbursementLists.get(i).getStatus());
 //        session_editor.commit();
 
-        if (currDisbursementLists.get(i).getStatus().equals("delivering")) {
+        if (currDisbursementLists.get(i).getStatus().equals("delivered")) {
             Intent intent = new Intent(getApplicationContext(), SignaturePadActivity.class);
             intent.putExtra("selected_dl", currDisbursementLists.get(i).getId());
             intent.putExtra("selected_dl_dept", currDisbursementLists.get(i).getDepartment());

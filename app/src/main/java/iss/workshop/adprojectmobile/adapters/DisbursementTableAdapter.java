@@ -46,14 +46,17 @@ public class DisbursementTableAdapter extends ArrayAdapter {
 
         TextView department = view.findViewById(R.id.dl_department);
         department.setText(DBL.get(pos).getDepartment());
-        System.out.println("dept name: "+DBL.get(pos).getDepartment());
+        System.out.println("dept name: " + DBL.get(pos).getDepartment());
 
         TextView representative = view.findViewById(R.id.dl_representative);
         representative.setText(DBL.get(pos).getRepName());
 
         TextView status = view.findViewById(R.id.dl_status);
-        status.setText(DBL.get(pos).getStatus());
-
+        if (DBL.get(pos).getStatus().equals("delivering")) {
+            status.setText("To be delivered on " + DBL.get(pos).getDate().substring(0,10));
+        } else {
+            status.setText(DBL.get(pos).getStatus());
+        }
         return view;
     }
 

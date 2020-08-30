@@ -8,13 +8,17 @@
         android:id="@+id/DDtitle"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="0.1" />
+        android:layout_weight="0.05"
+        android:gravity="center|left"
+        android:text="testing" />
 
     <TextView
         android:id="@+id/DDrep"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="0.1" />
+        android:layout_weight="0.05"
+        android:gravity="center|left"
+        android:text="testing" />
 
     <androidx.appcompat.widget.LinearLayoutCompat
         android:layout_width="match_parent"
@@ -51,18 +55,19 @@
         android:id="@+id/DDtable"
         android:layout_width="match_parent"
         android:layout_height="0dp"
+        android:layout_weight="0.55" />
+
+    <ImageView
+        android:id="@+id/DDsignature"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
         android:layout_weight="0.3" />
-<ImageView
-    android:layout_width="match_parent"
-    android:layout_height="0dp"
-    android:layout_weight="0.25"
-    android:id="@+id/DDsignature"/>
-<!--    <Button-->
-<!--        android:id="@+id/DDback"-->
-<!--        android:layout_width="wrap_content"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:layout_gravity="center" -->
-<!--        android:text="back"/>-->
+    <!--    <Button-->
+    <!--        android:id="@+id/DDback"-->
+    <!--        android:layout_width="wrap_content"-->
+    <!--        android:layout_height="wrap_content"-->
+    <!--        android:layout_gravity="center" -->
+    <!--        android:text="back"/>-->
 
 
 </androidx.appcompat.widget.LinearLayoutCompat>
