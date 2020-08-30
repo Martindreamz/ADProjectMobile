@@ -48,6 +48,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class ConfirmDisbursementCollectionActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
+    //final
     TextView collectionDateView, collectionTimeView;
     Button completeBtn;
     Spinner spinner;

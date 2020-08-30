@@ -7,13 +7,15 @@
     tools:context=".activity.Staff.ConfirmDisbursementCollectionActivity"
     android:orientation="vertical"
     >
+
     <TextView
         android:id="@+id/welcome"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
         android:layout_marginBottom="10dp"
-        android:text="Collection"/>
+        android:text="Collection"
+        android:textSize="18sp" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -61,7 +63,7 @@
     <TableLayout
         android:id="@+id/collectTableLayout"
         android:layout_width="match_parent"
-        android:layout_height="350dp"
+        android:layout_height="340dp"
         android:padding="5dp"
         android:orientation="vertical">
 
