@@ -4,63 +4,89 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activity.Head.DelegateAuthorityActivity"
     android:orientation="vertical"
-    >
+    tools:context=".activity.Head.DelegateAuthorityActivity">
+
     <TextView
         android:id="@+id/welcome"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
         android:layout_marginTop="10dp"
         android:layout_marginBottom="10dp"
-        android:text="Distribution"/>
+        android:text="Distribution"
+        android:textSize="24sp" />
+
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
+        android:layout_weight="0.1"
         android:orientation="vertical">
+
         <TextView
             android:id="@+id/selectRequestorTxt"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="30dp"
-            android:text="@string/selectRequestor"/>
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="10dp"
+            android:text="@string/selectRequestor"
+            android:textSize="18sp" />
+
         <Spinner
             android:id="@+id/selectRequestor"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:prompt="@string/selectRequestor"
+            android:layout_marginLeft="10dp"
             android:layout_marginTop="10dp"
-            />
+            android:prompt="@string/selectRequestor" />
     </LinearLayout>
 
-    <TableLayout
-        android:id="@+id/tableLayout"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:padding="5dp"
+        android:layout_height="0dp"
+        android:layout_weight="0.6"
         android:orientation="vertical">
 
-        <TableRow
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
+        <ScrollView
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_weight="1"
+            android:scrollbars="none">
 
-
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/Description"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="0.7"
-                android:gravity="center"
-                android:text="Stationery Description" />
-
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/rcvQty"
-                android:layout_width="0dp"
+            <TableLayout
+                android:id="@+id/tableLayout"
+                android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_weight="0.3"
-                android:gravity="center"
-                android:text="Received Qty" />
-        </TableRow>
-    </TableLayout>
+                android:orientation="vertical"
+                android:paddingTop="5dp"
+                android:paddingBottom="5dp">
+
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/Description"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0.7"
+                        android:gravity="center"
+                        android:paddingStart="20dp"
+                        android:text="Stationery Description"
+                        android:textAlignment="textStart" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/rcvQty"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="0.3"
+                        android:gravity="center"
+                        android:paddingRight="20dp"
+                        android:text="Received Qty"
+                        android:textAlignment="textEnd" />
+                </TableRow>
+            </TableLayout>
+        </ScrollView>
+    </LinearLayout>
 </LinearLayout>

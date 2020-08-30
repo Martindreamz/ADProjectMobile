@@ -14,6 +14,7 @@
         android:layout_gravity="center">
         <Button style="@style/Btn"
             android:id="@+id/confirmDisbursementBtn"
+            android:layout_width="300dp"
             android:text="@string/confirmDisbursement"
             android:layout_gravity="center"
             android:layout_marginTop="10dp"
@@ -22,7 +23,7 @@
         <Button
             android:id="@+id/findRoutesBtn"
             style="@style/Btn"
-            android:layout_width="wrap_content"
+            android:layout_width="300dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginTop="10dp"
@@ -48,6 +49,7 @@
 
         <Button style="@style/LogOutBtn"
             android:id="@+id/logOutBtn"
+            android:layout_width="300dp"
             android:text="@string/logout"
             android:layout_gravity="center"
             android:layout_marginTop="10dp"
