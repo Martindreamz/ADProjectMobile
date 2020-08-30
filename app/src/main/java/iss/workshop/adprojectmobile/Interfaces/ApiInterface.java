@@ -80,8 +80,11 @@ public interface ApiInterface {
     @GET("Dept/deptToDeliverReq/{id}")
     Call<List<Requisition>> getToDeliverRequisitionsByDeptId(@Path("id") int id);
 
-    @GET("Dept/empToDeliverReq/{id}")
-    Call<List<Requisition>> getToDeliverRequisitionsByEmpId(@Path("id") int id);
+    @GET("Dept/deptAllReq/{id}")
+    Call<List<Requisition>> getAllRequisitionsByDeptId(@Path("id") int id);
+
+    @GET("Dept/deptAllReqDetail/{id}")
+    Call<List<RequisitionDetail>> getAllRequisitionsDetailByDeptId(@Path("id") int id);
 
     @Headers({"Content-Type: application/json"})
     @POST("store/getretrieval")

@@ -59,7 +59,7 @@ public class ConfirmDisbursementCollectionActivity extends AppCompatActivity imp
     private SharedPreferences session;
     private SharedPreferences.Editor session_editor;
 
-    List<CollectionInfo> collectionInfo;
+    List<CollectionInfo> collectionInfo = new ArrayList<>();
     List<DisbursementList> disbursement;
     List<DisbursementDetail> disbursementDetail;
     List<DisbursementDetail> latestDisbursementDetail;
@@ -69,7 +69,6 @@ public class ConfirmDisbursementCollectionActivity extends AppCompatActivity imp
     List<DisbursementDetail> filteredDisbursementDetail;
     String collectionDateData;
     String collectionTimeData;
-    String collectionPointData;
 
     public List<DisbursementDetail> getFilteredDisbursementDetail() {
         return filteredDisbursementDetail;
@@ -95,20 +94,28 @@ public class ConfirmDisbursementCollectionActivity extends AppCompatActivity imp
         this.collectionDateData = collectionDateData;
     }
 
-    public String getCollectionPointData() {
-        return collectionPointData;
-    }
-
-    public void setCollectionPointData(String collectionPointData) {
-        this.collectionPointData = collectionPointData;
-    }
-
     public List<DisbursementDetail> getLatestDisbursementDetail() {
         return latestDisbursementDetail;
     }
 
     public void setLatestDisbursementDetail(List<DisbursementDetail> latestDisbursementDetail) {
         this.latestDisbursementDetail = latestDisbursementDetail;
+    }
+
+    public List<DisbursementDetail> getCurrDisbursementDetail() {
+        return currDisbursementDetail;
+    }
+
+    public void setCurrDisbursementDetail(List<DisbursementDetail> currDisbursementDetail) {
+        this.currDisbursementDetail = currDisbursementDetail;
+    }
+
+    public List<CollectionInfo> getCollectionInfo() {
+        return collectionInfo;
+    }
+
+    public void setCollectionInfo(List<CollectionInfo> collectionInfo) {
+        this.collectionInfo = collectionInfo;
     }
 
     @RequiresApi(api = Build.VERSION_CODES.O)
@@ -128,7 +135,7 @@ public class ConfirmDisbursementCollectionActivity extends AppCompatActivity imp
         completeBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                for (DisbursementDetail dd : filteredDisbursementDetail) {
+                for (DisbursementDetail dd : getCurrDisbursementDetail()) {
                     System.out.println(dd);
                 }
 
@@ -139,7 +146,7 @@ public class ConfirmDisbursementCollectionActivity extends AppCompatActivity imp
                         .build();
 
                 ApiInterface apiInterfaceSendDisbursementDetail = retrofit.create(ApiInterface.class);
-                Call<List<DisbursementDetail>> sendDisbursementDetailCall = apiInterfaceSendDisbursementDetail.SendDisbursementDetail(filteredDisbursementDetail);
+                Call<List<DisbursementDetail>> sendDisbursementDetailCall = apiInterfaceSendDisbursementDetail.SendDisbursementDetail(getCurrDisbursementDetail());
 
                 sendDisbursementDetailCall.enqueue(new Callback<List<DisbursementDetail>>() {
                     @Override
@@ -184,6 +191,15 @@ public class ConfirmDisbursementCollectionActivity extends AppCompatActivity imp
                 disbursement = response.body();
 
                 if (disbursement != null) {
+
+                    LocalDate ld = LocalDate.of(Integer.parseInt(disbursement.get(0).getDate().substring(0, 4)),
+                            Integer.parseInt(disbursement.get(0).getDate().substring(5, 7)),
+                            Integer.parseInt(disbursement.get(0).getDate().substring(8, 10)));
+
+                    setCollectionDateData(ld.toString());
+
+                    collectionDateView.setText(collectionDateData);
+
                     Call<List<CollectionInfo>> callCollect = apiInterface.getAllCollectionPointforDept();
 
                     callCollect.enqueue(new Callback<List<CollectionInfo>>() {
@@ -191,23 +207,7 @@ public class ConfirmDisbursementCollectionActivity extends AppCompatActivity imp
                         public void onResponse(Call<List<CollectionInfo>> call, Response<List<CollectionInfo>> response) {
                             collectionInfo = response.body();
 
-                            for (CollectionInfo cInfo : collectionInfo) {
-                                if (cInfo.getCollectionPoint().equals(disbursement.get(0).getDeliveryPoint())) {
-                                    LocalTime lt = LocalTime.of(Integer.parseInt(cInfo.getCollectionTime().substring(11, 13)),
-                                            Integer.parseInt(cInfo.getCollectionTime().substring(14, 16)),
-                                            Integer.parseInt(cInfo.getCollectionTime().substring(17, 19)));
-
-                                    LocalDate ld = LocalDate.of(Integer.parseInt(disbursement.get(0).getDate().substring(0, 4)),
-                                            Integer.parseInt(disbursement.get(0).getDate().substring(5, 7)),
-                                            Integer.parseInt(disbursement.get(0).getDate().substring(8, 10)));
-
-                                    setCollectionTimeData(lt.toString());
-                                    setCollectionDateData(ld.toString());
-
-                                    collectionDateView.setText(collectionDateData);
-                                    collectionTimeView.setText(collectionTimeData + " AM");
-                                }
-                            }
+                            setCollectionInfo(collectionInfo);
                         }
 
                         @Override
@@ -256,7 +256,7 @@ public class ConfirmDisbursementCollectionActivity extends AppCompatActivity imp
                         public void onResponse(Call<List<DisbursementDetail>> call, Response<List<DisbursementDetail>> response) {
                             disbursementDetail = response.body();
 
-                                Call<List<RequisitionDetail>> callRequisitionDetail = apiInterface.getToDeliverRequisitionDetailByDeptId(departmentId);
+                                Call<List<RequisitionDetail>> callRequisitionDetail = apiInterface.getAllRequisitionsDetailByDeptId(departmentId);
 
                                 callRequisitionDetail.enqueue(new Callback<List<RequisitionDetail>>() {
                                     @Override
@@ -270,9 +270,16 @@ public class ConfirmDisbursementCollectionActivity extends AppCompatActivity imp
                                             public void onResponse(Call<List<Stationery>> call, Response<List<Stationery>> response) {
                                                 stationery = response.body();
 
+                                                final List<DisbursementList> filteredDisbursement = new ArrayList<>();
                                                 final List<DisbursementDetail> filteredDisbursementDetail = new ArrayList<>();
 
                                                 for (DisbursementList dList : disbursement) {
+                                                    if(dList.getStatus().equals("delivering")){
+                                                        filteredDisbursement.add(dList);
+                                                    }
+                                                }
+
+                                                for (DisbursementList dList : filteredDisbursement) {
                                                     for (DisbursementDetail dDetail : disbursementDetail) {
                                                         if (dList.getId() == dDetail.getDisbursementListId()) {
                                                             filteredDisbursementDetail.add(dDetail);
@@ -281,7 +288,7 @@ public class ConfirmDisbursementCollectionActivity extends AppCompatActivity imp
                                                 }
 
                                                 if (filteredDisbursementDetail != null) {
-                                                    for (DisbursementList dList : disbursement) {
+                                                    for (DisbursementList dList : filteredDisbursement) {
                                                         for (DisbursementDetail dDetail : filteredDisbursementDetail) {
                                                             if (dList.getId() == dDetail.getDisbursementListId()) {
                                                                 dDetail.setDeliveryPoint(dList.getDeliveryPoint());
@@ -344,8 +351,19 @@ public class ConfirmDisbursementCollectionActivity extends AppCompatActivity imp
         Toast.makeText(ConfirmDisbursementCollectionActivity.this, item, Toast.LENGTH_SHORT).show();
 
         new CountDownTimer(1000, 1000) {
+            @RequiresApi(api = Build.VERSION_CODES.O)
             public void onFinish() {
-                System.out.println(getLatestDisbursementDetail());
+
+                for (CollectionInfo cInfo : getCollectionInfo()) {
+                    if (cInfo.getCollectionPoint().equals(item)) {
+                        LocalTime lt = LocalTime.of(Integer.parseInt(cInfo.getCollectionTime().substring(11, 13)),
+                                Integer.parseInt(cInfo.getCollectionTime().substring(14, 16)),
+                                Integer.parseInt(cInfo.getCollectionTime().substring(17, 19)));
+
+                        setCollectionTimeData(lt.toString());
+                        collectionTimeView.setText(collectionTimeData + " AM");
+                    }
+                }
 
                 List<DisbursementDetail> emptyList = new ArrayList<>();
 
@@ -356,6 +374,7 @@ public class ConfirmDisbursementCollectionActivity extends AppCompatActivity imp
                 }
 
                 currDisbursementDetail = emptyList;
+                setCurrDisbursementDetail(emptyList);
 
                 int count = collectTableLayout.getChildCount();
                 for (int i = 0; i < count; i++) {
