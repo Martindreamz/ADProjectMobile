@@ -4,9 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activity.Staff.ConfirmDisbursementCollectionActivity"
     android:orientation="vertical"
-    >
+    tools:context=".activity.Staff.ConfirmDisbursementCollectionActivity">
 
     <TextView
         android:id="@+id/welcome"
@@ -14,31 +13,37 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
         android:layout_marginBottom="10dp"
+        android:layout_marginLeft="10dp"
         android:text="Collection"
         android:textSize="18sp" />
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
+        android:layout_weight="0.1"
         android:orientation="vertical">
+
         <TextView
             android:id="@+id/selectCollectionPointTxt"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="30dp"
-            android:text="Select Collection Point"/>
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="10dp"
+            android:text="Select Collection Point" />
+
         <Spinner
             android:id="@+id/selectCollectinoPoint"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:prompt="@string/selectRequestor"
             android:layout_marginTop="10dp"
-            />
+            android:layout_marginLeft="10dp"
+            android:prompt="@string/selectRequestor" />
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
+        android:layout_weight="0.2"
         android:orientation="vertical">
 
         <TextView
@@ -46,6 +51,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
+            android:layout_marginLeft="10dp"
             android:inputType="textMultiLine"
             android:lines="5"
             android:textSize="14sp" />
@@ -55,62 +61,80 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
+            android:layout_marginLeft="10dp"
             android:inputType="textMultiLine"
             android:lines="5"
             android:textSize="14sp" />
 
     </LinearLayout>
-    <TableLayout
-        android:id="@+id/collectTableLayout"
+
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="340dp"
-        android:padding="5dp"
+        android:layout_height="0dp"
+        android:layout_weight="0.6"
         android:orientation="vertical">
 
-        <TableRow
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
+        <ScrollView
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_weight="1"
+            android:scrollbars="none">
+
+            <TableLayout
+                android:id="@+id/collectTableLayout"
+                android:layout_width="match_parent"
+                android:layout_height="340dp"
+                android:orientation="vertical"
+                android:padding="5dp">
+
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
 
 
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/code"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="0.1"
-                android:gravity="center"
-                android:text="Item Code" />
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/code"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0.1"
+                        android:gravity="center"
+                        android:text="Item Code" />
 
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/desc"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="0.4"
-                android:gravity="center"
-                android:text="Description" />
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/desc"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="0.4"
+                        android:gravity="center"
+                        android:text="Description" />
 
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/rqt"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="0.2"
-                android:gravity="center"
-                android:text="Requested" />
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/rqt"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="0.2"
+                        android:gravity="center"
+                        android:text="Requested" />
 
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/rcv"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="0.3"
-                android:gravity="center"
-                android:text="Received" />
-        </TableRow>
-    </TableLayout>
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/rcv"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="0.3"
+                        android:gravity="center"
+                        android:text="Received" />
+                </TableRow>
+            </TableLayout>
+
+        </ScrollView>
+    </LinearLayout>
 
     <Button
         android:id="@+id/completeBtn"
         style="@style/Btn"
         android:layout_gravity="center"
         android:layout_marginTop="25dp"
+        android:layout_marginBottom="25dp"
         android:text="@string/complete" />
 </LinearLayout>

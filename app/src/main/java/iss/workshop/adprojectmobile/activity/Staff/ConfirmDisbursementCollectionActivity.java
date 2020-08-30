@@ -351,7 +351,7 @@ public class ConfirmDisbursementCollectionActivity extends AppCompatActivity imp
         final String item = parent.getItemAtPosition(position).toString();
         Toast.makeText(ConfirmDisbursementCollectionActivity.this, item, Toast.LENGTH_SHORT).show();
 
-        new CountDownTimer(1000, 1000) {
+        new CountDownTimer(2000, 1000) {
             @RequiresApi(api = Build.VERSION_CODES.O)
             public void onFinish() {
 
