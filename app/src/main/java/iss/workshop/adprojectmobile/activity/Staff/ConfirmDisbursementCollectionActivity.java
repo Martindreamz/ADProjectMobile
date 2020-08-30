@@ -26,7 +26,9 @@ import com.travijuu.numberpicker.library.NumberPicker;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import iss.workshop.adprojectmobile.Interfaces.ApiInterface;
 import iss.workshop.adprojectmobile.Interfaces.SSLBypasser;
@@ -44,7 +46,6 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class ConfirmDisbursementCollectionActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
-    //comment
     TextView collectionDateView, collectionTimeView;
     Button completeBtn;
     Spinner spinner;
@@ -178,7 +179,6 @@ public class ConfirmDisbursementCollectionActivity extends AppCompatActivity imp
             @RequiresApi(api = Build.VERSION_CODES.O)
             @Override
             public void onResponse(Call<List<DisbursementList>> call, Response<List<DisbursementList>> response) {
-                System.out.println("Response here: " + response.code());
                 disbursement = response.body();
 
                 if (disbursement != null) {
@@ -187,7 +187,6 @@ public class ConfirmDisbursementCollectionActivity extends AppCompatActivity imp
                     callCollect.enqueue(new Callback<List<CollectionInfo>>() {
                         @Override
                         public void onResponse(Call<List<CollectionInfo>> call, Response<List<CollectionInfo>> response) {
-                            System.out.println("Response here: " + response.code());
                             collectionInfo = response.body();
 
                             for (CollectionInfo cInfo : collectionInfo) {
@@ -216,9 +215,14 @@ public class ConfirmDisbursementCollectionActivity extends AppCompatActivity imp
                     });
 
                     List<String> collectionPoints = new ArrayList<String>();
+                    Set<String> collectionSets = new HashSet<>();
 
                     for (DisbursementList dList : disbursement) {
-                        collectionPoints.add(dList.getDeliveryPoint());
+                        collectionSets.add(dList.getDeliveryPoint());
+                    }
+
+                    for (String collectionPoint : collectionSets) {
+                        collectionPoints.add(collectionPoint);
                     }
 
                     ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(getApplicationContext(), android.R.layout.simple_spinner_item, collectionPoints);
