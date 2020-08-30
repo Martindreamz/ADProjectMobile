@@ -7,12 +7,17 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.Spinner;
 import android.widget.TableLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.travijuu.numberpicker.library.Enums.ActionEnum;
 import com.travijuu.numberpicker.library.Interface.ValueChangedListener;
@@ -37,10 +42,11 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-public class ConfirmDisbursementCollectionActivity extends AppCompatActivity {
+public class ConfirmDisbursementCollectionActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
-    TextView collectionPointView, collectionDateView, collectionTimeView;
+    TextView collectionDateView, collectionTimeView;
     Button completeBtn;
+    Spinner spinner;
     private TableLayout collectTableLayout;
 
     int departmentId;
@@ -52,6 +58,8 @@ public class ConfirmDisbursementCollectionActivity extends AppCompatActivity {
     List<CollectionInfo> collectionInfo;
     List<DisbursementList> disbursement;
     List<DisbursementDetail> disbursementDetail;
+    List<DisbursementDetail> latestDisbursementDetail;
+    List<DisbursementDetail> currDisbursementDetail = new ArrayList<>();
     List<RequisitionDetail> requisitionDetail;
     List<Stationery> stationery;
     List<DisbursementDetail> filteredDisbursementDetail;
@@ -91,16 +99,24 @@ public class ConfirmDisbursementCollectionActivity extends AppCompatActivity {
         this.collectionPointData = collectionPointData;
     }
 
+    public List<DisbursementDetail> getLatestDisbursementDetail() {
+        return latestDisbursementDetail;
+    }
+
+    public void setLatestDisbursementDetail(List<DisbursementDetail> latestDisbursementDetail) {
+        this.latestDisbursementDetail = latestDisbursementDetail;
+    }
+
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_confirm_disbursement_collection);
 
+        latestDisbursementDetail = new ArrayList<>();
         collectTableLayout = (TableLayout) findViewById(R.id.collectTableLayout);
 
         //defining textViews & Buttons
-        collectionPointView = findViewById(R.id.collectionPoint);
         collectionDateView = findViewById(R.id.collectionDate);
         collectionTimeView = findViewById(R.id.collectionTime);
 
@@ -137,6 +153,9 @@ public class ConfirmDisbursementCollectionActivity extends AppCompatActivity {
                 });
             }
         });
+
+        spinner = findViewById(R.id.selectCollectinoPoint);
+        spinner.setOnItemSelectedListener(this);
 
         //retrieving info
         session = getSharedPreferences("session", MODE_PRIVATE);
@@ -182,9 +201,7 @@ public class ConfirmDisbursementCollectionActivity extends AppCompatActivity {
 
                                     setCollectionTimeData(lt.toString());
                                     setCollectionDateData(ld.toString());
-                                    setCollectionPointData(disbursement.get(0).getDeliveryPoint());
 
-                                    collectionPointView.setText(collectionPointData);
                                     collectionDateView.setText(collectionDateData);
                                     collectionTimeView.setText(collectionTimeData + " AM");
                                 }
@@ -196,6 +213,16 @@ public class ConfirmDisbursementCollectionActivity extends AppCompatActivity {
                             Log.e("error", t.getMessage());
                         }
                     });
+
+                    List<String> collectionPoints = new ArrayList<String>();
+
+                    for (DisbursementList dList : disbursement) {
+                        collectionPoints.add(dList.getDeliveryPoint());
+                    }
+
+                    ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(getApplicationContext(), android.R.layout.simple_spinner_item, collectionPoints);
+                    dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                    spinner.setAdapter(dataAdapter);
                 }
             }
 
@@ -205,14 +232,12 @@ public class ConfirmDisbursementCollectionActivity extends AppCompatActivity {
             }
         });
 
-
         Call<List<DisbursementList>> callDisbursementForDisbursementDetail = apiInterface.getNearestDisbursementByDeptId(departmentId);
 
         callDisbursementForDisbursementDetail.enqueue(new Callback<List<DisbursementList>>() {
             @RequiresApi(api = Build.VERSION_CODES.O)
             @Override
             public void onResponse(Call<List<DisbursementList>> call, Response<List<DisbursementList>> response) {
-                System.out.println("Response here: " + response.code());
                 disbursement = response.body();
 
                 if (disbursement != null) {
@@ -222,80 +247,58 @@ public class ConfirmDisbursementCollectionActivity extends AppCompatActivity {
                     callDisbursementDetail.enqueue(new Callback<List<DisbursementDetail>>() {
                         @Override
                         public void onResponse(Call<List<DisbursementDetail>> call, Response<List<DisbursementDetail>> response) {
-                            System.out.println("Response here: " + response.code());
                             disbursementDetail = response.body();
 
-                            final List<DisbursementDetail> filteredDisbursementDetail = new ArrayList<>();
-
-                            for (DisbursementDetail dDetail : disbursementDetail) {
-                                for (DisbursementList dList : disbursement) {
-                                    if (dDetail.getDisbursementListId() == dList.getId()) {
-                                        filteredDisbursementDetail.add(dDetail);
-                                    }
-                                }
-                            }
-
-                            if (filteredDisbursementDetail != null) {
                                 Call<List<RequisitionDetail>> callRequisitionDetail = apiInterface.getToDeliverRequisitionDetailByDeptId(departmentId);
 
                                 callRequisitionDetail.enqueue(new Callback<List<RequisitionDetail>>() {
                                     @Override
                                     public void onResponse(Call<List<RequisitionDetail>> call, Response<List<RequisitionDetail>> response) {
-                                        System.out.println("Response here: " + response.code());
                                         requisitionDetail = response.body();
-
-                                        for (RequisitionDetail rDetail : requisitionDetail) {
-                                            for (DisbursementDetail dDetail : filteredDisbursementDetail) {
-                                                if (dDetail.getRequisitionDetailId() == rDetail.getId()) {
-                                                    dDetail.setStationeryId(rDetail.getStationeryId());
-                                                }
-                                            }
-                                        }
 
                                         Call<List<Stationery>> callStationery = apiInterface.getAllStationery();
 
                                         callStationery.enqueue(new Callback<List<Stationery>>() {
                                             @Override
                                             public void onResponse(Call<List<Stationery>> call, Response<List<Stationery>> response) {
-                                                System.out.println("Response here: " + response.code());
                                                 stationery = response.body();
 
-                                                if (stationery != null) {
-                                                    for (DisbursementDetail dDetail2 : filteredDisbursementDetail) {
-                                                        for (Stationery stat : stationery) {
-                                                            if (dDetail2.getStationeryId() == stat.getId()) {
-                                                                dDetail2.setStationeryDesc(stat.getDesc());
-                                                            }
+                                                final List<DisbursementDetail> filteredDisbursementDetail = new ArrayList<>();
+
+                                                for (DisbursementList dList : disbursement) {
+                                                    for (DisbursementDetail dDetail : disbursementDetail) {
+                                                        if (dList.getId() == dDetail.getDisbursementListId()) {
+                                                            filteredDisbursementDetail.add(dDetail);
                                                         }
                                                     }
                                                 }
 
                                                 if (filteredDisbursementDetail != null) {
-                                                    for (final DisbursementDetail dDetail : filteredDisbursementDetail) {
-                                                        View tableRow = LayoutInflater.from(getApplicationContext()).inflate(R.layout.activity_confirm_disbursement_collection_item, null, false);
-                                                        TextView itemCode = (TextView) tableRow.findViewById(R.id.itemCode);
-                                                        TextView itemDesc = (TextView) tableRow.findViewById(R.id.itemDesc);
-                                                        TextView itemRqt = (TextView) tableRow.findViewById(R.id.itemRqt);
-
-                                                        final NumberPicker qty = tableRow.findViewById(R.id.itemRcv);
-                                                        qty.setValue(dDetail.getQty());
-                                                        qty.setMin(0);
-                                                        qty.setValueChangedListener(new ValueChangedListener() {
-                                                            @Override
-                                                            public void valueChanged(int value, ActionEnum action) {
-                                                                dDetail.setQty(value);
+                                                    for (DisbursementList dList : disbursement) {
+                                                        for (DisbursementDetail dDetail : filteredDisbursementDetail) {
+                                                            if (dList.getId() == dDetail.getDisbursementListId()) {
+                                                                dDetail.setDeliveryPoint(dList.getDeliveryPoint());
                                                             }
-                                                        });
+                                                        }
+                                                    }
 
-                                                        setFilteredDisbursementDetail(filteredDisbursementDetail);
+                                                    for (DisbursementDetail dDetail : filteredDisbursementDetail) {
+                                                        for (RequisitionDetail rDetail : requisitionDetail) {
+                                                            if (dDetail.getRequisitionDetailId() == rDetail.getId()) {
+                                                                dDetail.setStationeryId(rDetail.getStationeryId());
+                                                            }
+                                                        }
+                                                    }
 
-                                                        itemCode.setText(Integer.toString(dDetail.getStationeryId()));
-                                                        itemDesc.setText(dDetail.getStationeryDesc());
-                                                        itemRqt.setText(Integer.toString(dDetail.getQty()));
-                                                        collectTableLayout.addView(tableRow);
-
+                                                    for (DisbursementDetail dDetail : filteredDisbursementDetail) {
+                                                        for (Stationery stat : stationery) {
+                                                            if (dDetail.getStationeryId() == stat.getId()) {
+                                                                dDetail.setStationeryDesc(stat.getDesc());
+                                                            }
+                                                        }
                                                     }
                                                 }
+                                                setLatestDisbursementDetail(filteredDisbursementDetail);
                                             }
 
                                             @Override
@@ -311,29 +314,12 @@ public class ConfirmDisbursementCollectionActivity extends AppCompatActivity {
                                     }
                                 });
                             }
-                        }
 
                         @Override
                         public void onFailure(Call<List<DisbursementDetail>> call, Throwable t) {
                             Log.e("error", t.getMessage());
                         }
                     });
-                } else {
-                    View tableRow = LayoutInflater.from(getApplicationContext()).inflate(R.layout.activity_confirm_disbursement_collection_item, null, false);
-                    TextView itemCode = (TextView) tableRow.findViewById(R.id.itemCode);
-                    TextView itemDesc = (TextView) tableRow.findViewById(R.id.itemDesc);
-                    TextView itemRqt = (TextView) tableRow.findViewById(R.id.itemRqt);
-
-                    final NumberPicker qty = tableRow.findViewById(R.id.itemRcv);
-                    qty.setValue(0);
-                    qty.setMin(0);
-                    qty.setVisibility(View.GONE);
-                    completeBtn.setVisibility(View.GONE);
-
-                    itemCode.setText("");
-                    itemDesc.setText("All items are collected!");
-                    itemRqt.setText("");
-                    collectTableLayout.addView(tableRow);
                 }
             }
 
@@ -342,6 +328,62 @@ public class ConfirmDisbursementCollectionActivity extends AppCompatActivity {
                 Log.e("error", t.getMessage());
             }
         });
+    }
+
+    @Override
+    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+        // On selecting a spinner item
+        final String item = parent.getItemAtPosition(position).toString();
+        Toast.makeText(ConfirmDisbursementCollectionActivity.this, item, Toast.LENGTH_SHORT).show();
+
+        new CountDownTimer(1000, 1000) {
+            public void onFinish() {
+                System.out.println(getLatestDisbursementDetail());
+
+                List<DisbursementDetail> emptyList = new ArrayList<>();
+
+                for (DisbursementDetail dDetail : getLatestDisbursementDetail()) {
+                    if (dDetail.getDeliveryPoint().equals(item)) {
+                        emptyList.add(dDetail);
+                    }
+                }
+
+                currDisbursementDetail = emptyList;
+
+                for (final DisbursementDetail dDetail : currDisbursementDetail) {
+                    View tableRow = LayoutInflater.from(getApplicationContext()).inflate(R.layout.activity_confirm_disbursement_collection_item, null, false);
+                    TextView itemCode = (TextView) tableRow.findViewById(R.id.itemCode);
+                    TextView itemDesc = (TextView) tableRow.findViewById(R.id.itemDesc);
+                    TextView itemRqt = (TextView) tableRow.findViewById(R.id.itemRqt);
+
+                    final NumberPicker qty = tableRow.findViewById(R.id.itemRcv);
+                    qty.setValue(dDetail.getQty());
+                    qty.setMin(0);
+                    qty.setValueChangedListener(new ValueChangedListener() {
+                        @Override
+                        public void valueChanged(int value, ActionEnum action) {
+                            dDetail.setQty(value);
+                        }
+                    });
+
+                    setFilteredDisbursementDetail(filteredDisbursementDetail);
+
+                    itemCode.setText(Integer.toString(dDetail.getStationeryId()));
+                    itemDesc.setText(dDetail.getStationeryDesc());
+                    itemRqt.setText(Integer.toString(dDetail.getQty()));
+                    collectTableLayout.addView(tableRow);
+                }
+            }
+
+            public void onTick(long millisUntilFinished) {
+                // millisUntilFinished    The amount of time until finished.
+            }
+        }.start();
+    }
+
+    @Override
+    public void onNothingSelected(AdapterView<?> adapterView) {
+
     }
 
     @Override

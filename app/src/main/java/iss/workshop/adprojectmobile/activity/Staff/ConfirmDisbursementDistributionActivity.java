@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -243,10 +244,6 @@ public class ConfirmDisbursementDistributionActivity extends AppCompatActivity i
                                                                                         }
                                                                                     }
                                                                                 }
-
-                                                                                for (DisbursementDetail dDetail : filteredDisbursementDetail) {
-                                                                                    System.out.println(dDetail.getRequestedEmp());
-                                                                                }
                                                                                 setDisbursementDetail(filteredDisbursementDetail);
                                                                             }
 
@@ -313,30 +310,37 @@ public class ConfirmDisbursementDistributionActivity extends AppCompatActivity i
         final String item = parent.getItemAtPosition(position).toString();
         Toast.makeText(ConfirmDisbursementDistributionActivity.this, item, Toast.LENGTH_SHORT).show();
 
-        List<DisbursementDetail> emptyList = new ArrayList<>();
+        new CountDownTimer(1000, 1000) {
+            public void onFinish() {
+                List<DisbursementDetail> emptyList = new ArrayList<>();
 
-        for (DisbursementDetail dDetail : disbursementDetail) {
-            if (dDetail.getRequestedEmp().equals(item)) {
-                emptyList.add(dDetail);
+                for (DisbursementDetail dDetail : disbursementDetail) {
+                    if (dDetail.getRequestedEmp().equals(item)) {
+                        emptyList.add(dDetail);
+                    }
+                }
+
+                System.out.println("EMPTY LIST: " + emptyList);
+
+                currDisbursementDetail = emptyList;
+
+                System.out.println("CURRENT LIST: " + currDisbursementDetail);
+
+                for (DisbursementDetail dDetail : currDisbursementDetail) {
+                    View tableRow = LayoutInflater.from(getApplicationContext()).inflate(R.layout.activity_confirm_disbursement_distribution_item, null, false);
+                    TextView statDescription = (TextView) tableRow.findViewById(R.id.statDescription);
+                    TextView receivedQty = (TextView) tableRow.findViewById(R.id.receivedQty);
+
+                    statDescription.setText(dDetail.getStationeryDesc());
+                    receivedQty.setText(Integer.toString(dDetail.getQty()));
+                    tableLayout.addView(tableRow);
+                }
             }
-        }
 
-        System.out.println("EMPTY LIST: " + emptyList);
-
-        currDisbursementDetail = emptyList;
-
-        System.out.println("CURRENT LIST: " + currDisbursementDetail);
-
-        for (DisbursementDetail dDetail : currDisbursementDetail) {
-            View tableRow = LayoutInflater.from(getApplicationContext()).inflate(R.layout.activity_confirm_disbursement_distribution_item, null, false);
-            TextView statDescription = (TextView) tableRow.findViewById(R.id.statDescription);
-            TextView receivedQty = (TextView) tableRow.findViewById(R.id.receivedQty);
-
-            statDescription.setText(dDetail.getStationeryDesc());
-            receivedQty.setText(Integer.toString(dDetail.getQty()));
-            tableLayout.addView(tableRow);
-        }
-
+            public void onTick(long millisUntilFinished) {
+                // millisUntilFinished    The amount of time until finished.
+            }
+        }.start();
     }
 
     @Override
