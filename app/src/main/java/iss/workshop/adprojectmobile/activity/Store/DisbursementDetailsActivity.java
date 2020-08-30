@@ -31,7 +31,7 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class DisbursementDetailsActivity extends AppCompatActivity implements AdapterView.OnItemClickListener {
-//    private SharedPreferences session;
+    //    private SharedPreferences session;
 //    private SharedPreferences.Editor session_editor;
     private ListView ddTable;
     private List<DisbursementDetail> ddList;
@@ -82,19 +82,19 @@ public class DisbursementDetailsActivity extends AppCompatActivity implements Ad
                 System.out.println(response.code());
                 if (response.code() == 200) {
                     ddList = response.body();
-                    for(DisbursementDetail dd:ddList){
+                    for (DisbursementDetail dd : ddList) {
                         System.out.println(dd);
                     }
                     setDdList(ddList);
                     DisbursementDetailAdapter ddAdapter = new DisbursementDetailAdapter(getApplicationContext(), R.layout.activity_disbursement_details_rows, ddList);
                     ddTable.setAdapter(ddAdapter);
                     ddTable.setOnItemClickListener(ddTable.getOnItemClickListener());
+                    if (intent.getStringExtra("selected_dl_bitmap") != null) {
+                        byte[] decodedString = Base64.decode(intent.getStringExtra("selected_dl_bitmap"), Base64.DEFAULT);
+                        Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
 
-                    byte[] decodedString = Base64.decode(intent.getStringExtra("selected_dl_bitmap"), Base64.DEFAULT);
-                    Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
-
-                    signature.setImageBitmap(decodedByte);
-
+                        signature.setImageBitmap(decodedByte);
+                    }
                 }
             }
 

@@ -10,15 +10,19 @@ import android.os.CountDownTimer;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 import android.widget.TableLayout;
+import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import iss.workshop.adprojectmobile.Interfaces.ApiInterface;
 import iss.workshop.adprojectmobile.Interfaces.SSLBypasser;
@@ -95,32 +99,6 @@ public class ConfirmDisbursementDistributionActivity extends AppCompatActivity i
         session = getSharedPreferences("session", MODE_PRIVATE);
         session_editor = session.edit();
         departmentId = session.getInt("departmentId", 0);
-
-        Call<List<Employee>> callEmployeeUnderDept = apiInterface.getAllEmployeesByDept(departmentId);
-
-        callEmployeeUnderDept.enqueue(new Callback<List<Employee>>() {
-            @Override
-            public void onResponse(Call<List<Employee>> call, Response<List<Employee>> response) {
-                employeeList = response.body();
-
-                if (employeeList != null) {
-                    List<String> employees = new ArrayList<String>();
-
-                    for (Employee employee : employeeList) {
-                        employees.add(employee.getName());
-                    }
-
-                    ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(getApplicationContext(), android.R.layout.simple_spinner_item, employees);
-                    dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                    spinner.setAdapter(dataAdapter);
-                }
-            }
-
-            @Override
-            public void onFailure(Call<List<Employee>> call, Throwable t) {
-
-            }
-        });
 
         Call<List<DisbursementList>> callDisbursementUnderDept = apiInterface.getNearestDisbursementByDeptId(departmentId);
 
@@ -244,6 +222,22 @@ public class ConfirmDisbursementDistributionActivity extends AppCompatActivity i
                                                                                         }
                                                                                     }
                                                                                 }
+
+                                                                                    List<String> employees = new ArrayList<String>();
+                                                                                    Set<String> employeeSet = new HashSet<>();
+
+                                                                                    for (DisbursementDetail dDetail : filteredDisbursementDetail) {
+                                                                                        employeeSet.add(dDetail.getRequestedEmp());
+                                                                                    }
+
+                                                                                    for (String employee : employeeSet) {
+                                                                                        employees.add(employee);
+                                                                                    }
+
+                                                                                    ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(getApplicationContext(), android.R.layout.simple_spinner_item, employees);
+                                                                                    dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                                                                                    spinner.setAdapter(dataAdapter);
+
                                                                                 setDisbursementDetail(filteredDisbursementDetail);
                                                                             }
 
@@ -314,17 +308,19 @@ public class ConfirmDisbursementDistributionActivity extends AppCompatActivity i
             public void onFinish() {
                 List<DisbursementDetail> emptyList = new ArrayList<>();
 
-                for (DisbursementDetail dDetail : disbursementDetail) {
+                for (DisbursementDetail dDetail : getDisbursementDetail()) {
                     if (dDetail.getRequestedEmp().equals(item)) {
                         emptyList.add(dDetail);
                     }
                 }
 
-                System.out.println("EMPTY LIST: " + emptyList);
-
                 currDisbursementDetail = emptyList;
 
-                System.out.println("CURRENT LIST: " + currDisbursementDetail);
+                int count = tableLayout.getChildCount();
+                for (int i = 0; i < count; i++) {
+                    View child = tableLayout.getChildAt(i+1);
+                    if (child instanceof TableRow) ((ViewGroup) child).removeAllViews();
+                }
 
                 for (DisbursementDetail dDetail : currDisbursementDetail) {
                     View tableRow = LayoutInflater.from(getApplicationContext()).inflate(R.layout.activity_confirm_disbursement_distribution_item, null, false);
@@ -333,6 +329,7 @@ public class ConfirmDisbursementDistributionActivity extends AppCompatActivity i
 
                     statDescription.setText(dDetail.getStationeryDesc());
                     receivedQty.setText(Integer.toString(dDetail.getQty()));
+
                     tableLayout.addView(tableRow);
                 }
             }
