@@ -14,7 +14,11 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".activity.SplashScreen"><intent-filter>
+            <action android:name="android.intent.action.MAIN" />
 
+            <category android:name="android.intent.category.LAUNCHER" />
+        </intent-filter></activity>
         <activity android:name=".activity.Head.DepartmentHeadHomePageActivity" />
         <activity android:name=".activity.Store.DisbursementListActivity" />
         <activity android:name=".activity.Store.ViewInventoryActivity">
@@ -42,7 +46,6 @@
         <activity android:name=".activity.Staff.RepresentativeMenuActivity" />
         <activity android:name=".activity.Head.DelegateAuthorityActivity" />
         <activity android:name=".activity.Store.StationeryRetrievalActivity" />
-
         <activity android:name=".activity.Store.ReceiveGoodsActivity">
             <meta-data
                 android:name="android.app.searchable"
@@ -53,15 +56,8 @@
                 android:name="android.app.searchable"
                 android:resource="@xml/searchable" />
         </activity>
-
-            <activity android:name=".activity.Store.SignaturePadActivity"/>
-                <activity android:name=".activity.LoginActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
+        <activity android:name=".activity.Store.SignaturePadActivity" />
+        <activity android:name=".activity.LoginActivity"></activity>
         <activity android:name=".activity.MainActivity" />
     </application>
 
