@@ -79,16 +79,8 @@ public class ConfirmDisbursementCollectionActivity extends AppCompatActivity imp
         this.filteredDisbursementDetail = filteredDisbursementDetail;
     }
 
-    public String getCollectionTimeData() {
-        return collectionTimeData;
-    }
-
     public void setCollectionTimeData(String collectionTimeData) {
         this.collectionTimeData = collectionTimeData;
-    }
-
-    public String getCollectionDateData() {
-        return collectionDateData;
     }
 
     public void setCollectionDateData(String collectionDateData) {
@@ -257,78 +249,78 @@ public class ConfirmDisbursementCollectionActivity extends AppCompatActivity imp
                         public void onResponse(Call<List<DisbursementDetail>> call, Response<List<DisbursementDetail>> response) {
                             disbursementDetail = response.body();
 
-                                Call<List<RequisitionDetail>> callRequisitionDetail = apiInterface.getAllRequisitionsDetailByDeptId(departmentId);
+                            Call<List<RequisitionDetail>> callRequisitionDetail = apiInterface.getAllRequisitionsDetailByDeptId(departmentId);
 
-                                callRequisitionDetail.enqueue(new Callback<List<RequisitionDetail>>() {
-                                    @Override
-                                    public void onResponse(Call<List<RequisitionDetail>> call, Response<List<RequisitionDetail>> response) {
-                                        requisitionDetail = response.body();
+                            callRequisitionDetail.enqueue(new Callback<List<RequisitionDetail>>() {
+                                @Override
+                                public void onResponse(Call<List<RequisitionDetail>> call, Response<List<RequisitionDetail>> response) {
+                                    requisitionDetail = response.body();
 
-                                        Call<List<Stationery>> callStationery = apiInterface.getAllStationery();
+                                    Call<List<Stationery>> callStationery = apiInterface.getAllStationery();
 
-                                        callStationery.enqueue(new Callback<List<Stationery>>() {
-                                            @Override
-                                            public void onResponse(Call<List<Stationery>> call, Response<List<Stationery>> response) {
-                                                stationery = response.body();
+                                    callStationery.enqueue(new Callback<List<Stationery>>() {
+                                        @Override
+                                        public void onResponse(Call<List<Stationery>> call, Response<List<Stationery>> response) {
+                                            stationery = response.body();
 
-                                                final List<DisbursementList> filteredDisbursement = new ArrayList<>();
-                                                final List<DisbursementDetail> filteredDisbursementDetail = new ArrayList<>();
+                                            final List<DisbursementList> filteredDisbursement = new ArrayList<>();
+                                            final List<DisbursementDetail> filteredDisbursementDetail = new ArrayList<>();
 
-                                                for (DisbursementList dList : disbursement) {
-                                                    if(dList.getStatus().equals("delivering")){
-                                                        filteredDisbursement.add(dList);
+                                            for (DisbursementList dList : disbursement) {
+                                                if (dList.getStatus().equals("delivering")) {
+                                                    filteredDisbursement.add(dList);
+                                                }
+                                            }
+
+                                            for (DisbursementList dList : filteredDisbursement) {
+                                                for (DisbursementDetail dDetail : disbursementDetail) {
+                                                    if (dList.getId() == dDetail.getDisbursementListId()) {
+                                                        filteredDisbursementDetail.add(dDetail);
                                                     }
                                                 }
+                                            }
 
+                                            if (filteredDisbursementDetail != null) {
                                                 for (DisbursementList dList : filteredDisbursement) {
-                                                    for (DisbursementDetail dDetail : disbursementDetail) {
+                                                    for (DisbursementDetail dDetail : filteredDisbursementDetail) {
                                                         if (dList.getId() == dDetail.getDisbursementListId()) {
-                                                            filteredDisbursementDetail.add(dDetail);
+                                                            dDetail.setDeliveryPoint(dList.getDeliveryPoint());
                                                         }
                                                     }
                                                 }
 
-                                                if (filteredDisbursementDetail != null) {
-                                                    for (DisbursementList dList : filteredDisbursement) {
-                                                        for (DisbursementDetail dDetail : filteredDisbursementDetail) {
-                                                            if (dList.getId() == dDetail.getDisbursementListId()) {
-                                                                dDetail.setDeliveryPoint(dList.getDeliveryPoint());
-                                                            }
-                                                        }
-                                                    }
-
-                                                    for (DisbursementDetail dDetail : filteredDisbursementDetail) {
-                                                        for (RequisitionDetail rDetail : requisitionDetail) {
-                                                            if (dDetail.getRequisitionDetailId() == rDetail.getId()) {
-                                                                dDetail.setStationeryId(rDetail.getStationeryId());
-                                                            }
-                                                        }
-                                                    }
-
-                                                    for (DisbursementDetail dDetail : filteredDisbursementDetail) {
-                                                        for (Stationery stat : stationery) {
-                                                            if (dDetail.getStationeryId() == stat.getId()) {
-                                                                dDetail.setStationeryDesc(stat.getDesc());
-                                                            }
+                                                for (DisbursementDetail dDetail : filteredDisbursementDetail) {
+                                                    for (RequisitionDetail rDetail : requisitionDetail) {
+                                                        if (dDetail.getRequisitionDetailId() == rDetail.getId()) {
+                                                            dDetail.setStationeryId(rDetail.getStationeryId());
                                                         }
                                                     }
                                                 }
-                                                setLatestDisbursementDetail(filteredDisbursementDetail);
+
+                                                for (DisbursementDetail dDetail : filteredDisbursementDetail) {
+                                                    for (Stationery stat : stationery) {
+                                                        if (dDetail.getStationeryId() == stat.getId()) {
+                                                            dDetail.setStationeryDesc(stat.getDesc());
+                                                        }
+                                                    }
+                                                }
                                             }
+                                            setLatestDisbursementDetail(filteredDisbursementDetail);
+                                        }
 
-                                            @Override
-                                            public void onFailure(Call<List<Stationery>> call, Throwable t) {
+                                        @Override
+                                        public void onFailure(Call<List<Stationery>> call, Throwable t) {
 
-                                            }
-                                        });
-                                    }
+                                        }
+                                    });
+                                }
 
-                                    @Override
-                                    public void onFailure(Call<List<RequisitionDetail>> call, Throwable t) {
-                                        Log.e("error", t.getMessage());
-                                    }
-                                });
-                            }
+                                @Override
+                                public void onFailure(Call<List<RequisitionDetail>> call, Throwable t) {
+                                    Log.e("error", t.getMessage());
+                                }
+                            });
+                        }
 
                         @Override
                         public void onFailure(Call<List<DisbursementDetail>> call, Throwable t) {
@@ -367,7 +359,7 @@ public class ConfirmDisbursementCollectionActivity extends AppCompatActivity imp
                 }
 
                 List<DisbursementDetail> emptyList = new ArrayList<>();
-emptyList.clear();
+                emptyList.clear();
                 for (DisbursementDetail dDetail : getLatestDisbursementDetail()) {
                     if (dDetail.getDeliveryPoint().equals(item)) {
                         emptyList.add(dDetail);
@@ -379,7 +371,7 @@ emptyList.clear();
 
                 int count = collectTableLayout.getChildCount();
                 for (int i = 0; i < count; i++) {
-                    View child = collectTableLayout.getChildAt(i+1);
+                    View child = collectTableLayout.getChildAt(i + 1);
                     if (child instanceof TableRow) ((ViewGroup) child).removeAllViews();
                 }
 
@@ -409,7 +401,6 @@ emptyList.clear();
             }
 
             public void onTick(long millisUntilFinished) {
-                // millisUntilFinished    The amount of time until finished.
             }
         }.start();
     }

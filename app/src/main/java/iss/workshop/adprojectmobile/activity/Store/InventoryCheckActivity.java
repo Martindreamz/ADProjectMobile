@@ -2,13 +2,9 @@ package iss.workshop.adprojectmobile.activity.Store;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.app.SearchManager;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
@@ -34,22 +30,15 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 
-
-
 public class InventoryCheckActivity extends AppCompatActivity
         implements View.OnClickListener, AdapterView.OnItemClickListener,SearchView.OnQueryTextListener {
-    Button saveInvtCheckBtn, discripencyListBtn;
-   // EditText invtSearch;
+    Button saveInvtCheckBtn;
+
     private static List<Stationery> stationeries;
-    private boolean fetch_completed;
-    private SearchView searchView;
-    private MenuItem searchMenuItem;
+    private SearchView mSearchView;
     private InventoryCheckAdapter adapter;
     private static HashMap<Integer,Integer> changes;
-
-    public static HashMap<Integer, Integer> getChanges() {
-        return changes;
-    }
+    private ListView listView ;
 
     public static void setChanges(HashMap<Integer, Integer> changes) {
         InventoryCheckActivity.changes = changes;
@@ -71,6 +60,7 @@ public class InventoryCheckActivity extends AppCompatActivity
         setContentView(R.layout.activity_inventory_check);
         saveInvtCheckBtn = findViewById(R.id.saveInvtCheckBtn);
         saveInvtCheckBtn.setOnClickListener(this);
+        mSearchView = (SearchView) findViewById(R.id.searchView);
 
         stationeries = new ArrayList();
         changes=new HashMap<>();
@@ -91,22 +81,17 @@ public class InventoryCheckActivity extends AppCompatActivity
                 stationeries = response.body();
 
                 if (stationeries != null) {
-                    System.out.println("Stationeries recieved!"+stationeries);
                     for(Stationery s :stationeries){
                         s.setReOrderQty(s.getInventoryQty());
                         changes.put(s.getId(),s.getReOrderQty());
                     }
                     setChanges(changes);
                     setStationeries(stationeries);
-                    fetch_completed = true;
 
                     adapter = new InventoryCheckAdapter(getApplicationContext(), R.layout.activity_inventory_check_rows, stationeries);
-                    ListView listView = findViewById(R.id.StationeriesListView);
+                    listView = findViewById(R.id.StationeriesListView);
 
                     if (listView != null) {
-
-                      //  ViewGroup headerView = (ViewGroup)getLayoutInflater().inflate(R.layout.headers, listView,false);
-                        //listView.addHeaderView(headerView);
                         listView.setAdapter(adapter);
                         listView.setOnItemClickListener(listView.getOnItemClickListener());
                     }
@@ -121,46 +106,45 @@ public class InventoryCheckActivity extends AppCompatActivity
 
         });
 
+        setupSearchView();
+
 
     }
-@Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.search_menu, menu);
 
-        SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
-        searchMenuItem = menu.findItem(R.id.search);
-        searchView = (SearchView) findViewById(R.id.searchView);
-        searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
-        searchView.setSubmitButtonEnabled(true);
-        searchView.setOnQueryTextListener(this);
+    private void setupSearchView()
+    {
+        mSearchView.setIconifiedByDefault(false);
+        mSearchView.setOnQueryTextListener(this);
+        mSearchView.setSubmitButtonEnabled(true);
+        mSearchView.setQueryHint("Search Here");
+    }
 
+    @Override
+    public boolean onQueryTextChange(String newText)
+    {
+
+        if (TextUtils.isEmpty(newText)) {
+            listView.clearTextFilter();
+        } else {
+            listView.setFilterText(newText);
+            adapter.getFilter().filter(newText);
+
+        }
         return true;
     }
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case android.R.id.home:
-                InventoryCheckActivity.this.finish();
-                //InventoryCheckActivity.this.overridePendingTransition(R.anim.stay_in, R.anim.bottom_out);
-                //ActivityUtils.hideSoftKeyboard(this);
-
-                return true;
-        }
-
-        return super.onOptionsItemSelected(item);
+    public boolean onQueryTextSubmit(String query)
+    {
+        return false;
     }
-
 
 
     @Override
     public void onClick(View view) {
         final int id = view.getId();
         if (id == R.id.saveInvtCheckBtn) {
-          //post and send data to get stock adjustment detail
-            //Intent intent = new Intent(this, DiscrepencyListActivity.class);
-//            startActivity(intent);
+
             Retrofit retrofit = new Retrofit.Builder()
                     .baseUrl(ApiInterface.url)
                     .client(SSLBypasser.getUnsafeOkHttpClient().build())
@@ -171,7 +155,6 @@ public class InventoryCheckActivity extends AppCompatActivity
             call.enqueue(new Callback<List<StockAdjustmentDetail>>() {
                 @Override
                 public void onResponse(Call<List<StockAdjustmentDetail>> call, Response<List<StockAdjustmentDetail>> response) {
-                    System.out.println("LOOK HERE"+response.body());
                     if (response.code() == 200) {
                         List<StockAdjustmentDetail> sads = response.body();
                         if(response.body().isEmpty()){
@@ -203,19 +186,8 @@ public class InventoryCheckActivity extends AppCompatActivity
 
     @Override
     public void onItemClick(AdapterView<?> adapterView, View view, int pos, long l) {
-
     }
 
-    @Override
-    public boolean onQueryTextSubmit(String s) {
-        return false;
-    }
-
-    @Override
-    public boolean onQueryTextChange(String s) {
-        adapter.getFilter().filter(s);
-        return true;
-    }
 
     @Override
     public void onBackPressed() {

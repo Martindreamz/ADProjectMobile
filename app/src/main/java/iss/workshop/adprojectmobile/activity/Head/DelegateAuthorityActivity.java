@@ -39,9 +39,7 @@ public class DelegateAuthorityActivity extends AppCompatActivity implements Adap
     Button startDateBtn, endDateBtn;
     Button authorizeBtn;
     Spinner spinner;
-    List<Employee> departmentReps;
-    List<Employee> allEmployee;
-    TextView txtView, currentDelegate,welcome;
+    TextView txtView, currentDelegate, welcome;
     private SharedPreferences session;
     private SharedPreferences.Editor session_editor;
     Employee selectedEmployee, oldDelegate;
@@ -55,16 +53,8 @@ public class DelegateAuthorityActivity extends AppCompatActivity implements Adap
     Department currDept;
 
 
-    public Department getCurrDept() {
-        return currDept;
-    }
-
     public void setCurrDept(Department currDept) {
         this.currDept = currDept;
-    }
-
-    public List<Employee> getNonStaff() {
-        return nonStaff;
     }
 
     public void setNonStaff(List<Employee> nonStaff) {
@@ -77,22 +67,6 @@ public class DelegateAuthorityActivity extends AppCompatActivity implements Adap
 
     public void setOldDelegate(Employee oldDelegate) {
         this.oldDelegate = oldDelegate;
-    }
-
-    public List<Employee> getDepartmentReps() {
-        return departmentReps;
-    }
-
-    public List<Employee> getAllEmployee() {
-        return allEmployee;
-    }
-
-    public void setDepartmentReps(List<Employee> departmentReps) {
-        this.departmentReps = departmentReps;
-    }
-
-    public void setAllEmployee(List<Employee> allEmployee) {
-        this.allEmployee = allEmployee;
     }
 
     public List<Employee> getDepartmentEmp() {
@@ -127,7 +101,7 @@ public class DelegateAuthorityActivity extends AppCompatActivity implements Adap
         oldDelegate = new Employee();
         welcome = findViewById(R.id.welcome);
 
-        welcome.setText("Welcome, " + session.getString("username",null));
+        welcome.setText("Welcome, " + session.getString("username", null));
 
         final Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(ApiInterface.url)
@@ -193,60 +167,16 @@ public class DelegateAuthorityActivity extends AppCompatActivity implements Adap
 
                         @Override
                         public void onFailure(Call<List<Employee>> call, Throwable t) {
-
                         }
                     });
-
-
                 }
             }
 
             @Override
             public void onFailure(Call<Department> call, Throwable t) {
-
             }
         });
 
-
-//
-//
-//
-//
-//
-//        empListCall.enqueue(new Callback<List<Employee>>() {
-//            @Override
-//            public void onResponse(Call<List<Employee>> call, Response<List<Employee>> response) {
-//                if (response.code() == 200) {
-//                    departmentEmp = response.body();
-//                    setDepartmentEmp(departmentEmp);
-//                    for (Employee e : getDepartmentEmp()) {
-////                        System.out.println(e);
-//                        if (e.getRole().equals("STAFF")) {
-//                            employees.add(e.getName());
-//                            nonStaff.add(e);
-//                        }
-//                        if (e.getRole().equals("DELEGATE")) {
-//                            oldDelegate = e;
-//                            setOldDelegate(oldDelegate);
-//                            existingdelegate = true;
-//                        }
-//                    }
-//                    setNonStaff(nonStaff);
-//                    ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(getApplicationContext(), android.R.layout.simple_spinner_item, employees);
-//                    dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-//                    spinner.setAdapter(dataAdapter);
-//                }
-//            }
-//
-//            @Override
-//            public void onFailure(Call<List<Employee>> call, Throwable t) {
-//
-//            }
-//        });
-
-
-        //startDate.setOnClickListener(this);
-        //.setOnClickListener(this);
         startDateBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -310,53 +240,51 @@ public class DelegateAuthorityActivity extends AppCompatActivity implements Adap
             public void onClick(View view) {
 
                 if (!existingdelegate) {
-                startDateStr = startDateBtn.getText().toString();
-                endDateStr = endDateBtn.getText().toString();
-                System.out.println(startDateStr);
-                System.out.println(endDateStr);
+                    startDateStr = startDateBtn.getText().toString();
+                    endDateStr = endDateBtn.getText().toString();
+                    System.out.println(startDateStr);
+                    System.out.println(endDateStr);
 
-                if (!startDateClear) {
-                    Toast.makeText(getApplicationContext(), "select a future date or today for start date please", Toast.LENGTH_LONG).show();
-                } else if (!endDateClear) {
-                    Toast.makeText(getApplicationContext(), "select a future date or today for end date  please", Toast.LENGTH_LONG).show();
-                } else if (endDate.isBefore(startDate)) {
-                    Toast.makeText(getApplicationContext(), "End date cannot be before start date", Toast.LENGTH_LONG).show();
-                } else {
-                    Employee sendingEmployee = new Employee();
-                    sendingEmployee.setId(selectedEmployee.getDepartmentId());
-                    sendingEmployee.setName(startDateStr);
-                    sendingEmployee.setPassword(endDateStr);
-                    sendingEmployee.setEmail(String.valueOf(oldDelegate.getId()));
-                    sendingEmployee.setRole("STAFF");
-                    sendingEmployee.setDepartmentId(selectedEmployee.getId());
-                    sendingEmployee.setPhoneNum("DELEGATE");
+                    if (!startDateClear) {
+                        Toast.makeText(getApplicationContext(), "select a future date or today for start date please", Toast.LENGTH_LONG).show();
+                    } else if (!endDateClear) {
+                        Toast.makeText(getApplicationContext(), "select a future date or today for end date  please", Toast.LENGTH_LONG).show();
+                    } else if (endDate.isBefore(startDate)) {
+                        Toast.makeText(getApplicationContext(), "End date cannot be before start date", Toast.LENGTH_LONG).show();
+                    } else {
+                        Employee sendingEmployee = new Employee();
+                        sendingEmployee.setId(selectedEmployee.getDepartmentId());
+                        sendingEmployee.setName(startDateStr);
+                        sendingEmployee.setPassword(endDateStr);
+                        sendingEmployee.setEmail(String.valueOf(oldDelegate.getId()));
+                        sendingEmployee.setRole("STAFF");
+                        sendingEmployee.setDepartmentId(selectedEmployee.getId());
+                        sendingEmployee.setPhoneNum("DELEGATE");
 
 
-                    Retrofit retrofit = new Retrofit.Builder()
-                            .baseUrl(ApiInterface.url)
-                            .client(SSLBypasser.getUnsafeOkHttpClient().build())
-                            .addConverterFactory(GsonConverterFactory.create())
-                            .build();
+                        Retrofit retrofit = new Retrofit.Builder()
+                                .baseUrl(ApiInterface.url)
+                                .client(SSLBypasser.getUnsafeOkHttpClient().build())
+                                .addConverterFactory(GsonConverterFactory.create())
+                                .build();
 
-                    ApiInterface apiInterface2 = retrofit.create(ApiInterface.class);
-                    Call<Employee> DeptDelegateCall = apiInterface2.DeptDelegate(sendingEmployee, session.getInt("departmentId", 0));
-                    DeptDelegateCall.enqueue(new Callback<Employee>() {
-                        @Override
-                        public void onResponse(Call<Employee> call, Response<Employee> response) {
-                            System.out.println(response.code());
+                        ApiInterface apiInterface2 = retrofit.create(ApiInterface.class);
+                        Call<Employee> DeptDelegateCall = apiInterface2.DeptDelegate(sendingEmployee, session.getInt("departmentId", 0));
+                        DeptDelegateCall.enqueue(new Callback<Employee>() {
+                            @Override
+                            public void onResponse(Call<Employee> call, Response<Employee> response) {
+                                System.out.println(response.code());
 
-                            Intent intent = new Intent(getApplicationContext(), DepartmentHeadHomePageActivity.class);
-                            startActivity(intent);
+                                Intent intent = new Intent(getApplicationContext(), DepartmentHeadHomePageActivity.class);
+                                startActivity(intent);
+                            }
 
-                        }
+                            @Override
+                            public void onFailure(Call<Employee> call, Throwable t) {
 
-                        @Override
-                        public void onFailure(Call<Employee> call, Throwable t) {
-
-                        }
-                    });
-
-                }
+                            }
+                        });
+                    }
 
 
                 } else {
@@ -391,7 +319,7 @@ public class DelegateAuthorityActivity extends AppCompatActivity implements Adap
     @Override
     public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
         selectedEmployee = nonStaff.get(i);
-        //Toast.makeText(getApplicationContext(),adapterView.getItemAtPosition(i).toString(), Toast.LENGTH_LONG).show();
+
     }
 
     @Override

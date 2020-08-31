@@ -14,7 +14,6 @@ import java.util.List;
 import iss.workshop.adprojectmobile.Interfaces.ApiInterface;
 import iss.workshop.adprojectmobile.Interfaces.SSLBypasser;
 import iss.workshop.adprojectmobile.R;
-import iss.workshop.adprojectmobile.activity.MainActivity;
 import iss.workshop.adprojectmobile.adapters.GenericAdapter;
 import iss.workshop.adprojectmobile.model.Stationery;
 import retrofit2.Call;

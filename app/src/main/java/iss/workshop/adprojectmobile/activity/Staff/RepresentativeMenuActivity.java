@@ -13,10 +13,9 @@ import android.widget.Button;
 
 import iss.workshop.adprojectmobile.R;
 import iss.workshop.adprojectmobile.activity.LoginActivity;
-import iss.workshop.adprojectmobile.activity.Store.StoreClerkHomePageActivity;
 
 public class RepresentativeMenuActivity extends AppCompatActivity implements View.OnClickListener {
-    Button confirmDisbursement, raiseRequest, findRoutes;
+    Button confirmDisbursement, findRoutes;
 Button logout;
     SharedPreferences session;
     SharedPreferences.Editor session_editor;
@@ -41,10 +40,6 @@ Button logout;
 
             confirmDisbursement.setVisibility(View.GONE);
         }
-        /*raiseRequest = findViewById(R.id.raiseBtn);
-        raiseRequest.setOnClickListener(this);
-        if (confirmDisbursement != null)
-            registerForContextMenu(confirmDisbursement);*/
 
         findRoutes = (Button) findViewById(R.id.findRoutesBtn);
         findRoutes.setOnClickListener(new View.OnClickListener() {
@@ -54,25 +49,6 @@ Button logout;
                 startActivity(intent);
             }
         });
-
-//        dCollection = (Button) findViewById(R.id.dCollection);
-//        dCollection.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Intent intent = new Intent(RepresentativeMenuActivity.this, ConfirmDisbursementCollectionActivity.class);
-//                startActivity(intent);
-//            }
-//        });
-//
-//        dDistribution = (Button) findViewById(R.id.dDistribution);
-//        dDistribution.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Intent intent = new Intent(RepresentativeMenuActivity.this, ConfirmDisbursementDistributionActivity.class);
-//                startActivity(intent);
-//            }
-//        });
-
     }
 
     @Override

@@ -27,7 +27,6 @@ import java.util.Set;
 import iss.workshop.adprojectmobile.Interfaces.ApiInterface;
 import iss.workshop.adprojectmobile.Interfaces.SSLBypasser;
 import iss.workshop.adprojectmobile.R;
-import iss.workshop.adprojectmobile.model.CollectionInfo;
 import iss.workshop.adprojectmobile.model.DisbursementDetail;
 import iss.workshop.adprojectmobile.model.DisbursementList;
 import iss.workshop.adprojectmobile.model.Employee;
@@ -62,14 +61,6 @@ public class ConfirmDisbursementDistributionActivity extends AppCompatActivity i
 
     List<Employee> employeeList;
     int selectedEmpId;
-
-    public int getSelectedEmpId() {
-        return selectedEmpId;
-    }
-
-    public void setSelectedEmpId(int selectedEmpId) {
-        this.selectedEmpId = selectedEmpId;
-    }
 
     List<DisbursementList> disbursement;
     List<DisbursementDetail> disbursementDetail = new ArrayList<>();
@@ -346,7 +337,6 @@ public class ConfirmDisbursementDistributionActivity extends AppCompatActivity i
             }
 
             public void onTick(long millisUntilFinished) {
-                // millisUntilFinished    The amount of time until finished.
             }
         }.start();
     }

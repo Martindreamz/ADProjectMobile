@@ -183,8 +183,6 @@ public class CollectionPointLocationsActivity extends FragmentActivity implement
                     getMyLocation();
 
                 } else {
-                    // permission denied, boo! Disable the
-                    // functionality that depends on this permission.
                 }
                 return;
             }
@@ -198,13 +196,7 @@ public class CollectionPointLocationsActivity extends FragmentActivity implement
         mMap.setOnMyLocationChangeListener(new GoogleMap.OnMyLocationChangeListener() {
             @Override
             public void onMyLocationChange(Location location) {
-
                 myLocation = location;
-
-                LatLng ltlng = new LatLng(location.getLatitude(), location.getLongitude());
-
-                //CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(ltlng, 16f);
-                //mMap.animateCamera(cameraUpdate);
             }
         });
 
@@ -249,8 +241,6 @@ public class CollectionPointLocationsActivity extends FragmentActivity implement
 
             @Override
             public void onNothingSelected(AdapterView<?> adapterView) {
-                // TODO Auto-generated method stub
-
             }
         });
     }
@@ -289,7 +279,6 @@ public class CollectionPointLocationsActivity extends FragmentActivity implement
         View parentLayout = findViewById(android.R.id.content);
         Snackbar snackbar = Snackbar.make(parentLayout, e.toString(), Snackbar.LENGTH_LONG);
         snackbar.show();
-//        Findroutes(start,end);
     }
 
     @Override

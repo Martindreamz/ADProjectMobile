@@ -44,7 +44,7 @@
         android:background="@android:drawable/btn_dropdown"
         android:spinnerMode="dropdown"
         app:layout_constraintBottom_toTopOf="@+id/map"
-        app:layout_constraintTop_toBottomOf="@id/selectCollectionPointTxt"/>
+        app:layout_constraintTop_toBottomOf="@id/selectCollectionPointTxt" />
 
     <fragment
         android:id="@+id/map"

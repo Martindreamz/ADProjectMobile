@@ -48,10 +48,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         password.setTransformationMethod(new PasswordTransformationMethod());
         session = getSharedPreferences("session", MODE_PRIVATE);
         session_editor = session.edit();
-
-
-//sharedpref name = session <- every on create u must instantiate
-        //based on session (which is a sharedpref), you call the key name for value.
     }
 
     @Override

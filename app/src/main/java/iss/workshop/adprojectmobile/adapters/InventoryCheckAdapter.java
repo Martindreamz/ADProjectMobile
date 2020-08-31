@@ -6,11 +6,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.EditText;
 import android.widget.Filter;
 import android.widget.Filterable;
-import android.widget.ListAdapter;
-import android.widget.ListView;
 
 import com.travijuu.numberpicker.library.Enums.ActionEnum;
 import com.travijuu.numberpicker.library.Interface.ValueChangedListener;
@@ -21,9 +18,6 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 
 import java.util.ArrayList;
-import java.util.Dictionary;
-import java.util.Enumeration;
-import java.util.HashMap;
 import java.util.List;
 
 import iss.workshop.adprojectmobile.R;
@@ -62,14 +56,8 @@ public class InventoryCheckAdapter extends ArrayAdapter implements Filterable {
 
 
         TextView txtItemCode = view.findViewById(R.id.TxtItemCode);
-
-
         TextView txtDesc = view.findViewById(R.id.TxtDesc);
-
-
         TextView txtQty = view.findViewById(R.id.TxtQty);
-
-
 
             s = filteredList.get(pos);
             txtItemCode.setText(Integer.toString(s.getId()));
@@ -91,9 +79,6 @@ public class InventoryCheckAdapter extends ArrayAdapter implements Filterable {
                 }
 
             });
-
-
-
         return view;
     }
 
@@ -131,12 +116,6 @@ public class InventoryCheckAdapter extends ArrayAdapter implements Filterable {
             return filterResults;
         }
 
-        /**
-         * Notify about filtered list to ui
-         *
-         * @param constraint text
-         * @param results    filtered result
-         */
         @SuppressWarnings("unchecked")
         @Override
         protected void publishResults(CharSequence constraint, FilterResults results) {

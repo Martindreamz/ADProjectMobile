@@ -35,11 +35,8 @@
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
 
-        <activity android:name=".activity.Store.RaisePurchaseOrderSubmitActivity" />
-        <activity android:name=".activity.Store.RaisePurchaseOrderActivity" />
         <activity android:name=".activity.Store.DisbursementDetailsActivity" />
         <activity android:name=".activity.Store.StoreClerkHomePageActivity" />
-        <activity android:name=".activity.Staff.RaiseRequestActivity" />
         <activity android:name=".activity.Staff.ConfirmDisbursementCollectionActivity" />
         <activity android:name=".activity.Staff.ConfirmDisbursementDistributionActivity" />
         <activity android:name=".activity.Staff.CollectionPointLocationsActivity" />
@@ -58,7 +55,6 @@
         </activity>
         <activity android:name=".activity.Store.SignaturePadActivity" />
         <activity android:name=".activity.LoginActivity"></activity>
-        <activity android:name=".activity.MainActivity" />
     </application>
 
 </manifest>
