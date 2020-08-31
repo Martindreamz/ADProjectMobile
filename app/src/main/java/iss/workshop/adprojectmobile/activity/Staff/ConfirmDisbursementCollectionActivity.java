@@ -367,7 +367,7 @@ public class ConfirmDisbursementCollectionActivity extends AppCompatActivity imp
                 }
 
                 List<DisbursementDetail> emptyList = new ArrayList<>();
-
+emptyList.clear();
                 for (DisbursementDetail dDetail : getLatestDisbursementDetail()) {
                     if (dDetail.getDeliveryPoint().equals(item)) {
                         emptyList.add(dDetail);

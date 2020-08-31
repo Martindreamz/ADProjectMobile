@@ -113,7 +113,7 @@ public class SignaturePadActivity extends Activity {
                 Bitmap signatureBitmap = mSignaturePad.getSignatureBitmap();
                 //add code here to add bitmap to database
                 String img = BitMapToString(signatureBitmap);
-                Toast.makeText(SignaturePadActivity.this, img, Toast.LENGTH_SHORT).show();
+//                Toast.makeText(SignaturePadActivity.this, img, Toast.LENGTH_SHORT).show();
 
                 DisbursementList DL = new DisbursementList(dlId, 0, "", "", "Completed", "");
                 DL.setBitmap(img);

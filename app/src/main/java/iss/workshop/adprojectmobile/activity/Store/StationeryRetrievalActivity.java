@@ -226,6 +226,9 @@ public class StationeryRetrievalActivity extends AppCompatActivity implements Ad
 
             //if there are selections
             if (sum != 0 && dateClear) {
+                submit.setEnabled(false);
+                DLdatepicker.setEnabled(false);
+
                 List<RequisitionDetail> rdl_tosend = new ArrayList<>();
                 for (RequisitionDetail rd : requisitionDetails) {
                     System.out.println(rd);
@@ -252,10 +255,16 @@ public class StationeryRetrievalActivity extends AppCompatActivity implements Ad
                         System.out.println(response.code());
                         if (response.code() == 200) {
                             List<DisbursementList> disbursementLists = response.body();
+                            submit.setEnabled(true);
+                            DLdatepicker.setEnabled(true);
+
                             Intent success = new Intent(getApplicationContext(), StoreClerkHomePageActivity.class);
                             startActivity(success);
                         } else {
                             Toast.makeText(getApplicationContext(), "Something went wrong please try again", Toast.LENGTH_LONG).show();
+                            submit.setEnabled(true);
+                            DLdatepicker.setEnabled(true);
+
                             Intent failure = new Intent(getApplicationContext(), StationeryRetrievalActivity.class);
                             startActivity(failure);
                         }
@@ -263,6 +272,8 @@ public class StationeryRetrievalActivity extends AppCompatActivity implements Ad
 
                     @Override
                     public void onFailure(Call<List<DisbursementList>> call2, Throwable t) {
+                        submit.setEnabled(true);
+                        DLdatepicker.setEnabled(true);
                         Toast.makeText(getApplicationContext(), "Server Down", Toast.LENGTH_LONG).show();
                     }
                 });
